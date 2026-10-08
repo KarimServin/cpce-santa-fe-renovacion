@@ -1,0 +1,603 @@
+/* ================================================================
+   FOOTER INSTITUCIONAL CPCE SANTA FE — CÁMARA PRIMERA
+   Estética Hero & Vanguardia: Paleta unificada azulada/gris,
+   manchas aurora de fondo, tarjetas refinadas y logo oficial.
+   ================================================================ */
+
+.footer-renovated {
+  position: relative;
+  background: #ffffff;
+  color: #334155;
+  overflow: hidden;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+/* ── 1. LÍNEA SUPERIOR DE GRADIENTE INSTITUCIONAL ── */
+.footer-gradient-accent {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #0052FF 0%, #009FE3 45%, #002B5C 100%);
+}
+
+/* ── 2. MANCHAS AURORA DECORATIVAS DE FONDO (HERO & CHAMBERS STYLE) ── */
+.footer-aurora-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.footer-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.footer-aurora-blob--left {
+  width: clamp(380px, 45vw, 600px);
+  height: clamp(300px, 35vw, 480px);
+  bottom: -120px;
+  left: -100px;
+  background: radial-gradient(
+    circle at 45% 45%,
+    rgba(0, 82, 255, 0.12) 0%,
+    rgba(14, 165, 233, 0.08) 38%,
+    rgba(37, 99, 235, 0.03) 60%,
+    transparent 74%
+  );
+  filter: blur(60px);
+}
+
+.footer-aurora-blob--right {
+  width: clamp(360px, 40vw, 540px);
+  height: clamp(280px, 32vw, 420px);
+  top: -80px;
+  right: -90px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(0, 82, 255, 0.10) 0%,
+    rgba(79, 70, 229, 0.07) 40%,
+    transparent 70%
+  );
+  filter: blur(65px);
+}
+
+/* ── 3. CONTENEDOR PRINCIPAL ── */
+.footer-content-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1.05fr 1.05fr 0.95fr;
+  gap: 36px;
+  padding: 56px 0 44px;
+}
+
+/* ── 4. COLUMNA 1: IDENTIDAD INSTITUCIONAL & LOGO ── */
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-brand-logo-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.footer-brand-logo-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.footer-brand-logo {
+  width: 275px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-brand-eyebrow {
+  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0052FF;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.footer-brand-desc {
+  font-size: 13px;
+  line-height: 1.62;
+  color: #475569;
+  margin: 0 0 16px;
+  max-width: 360px;
+}
+
+.footer-brand-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.footer-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(0, 82, 255, 0.06);
+  border: 1px solid rgba(0, 82, 255, 0.16);
+  color: #0052FF;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Redes Sociales y Canales */
+.footer-social-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-social-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+}
+
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  color: #0b192c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(11, 25, 44, 0.04);
+  text-decoration: none;
+}
+
+.footer-social-btn:hover {
+  background: #0052FF;
+  border-color: #0052FF;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 82, 255, 0.25);
+}
+
+.footer-social-btn--whatsapp:hover {
+  background: #059669;
+  border-color: #059669;
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.25);
+}
+
+/* ── 5. ENCABEZADOS DE COLUMNAS ── */
+.footer-col-eyebrow {
+  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0052FF;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.footer-col-title {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #0b192c;
+  letter-spacing: -0.015em;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 6. COLUMNA 2: SEDE CENTRAL SANTA FE ── */
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.footer-contact-icon {
+  width: 17px;
+  height: 17px;
+  color: #0076C0;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.footer-contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-contact-detail strong {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748B;
+  font-weight: 700;
+}
+
+.footer-contact-detail span {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.footer-inline-link {
+  color: #0076C0;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.18s ease;
+}
+
+.footer-inline-link:hover {
+  color: #0052FF;
+  text-decoration: underline;
+}
+
+.footer-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  max-width: 250px;
+  padding: 10px 16px;
+  background: #0b192c;
+  color: #ffffff;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(11, 25, 44, 0.12);
+}
+
+.footer-portal-btn:hover {
+  background: #0052FF;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 82, 255, 0.25);
+}
+
+/* ── 7. COLUMNA 3: DELEGACIONES Y RECEPTORÍAS ── */
+.footer-delegations-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.footer-delegation-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-delegation-card:hover {
+  background: #ffffff;
+  border-color: #0076C0;
+  box-shadow: 0 4px 12px rgba(0, 118, 192, 0.08);
+  transform: translateY(-1px);
+}
+
+.footer-delegation-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.footer-delegation-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0b192c;
+}
+
+.footer-delegation-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background: #E0F2FE;
+  color: #0284C7;
+}
+
+.footer-delegation-address {
+  font-size: 11.5px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.footer-delegation-phone {
+  font-size: 11.5px;
+  margin: 2px 0 0;
+}
+
+.footer-receptorias-box {
+  background: #ffffff;
+  border: 1px dashed #CBD5E1;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.footer-receptorias-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  margin-bottom: 8px;
+}
+
+.footer-receptorias-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.footer-receptoria-chip {
+  padding: 3px 8px;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.footer-receptoria-chip:hover {
+  background: #0052FF;
+  border-color: #0052FF;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ── 8. COLUMNA 4: SERVICIOS Y ENLACES ── */
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-link-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 550;
+  color: #334155;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+}
+
+.footer-link-bullet {
+  color: #0076C0;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.footer-link-action:hover {
+  color: #0052FF;
+  transform: translateX(3px);
+}
+
+.footer-link-action:hover .footer-link-bullet {
+  color: #0052FF;
+  transform: translateX(2px);
+}
+
+/* ── 9. BARRA INFERIOR / COPYRIGHT & ACCIONES ── */
+.footer-bottom-bar {
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 24px 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-legal {
+  max-width: 680px;
+}
+
+.footer-bottom-copy {
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.footer-bottom-sub {
+  margin: 0;
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+.footer-bottom-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-bottom-link-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 550;
+  color: #64748B;
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+
+.footer-bottom-link-btn:hover {
+  color: #0052FF;
+  text-decoration: underline;
+}
+
+.footer-bottom-separator {
+  color: #CBD5E1;
+  font-size: 12px;
+}
+
+.footer-back-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  color: #0b192c;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(11, 25, 44, 0.04);
+}
+
+.footer-back-to-top-btn:hover {
+  background: #0b192c;
+  border-color: #0b192c;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(11, 25, 44, 0.15);
+}
+
+/* ── 10. RESPONSIVE / MEDIA QUERIES ── */
+@media (max-width: 1120px) {
+  .footer-main-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 32px;
+    padding: 48px 0 36px;
+  }
+}
+
+@media (max-width: 680px) {
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 0 28px;
+  }
+
+  .footer-brand-logo {
+    width: 240px;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-bottom-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-back-to-top-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-delegation-card {
+    padding: 8px 10px;
+  }
+
+  .footer-delegation-head {
+    align-items: flex-start;
+  }
+
+  .footer-delegation-name {
+    font-size: 12px;
+  }
+
+  .footer-delegation-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+  }
+
+  .footer-brand-logo {
+    width: 220px;
+  }
+}
+

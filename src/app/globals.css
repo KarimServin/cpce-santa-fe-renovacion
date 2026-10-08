@@ -1,0 +1,39 @@
+/* ================================================================
+   CPCE SANTA FE - ESTILOS PRINCIPALES (MODULARES)
+   ================================================================ */
+
+/* 1. Variables de diseño, reset y utilidades globales */
+@import '../styles/variables.css';
+
+/* 2. Header, navbar vanguardista, mega panels y mobile drawer */
+@import '../styles/header.css';
+
+/* 3. Hero institucional (Aurora, buscador command palette y panel actualidad) */
+@import '../styles/hero.css';
+
+/* 3.1. Agenda y Eventos (Carrusel de vanguardia) */
+@import '../styles/events-agenda.css';
+
+/* 4. Accesos directos y perfiles */
+@import '../styles/quick-access.css';
+
+/* 5. Secciones comunes */
+@import '../styles/sections.css';
+
+/* 6. Sedes y delegaciones (Chambers) */
+@import '../styles/chambers.css';
+
+/* 7. Servicios institucionales */
+@import '../styles/services.css';
+
+/* 8. Novedades y actualidad */
+@import '../styles/news.css';
+
+/* 9. Capacitación y educación */
+@import '../styles/education.css';
+
+/* 10. Pie de página institucional (Footer) */
+@import '../styles/footer.css';
+
+/* 11. Modales, diálogos y notificaciones toast */
+@import '../styles/modal.css';

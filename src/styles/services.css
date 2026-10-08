@@ -1,0 +1,121 @@
+/* ---------------- SERVICIOS ---------------- */
+.services-section {
+  background: #ffffff;
+}
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.service-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: all .18s ease;
+  cursor: pointer;
+}
+.service-card:hover {
+  border-color: #94A3B8;
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+.service-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  flex: none;
+  transition: all .2s ease;
+}
+
+.service-card[data-theme="emerald"] .service-icon-box { background: #ECFDF5; color: #059669; }
+.service-card[data-theme="emerald"]:hover { border-color: #059669; }
+.service-card[data-theme="emerald"]:hover .service-icon-box { background: #059669; color: #ffffff; }
+.service-card[data-theme="emerald"] .service-action { color: #059669; }
+
+.service-card[data-theme="indigo"] .service-icon-box { background: #EEF2FF; color: #4F46E5; }
+.service-card[data-theme="indigo"]:hover { border-color: #4F46E5; }
+.service-card[data-theme="indigo"]:hover .service-icon-box { background: #4F46E5; color: #ffffff; }
+.service-card[data-theme="indigo"] .service-action { color: #4F46E5; }
+
+.service-card[data-theme="cyan"] .service-icon-box { background: #E0F2FE; color: #0284C7; }
+.service-card[data-theme="cyan"]:hover { border-color: #0284C7; }
+.service-card[data-theme="cyan"]:hover .service-icon-box { background: #0284C7; color: #ffffff; }
+.service-card[data-theme="cyan"] .service-action { color: #0284C7; }
+
+.service-card[data-theme="blue"] .service-icon-box { background: #F0F7FD; color: #002B5C; }
+.service-card[data-theme="blue"]:hover { border-color: #002B5C; }
+.service-card[data-theme="blue"]:hover .service-icon-box { background: #002B5C; color: #ffffff; }
+.service-card[data-theme="blue"] .service-action { color: #002B5C; }
+
+.service-card[data-theme="amber"] .service-icon-box { background: #FEF3C7; color: #D97706; }
+.service-card[data-theme="amber"]:hover { border-color: #D97706; }
+.service-card[data-theme="amber"]:hover .service-icon-box { background: #D97706; color: #ffffff; }
+.service-card[data-theme="amber"] .service-action { color: #D97706; }
+
+.service-card[data-theme="rose"] .service-icon-box { background: #FFE4E6; color: #E11D48; }
+.service-card[data-theme="rose"]:hover { border-color: #E11D48; }
+.service-card[data-theme="rose"]:hover .service-icon-box { background: #E11D48; color: #ffffff; }
+.service-card[data-theme="rose"] .service-action { color: #E11D48; }
+
+.service-card[data-theme="teal"] .service-icon-box { background: #CCFBF1; color: #0D9488; }
+.service-card[data-theme="teal"]:hover { border-color: #0D9488; }
+.service-card[data-theme="teal"]:hover .service-icon-box { background: #0D9488; color: #ffffff; }
+.service-card[data-theme="teal"] .service-action { color: #0D9488; }
+
+.service-card[data-theme="orange"] .service-icon-box { background: #FFEDD5; color: #EA580C; }
+.service-card[data-theme="orange"]:hover { border-color: #EA580C; }
+.service-card[data-theme="orange"]:hover .service-icon-box { background: #EA580C; color: #ffffff; }
+.service-card[data-theme="orange"] .service-action { color: #EA580C; }
+
+.service-body {
+  flex: 1;
+  margin-bottom: 16px;
+}
+.service-body h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.service-body p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.service-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+}
+.arrow {
+  transition: transform .18s ease;
+}
+.service-card:hover .arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 950px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+}

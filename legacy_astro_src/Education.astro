@@ -1,0 +1,177 @@
+---
+// Education.astro (Formación y Capacitación Continua - Formal e Institucional)
+const items = [
+  "Cursos de actualización tributaria, contable, societaria y laboral",
+  "Modalidad híbrida: transmisión en vivo por streaming y clases presenciales",
+  "Certificados de asistencia y aprobación con validación digital",
+  "Aranceles preferenciales para profesionales matriculados al día"
+];
+---
+
+<section class="education-section" id="capacitacion" aria-labelledby="capacitacion-title">
+  <div class="wrap">
+    <div class="education-box">
+      <div class="education-text">
+        <span class="edu-kicker">Desarrollo Profesional Continuo</span>
+        <h2 id="capacitacion-title">
+          Capacitación y formación técnica permanente
+        </h2>
+        <p class="edu-desc">
+          El Consejo brinda una nutrida agenda de actividades académicas dictadas por especialistas de trayectoria nacional para acompañar los desafíos del ejercicio diario.
+        </p>
+
+        <ul class="edu-list">
+          {items.map((item) => (
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="education-sidebar">
+        <div class="action-card">
+          <span class="action-badge">Ciclo Académico 2026</span>
+          <h3>Calendario de Cursos y Jornadas</h3>
+          <p>Conocé el cronograma completo de actividades programadas para este cuatrimestre e inscribite online.</p>
+          <a class="btn btn-education" href="https://cpcesfe1.org.ar/capacitacion/" target="_blank" rel="noreferrer">
+            Ver oferta académica ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .education-section {
+    padding: 60px 0;
+    background: #ffffff;
+  }
+  .education-box {
+    background: var(--navy);
+    border-radius: var(--radius-card);
+    padding: 44px 48px;
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 40px;
+    align-items: center;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 36, 71, 0.15);
+  }
+  .edu-kicker {
+    display: inline-block;
+    color: #7DD3FC;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 30px;
+    line-height: 1.2;
+    color: #ffffff;
+    margin: 0 0 14px;
+    font-weight: 800;
+  }
+  .edu-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #E2E8F0;
+    margin: 0 0 24px;
+  }
+  .edu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .edu-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #F1F5F9;
+  }
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    color: #10B981;
+    flex: none;
+    margin-top: 2px;
+  }
+
+  /* Action Card */
+  .action-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .action-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #FBBF24;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.6px;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+  .action-card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #ffffff;
+  }
+  .action-card p {
+    font-size: 13px;
+    color: #CBD5E1;
+    line-height: 1.5;
+    margin: 0 0 20px;
+  }
+  .btn-education {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    border: 1px solid #B45309;
+    color: #ffffff;
+    font-weight: 800;
+    width: 100%;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+    transition: all .2s ease;
+  }
+  .btn-education:hover {
+    background: linear-gradient(135deg, #FBBF24 0%, #E68A00 100%);
+    border-color: #92400E;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 900px) {
+    .education-box {
+      grid-template-columns: 1fr;
+      padding: 30px;
+      gap: 28px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    h2 {
+      font-size: 24px;
+    }
+    .action-card {
+      padding: 20px;
+    }
+  }
+</style>

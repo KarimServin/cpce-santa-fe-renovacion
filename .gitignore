@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+.astro/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary / Scratch artifacts
+page_debug.html
+page_test.html
+scratch_fetch_live.cjs
+update-globals.cjs
+outputs/
+work/

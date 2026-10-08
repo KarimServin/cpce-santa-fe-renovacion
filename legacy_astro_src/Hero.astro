@@ -1,0 +1,346 @@
+---
+// Hero.astro (Estructura Limpia: Fondo Blanco por un lado y Foto por el otro)
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-grid">
+    <!-- Lado izquierdo: Fondo blanco con contenidos -->
+    <div class="hero-left">
+      <div class="hero-copy">
+        <div class="hero-brand">
+          <div class="hero-brand-logos">
+            <img 
+              src="/images/isologo-cpce.png" 
+              alt="Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe - Cámara I" 
+              class="hero-brand-isotype"
+              width="46"
+              height="51"
+              loading="eager"
+            />
+            <img 
+              src="/images/logo-60-anos.png" 
+              alt="60 Años (1966 - 2026)" 
+              class="hero-brand-anniversary"
+              width="50"
+              height="44"
+              loading="eager"
+            />
+          </div>
+          <div class="hero-brand-text">
+            <span class="hero-brand-title">Consejo Profesional de Ciencias Económicas</span>
+            <span class="hero-brand-sub">De la Provincia de Santa Fe · Cámara I</span>
+          </div>
+        </div>
+
+        <h1 id="hero-title">
+          <span class="hero-title-intro">Una comunidad profesional</span>
+          <span class="hero-title-accent">que impulsa el futuro.</span>
+        </h1>
+
+        <p>
+          El espacio de referencia, representación y desarrollo continuo para los profesionales y graduados en ciencias económicas de la jurisdicción.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-hero-primary" href="#servicios">
+            Explorar servicios 
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+
+          <button class="btn btn-hero-secondary" data-dialog="matricula">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="m20 20-4-4"/>
+            </svg>
+            Consultar matrícula
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado derecho: La fotografía limpia y sin degradados -->
+    <div class="hero-right">
+      <img 
+        class="hero-img"
+        src="/images/hero-profesional.jpg" 
+        alt="Profesional en Ciencias Económicas en su estudio contable" 
+        loading="eager"
+        fetchpriority="high"
+        width="1200"
+        height="650"
+      />
+      <div class="hero-caption">Comunidad Profesional · CPCE Santa Fe</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: clamp(520px, calc(100vh - 58px), 660px);
+    background: #ffffff;
+    overflow: hidden;
+    border-bottom: 1px solid #E2E8F0;
+    box-sizing: border-box;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    min-height: clamp(520px, calc(100vh - 58px), 660px);
+    width: 100%;
+  }
+
+  .hero-left {
+    background: #ffffff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 36px 44px 48px max(24px, calc((100vw - var(--max)) / 2));
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: 580px;
+  }
+
+  .hero-right {
+    position: relative;
+    background: #F1F5F9;
+    height: 100%;
+    min-height: 480px;
+    overflow: hidden;
+    border-left: 1px solid #E2E8F0;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 8px 18px 8px 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 43, 92, 0.04);
+  }
+
+  .hero-brand-logos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+  }
+
+  .hero-brand-isotype {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    background: #ffffff;
+    padding: 3px 5px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 43, 92, 0.12);
+  }
+
+  .hero-brand-anniversary {
+    height: 46px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 2px 5px rgba(217, 119, 6, 0.30));
+    transition: transform .25s ease;
+  }
+
+  .hero-brand-anniversary:hover {
+    transform: translateY(-1px) scale(1.04);
+  }
+
+  .hero-brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .hero-brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #002B5C;
+  }
+
+  .hero-brand-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #0076C0;
+    margin-top: 2px;
+  }
+
+  h1 {
+    margin: 0 0 18px;
+    color: #002B5C;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero-title-intro {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: #00366D;
+    display: block;
+  }
+
+  .hero-title-accent {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #002B5C;
+    display: block;
+  }
+
+  .hero-copy p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0 0 28px;
+    max-width: 580px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-hero-primary {
+    background: #002B5C;
+    border-color: #002B5C;
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(0, 43, 92, 0.25);
+  }
+
+  .btn-hero-primary:hover {
+    background: #004085;
+    border-color: #004085;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 43, 92, 0.32);
+  }
+
+  .btn-hero-secondary {
+    background: #ffffff;
+    border: 1.5px solid #002B5C;
+    color: #002B5C;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 43, 92, 0.06);
+  }
+
+  .btn-hero-secondary:hover {
+    background: #F0F7FD;
+    border-color: #001B3A;
+    color: #001B3A;
+    transform: translateY(-1px);
+  }
+
+  .hero-caption {
+    position: absolute;
+    z-index: 3;
+    bottom: 20px;
+    right: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #002B5C;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 43, 92, 0.15);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 14px rgba(0, 36, 71, 0.10);
+  }
+
+  @media (max-width: 850px) {
+    .hero {
+      min-height: auto;
+    }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .hero-left {
+      padding: 28px 20px 36px;
+      justify-content: flex-start;
+    }
+    .hero-right {
+      height: 340px;
+      min-height: 300px;
+      border-left: none;
+      border-top: 1px solid #E2E8F0;
+    }
+    .hero-img {
+      object-position: 50% top;
+    }
+    .hero-brand {
+      gap: 12px;
+      padding: 6px 14px 6px 8px;
+      margin-bottom: 16px;
+      max-width: 100%;
+    }
+    .hero-brand-isotype {
+      height: 38px;
+    }
+    .hero-brand-anniversary {
+      height: 36px;
+    }
+    .hero-brand-title {
+      font-size: 13px;
+      white-space: normal;
+    }
+    .hero-brand-sub {
+      font-size: 11px;
+      white-space: normal;
+    }
+    h1 {
+      margin-bottom: 14px;
+    }
+    .hero-title-intro {
+      font-size: 20px;
+      line-height: 1.25;
+    }
+    .hero-title-accent {
+      font-size: 34px;
+      line-height: 1.15;
+    }
+    .hero-copy p {
+      font-size: 14.5px;
+      margin-bottom: 22px;
+    }
+    .hero-caption {
+      right: 14px;
+      bottom: 14px;
+    }
+  }
+</style>

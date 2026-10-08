@@ -1,0 +1,127 @@
+/* ---------------- CAPACITACIÓN / EDUCATION ---------------- */
+.education-section {
+  padding: 60px 0;
+  background: #ffffff;
+}
+.education-box {
+  background: var(--navy);
+  border-radius: var(--radius-card);
+  padding: 44px 48px;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 40px;
+  align-items: center;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 36, 71, 0.15);
+}
+.edu-kicker {
+  display: inline-block;
+  color: #7DD3FC;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+.education-box h2 {
+  font-size: 30px;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 0 14px;
+  font-weight: 800;
+}
+.edu-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #E2E8F0;
+  margin: 0 0 24px;
+}
+.edu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.edu-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #F1F5F9;
+}
+.check-icon {
+  width: 16px;
+  height: 16px;
+  color: #10B981;
+  flex: none;
+  margin-top: 2px;
+}
+
+.action-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+.action-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FBBF24;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.6px;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+.action-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #ffffff;
+}
+.action-card p {
+  font-size: 13px;
+  color: #CBD5E1;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+.btn-education {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border: 1px solid #B45309;
+  color: #ffffff;
+  font-weight: 800;
+  width: 100%;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+  transition: all .2s ease;
+}
+.btn-education:hover {
+  background: linear-gradient(135deg, #FBBF24 0%, #E68A00 100%);
+  border-color: #92400E;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .education-box {
+    grid-template-columns: 1fr;
+    padding: 30px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .education-box h2 {
+    font-size: 24px;
+  }
+  .action-card {
+    padding: 20px;
+  }
+}

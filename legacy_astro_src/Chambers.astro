@@ -1,0 +1,328 @@
+---
+// Chambers.astro (Sede Central y Delegaciones - Formal e Institucional)
+const delegations = [
+  {
+    city: "Rafaela",
+    theme: "emerald",
+    color: "#059669",
+    colorLight: "#ECFDF5",
+    address: "Brown 247",
+    phone: "(03492) 422-544",
+    email: "del-rafaela@cpcesfe1.org.ar"
+  },
+  {
+    city: "Reconquista",
+    theme: "amber",
+    color: "#D97706",
+    colorLight: "#FEF3C7",
+    address: "General López 865",
+    phone: "(03482) 420-721",
+    email: "del-reconquista@cpcesfe1.org.ar"
+  },
+  {
+    city: "Esperanza",
+    theme: "indigo",
+    color: "#4F46E5",
+    colorLight: "#EEF2FF",
+    address: "25 de Mayo 1664",
+    phone: "(03496) 420-942",
+    email: "del-esperanza@cpcesfe1.org.ar"
+  },
+  {
+    city: "San Jorge",
+    theme: "rose",
+    color: "#E11D48",
+    colorLight: "#FFE4E6",
+    address: "Eva Perón 1218",
+    phone: "(03406) 441-218",
+    email: "del-sanjorge@cpcesfe1.org.ar"
+  }
+];
+---
+
+<section class="section sedes-section" id="sedes" aria-labelledby="sedes-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-kicker">Cámara Primera · Presencia provincial</span>
+        <h2 id="sedes-title">Sede Central y Delegaciones</h2>
+      </div>
+      <p class="section-subtitle">
+        Atención presencial a profesionales en Santa Fe Capital y en los centros productivos del interior provincial.
+      </p>
+    </div>
+
+    <!-- Sede Central Destacada -->
+    <div class="central-card">
+      <div class="central-main">
+        <span class="central-kicker">Sede Central · Santa Fe Capital</span>
+        <h3>Consejo Profesional de Ciencias Económicas</h3>
+        <p class="central-address">San Lorenzo 1849 (S3000CGI), Ciudad de Santa Fe</p>
+        
+        <div class="central-info-grid">
+          <div class="info-block">
+            <strong>Teléfonos centrales:</strong>
+            <span>(0342) 459-3450 / 459-3458</span>
+          </div>
+          <div class="info-block">
+            <strong>Horario de atención:</strong>
+            <span>Lunes a Viernes de 7:30 a 15:30 hs</span>
+          </div>
+          <div class="info-block">
+            <strong>Correo institucional:</strong>
+            <span>cpcesfe@cpcesfe1.org.ar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="central-actions">
+        <a class="btn btn-primary" href="https://cpcesfe1.org.ar/contacto/" target="_blank" rel="noreferrer">
+          Mesa de ayuda ↗
+        </a>
+        <a class="btn" href="https://maps.google.com/?q=San+Lorenzo+1849,+Santa+Fe" target="_blank" rel="noreferrer">
+          Ver en Google Maps ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Título de Delegaciones -->
+    <div class="delegations-title">
+      <h3>Delegaciones del Interior</h3>
+      <p>Gestiones arancelarias, legalizaciones y asesoramiento directo</p>
+    </div>
+
+    <!-- Cuadrícula de Delegaciones -->
+    <div class="delegations-grid">
+      {delegations.map((item) => (
+        <article class="delegation-card" data-theme={item.theme}>
+          <div class="del-head">
+            <span class="del-bullet" style={`background: ${item.color}; box-shadow: 0 0 0 3px ${item.colorLight};`} aria-hidden="true"></span>
+            <h4>Delegación {item.city}</h4>
+          </div>
+          <p class="del-address">{item.address}</p>
+          <div class="del-meta">
+            <div>
+              <span class="del-label">Teléfono:</span>
+              <strong>{item.phone}</strong>
+            </div>
+            <div>
+              <span class="del-label">Correo:</span>
+              <span>{item.email}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 60px 0;
+  }
+  .sedes-section {
+    background: #F8FAFC;
+    padding-top: 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .section-kicker {
+    display: block;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .section h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 0;
+  }
+  .section-subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 480px;
+  }
+
+  /* Sede Central */
+  .central-card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--navy);
+    border-radius: var(--radius-card);
+    padding: 30px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 28px;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 40px;
+  }
+  .central-kicker {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .central-main h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: var(--navy);
+  }
+  .central-address {
+    margin: 0 0 16px;
+    color: var(--ink-secondary);
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .central-info-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+  }
+  .info-block strong {
+    color: var(--navy);
+    font-size: 12px;
+  }
+  .info-block span {
+    color: var(--ink);
+  }
+  .central-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: none;
+  }
+
+  /* Delegaciones */
+  .delegations-title {
+    margin-bottom: 18px;
+  }
+  .delegations-title h3 {
+    font-size: 18px;
+    color: var(--navy);
+    margin: 0 0 4px;
+  }
+  .delegations-title p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .delegations-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .delegation-card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-top: 3px solid transparent;
+    border-radius: var(--radius-card);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: all .2s ease;
+  }
+  .delegation-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+  .delegation-card[data-theme="emerald"]:hover {
+    border-top-color: #059669;
+    border-color: #A7F3D0;
+  }
+  .delegation-card[data-theme="amber"]:hover {
+    border-top-color: #D97706;
+    border-color: #FDE68A;
+  }
+  .delegation-card[data-theme="indigo"]:hover {
+    border-top-color: #4F46E5;
+    border-color: #C7D2FE;
+  }
+  .delegation-card[data-theme="rose"]:hover {
+    border-top-color: #E11D48;
+    border-color: #FECDD3;
+  }
+  .del-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .del-bullet {
+    width: 6px;
+    height: 6px;
+    background: var(--blue);
+    border-radius: 50%;
+  }
+  .del-head h4 {
+    margin: 0;
+    font-size: 15px;
+    color: var(--navy);
+  }
+  .del-address {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .del-meta {
+    border-top: 1px solid #F1F5F9;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .del-label {
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .del-meta strong {
+    color: var(--ink);
+  }
+
+  @media (max-width: 950px) {
+    .central-card {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+    }
+    .central-actions {
+      flex-direction: row;
+      width: 100%;
+    }
+    .delegations-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .central-actions {
+      flex-direction: column;
+    }
+    .delegations-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,315 @@
+---
+// News.astro (Novedades Institucionales - Prensa Formal)
+const featuredNews = {
+  tag: "Secretaría Técnica",
+  theme: "emerald",
+  title: "Publicación de modelos y guías de aplicación para informes profesionales",
+  description: "Accedé a los nuevos modelos sugeridos por la Secretaría Técnica de Cámara Primera, elaborados conforme a las resoluciones técnicas vigentes y buenas prácticas profesionales.",
+  image: "https://www.argentina.gob.ar/sites/default/files/santa_fe_puente.jpg",
+  alt: "Puente Colgante de Santa Fe sobre la laguna Setúbal",
+  link: "https://cpcesfe1.org.ar/noticias/",
+  dateFormatted: "26 de Septiembre, 2026"
+};
+
+const recentNews = [
+  {
+    category: "Institucional",
+    theme: "cyan",
+    date: "2026-09-24",
+    dateFormatted: "24 Sep 2026",
+    title: "Reunión de Consejo Directivo y agenda de trabajo con delegaciones",
+    description: "Se abordaron los principales proyectos de modernización administrativa y el plan de obras para las sedes del interior."
+  },
+  {
+    category: "Capacitación",
+    theme: "amber",
+    date: "2026-09-20",
+    dateFormatted: "20 Sep 2026",
+    title: "Próximas jornadas tributarias provinciales: apertura de inscripciones",
+    description: "Especialistas analizarán el impacto de las recientes modificaciones normativas y jurisprudencia provincial."
+  },
+  {
+    category: "Comunidad",
+    theme: "rose",
+    date: "2026-09-15",
+    dateFormatted: "15 Sep 2026",
+    title: "Acto de colación y entrega de diplomas a nuevos profesionales matriculados",
+    description: "Una nueva cohorte de graduados en ciencias económicas se incorporó formalmente a la matrícula de Cámara Primera."
+  }
+];
+---
+
+<section class="section news-section" id="novedades" aria-labelledby="novedades-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-kicker">Comunicación institucional</span>
+        <h2 id="novedades-title">Novedades y Comunicados</h2>
+      </div>
+      <a class="btn" href="https://cpcesfe1.org.ar/noticias/" target="_blank" rel="noreferrer">
+        Ver todas las noticias ↗
+      </a>
+    </div>
+
+    <div class="news-layout">
+      <!-- Noticia Principal -->
+      <article class="news-feature">
+        <div class="feature-photo">
+          <img 
+            src={featuredNews.image} 
+            alt={featuredNews.alt} 
+            loading="lazy" 
+            width="600" 
+            height="340" 
+          />
+        </div>
+        <div class="feature-copy">
+          <div class="feature-meta">
+            <span class={`news-badge theme-${featuredNews.theme}`}>{featuredNews.tag}</span>
+            <time>{featuredNews.dateFormatted}</time>
+          </div>
+          <h3>{featuredNews.title}</h3>
+          <p>{featuredNews.description}</p>
+          <a class="news-link" href={featuredNews.link} target="_blank" rel="noreferrer">
+            Leer noticia completa →
+          </a>
+        </div>
+      </article>
+
+      <!-- Lista de Noticias Secundarias -->
+      <div class="news-list">
+        {recentNews.map((news) => (
+          <article class="news-item">
+            <div class="item-meta">
+              <span class={`item-cat theme-${news.theme}`}>{news.category}</span>
+              <time datetime={news.date}>{news.dateFormatted}</time>
+            </div>
+            <h4>
+              <a href="https://cpcesfe1.org.ar/noticias/" target="_blank" rel="noreferrer">
+                {news.title}
+              </a>
+            </h4>
+            <p>{news.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 60px 0;
+  }
+  .news-section {
+    background: #F8FAFC;
+    border-top: 1px solid var(--line);
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .section-kicker {
+    display: block;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .section h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .news-layout {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 24px;
+  }
+
+  /* Noticia Principal */
+  .news-feature {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+  }
+  .feature-photo {
+    height: 260px;
+    background: #E2E8F0;
+    overflow: hidden;
+  }
+  .feature-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .feature-copy {
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+  }
+  .feature-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .news-badge {
+    background: var(--sky-light);
+    color: var(--blue);
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .news-badge.theme-emerald {
+    background: var(--emerald-light);
+    color: var(--emerald);
+    border: 1px solid var(--emerald-border);
+  }
+  .news-badge.theme-cyan {
+    background: var(--cyan-light);
+    color: var(--cyan);
+    border: 1px solid var(--cyan-border);
+  }
+  .news-badge.theme-amber {
+    background: var(--amber-light);
+    color: var(--amber);
+    border: 1px solid var(--amber-border);
+  }
+  .news-badge.theme-rose {
+    background: var(--rose-light);
+    color: var(--rose);
+    border: 1px solid var(--rose-border);
+  }
+  .feature-copy h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .feature-copy p {
+    font-size: 13px;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+  .news-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-top: auto;
+  }
+  .news-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Lista de Noticias */
+  .news-list {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 10px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+  }
+  .news-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .news-item:last-child {
+    border-bottom: none;
+  }
+  .item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  .item-cat {
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--sky-light);
+  }
+  .item-cat.theme-cyan {
+    background: var(--cyan-light);
+    color: var(--cyan);
+  }
+  .item-cat.theme-amber {
+    background: var(--amber-light);
+    color: var(--amber);
+  }
+  .item-cat.theme-rose {
+    background: var(--rose-light);
+    color: var(--rose);
+  }
+  .item-cat.theme-emerald {
+    background: var(--emerald-light);
+    color: var(--emerald);
+  }
+  .item-meta time {
+    color: var(--muted);
+  }
+  .news-item h4 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .news-item h4 a {
+    color: var(--navy);
+  }
+  .news-item h4 a:hover {
+    color: var(--blue);
+  }
+  .news-item p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .news-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .feature-photo {
+      height: 190px;
+    }
+    .feature-copy {
+      padding: 18px;
+    }
+  }
+</style>

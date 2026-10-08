@@ -1,0 +1,215 @@
+---
+// Header.astro (Diseño Institucional Serio y Limpio)
+---
+<!-- Navegación Oficial -->
+<nav class="nav" aria-label="Navegación principal">
+  <div class="wrap">
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menu-toggle">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    
+    <div class="nav-links" id="nav-links">
+      <a class="active" href="/">Inicio</a>
+      <a href="#servicios">Servicios y Trámites</a>
+      <a href="#novedades">Novedades</a>
+      <a href="#capacitacion">Capacitación</a>
+      <a href="#sedes">Sede y Delegaciones</a>
+      <button class="btn btn-acceso-navbar" data-dialog="acceso" aria-label="Ingresar a la plataforma de autogestión profesional">
+        <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Acceso profesional
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Botón Acceso Profesional en Navbar */
+
+  .btn-acceso-navbar {
+    min-height: 38px;
+    padding: 0 20px;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+    margin-left: 20px;
+    align-self: center;
+    background: linear-gradient(135deg, #0F766E 0%, #0D9488 50%, #059669 100%);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    color: #ffffff;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
+    transition: all .18s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-acceso-navbar:hover {
+    background: linear-gradient(135deg, #115E59 0%, #0F766E 50%, #047857 100%);
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.45);
+    border-color: rgba(255, 255, 255, 0.40);
+    transform: translateY(-1px);
+    color: #ffffff;
+  }
+  .btn-acceso-navbar .icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #002B5C;
+    color: white;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.12), 
+      0 4px 16px rgba(0, 16, 40, 0.18);
+    transition: background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  /* Nav Glassmorphism al bajar (scrolled) */
+  .nav.scrolled {
+    background: rgba(0, 43, 92, 0.94);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.18), 
+      0 8px 24px rgba(0, 16, 40, 0.25),
+      0 18px 36px rgba(0, 16, 40, 0.30);
+  }
+
+  .nav .wrap {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .nav-links {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    height: 58px;
+  }
+  .nav-links a {
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: 0.005em;
+    transition: all .15s ease;
+  }
+  .nav-links a:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(4px);
+  }
+  .nav-links a.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .menu-toggle {
+    display: none;
+    border: 0;
+    background: none;
+    color: #fff;
+    padding: 8px;
+    cursor: pointer;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: drop-shadow(0 1px 2px rgba(0, 24, 56, 0.5));
+  }
+
+  @media (max-width: 850px) {
+    .nav-links a {
+      padding: 0 12px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav .wrap {
+      min-height: 52px;
+    }
+    .btn-acceso-navbar {
+      margin-left: 0;
+      margin-top: 12px;
+      min-height: 42px;
+      width: 100%;
+      justify-content: center;
+    }
+    .menu-toggle {
+      display: block;
+    }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: auto;
+      background: #002B5C;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 50;
+      padding: 8px 16px 16px;
+      flex-direction: column;
+      align-items: stretch;
+      box-shadow: 0 16px 32px rgba(0, 16, 40, 0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .nav-links.open {
+      display: flex;
+    }
+    .nav-links a {
+      min-height: 44px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  const menuButton = document.getElementById('menu-toggle');
+  const menu = document.getElementById('nav-links');
+
+  if (menuButton && menu) {
+    menuButton.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Activar efecto glassmórfico al bajar en la página
+  const nav = document.querySelector('.nav');
+  if (nav) {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+</script>

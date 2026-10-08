@@ -1,0 +1,213 @@
+---
+// MatriculaModal.astro
+---
+<div class="dialog-backdrop" id="dialog-backdrop" role="presentation">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" id="main-dialog">
+    <div class="dialog-head">
+      <h2 id="dialog-title">Consultar matrícula</h2>
+      <button class="close" id="dialog-close" aria-label="Cerrar modal">×</button>
+    </div>
+    <p id="dialog-description">Verificá si un profesional está matriculado y habilitado para ejercer.</p>
+    
+    <form id="demo-form">
+      <label class="form-label" for="search-term">Número de matrícula o DNI</label>
+      <input class="text-input" id="search-term" name="q" placeholder="Ej: 12345 o DNI sin puntos" autocomplete="off" />
+      <button class="btn btn-primary" style="margin-top:12px;width:100%" type="submit">
+        Consultar habilitación <span aria-hidden="true">→</span>
+      </button>
+    </form>
+    
+    <p class="demo-note">
+      <strong>Aviso:</strong> En la versión final, esta búsqueda consulta directamente el registro oficial de matriculados habilitados de Cámara Primera (Santa Fe).
+    </p>
+  </section>
+</div>
+
+<div class="toast" id="app-toast" role="status" aria-live="polite"></div>
+
+<style>
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 23, 45, 0.8);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+  }
+  .dialog-backdrop.open {
+    display: flex;
+  }
+  .dialog {
+    width: min(460px, 100%);
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 20px 80px rgba(0, 24, 45, 0.35);
+  }
+  .dialog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .dialog h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 21px;
+  }
+  .dialog p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .close {
+    border: 0;
+    background: #F0F5F9;
+    color: var(--navy);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+    transition: background .18s;
+  }
+  .close:hover {
+    background: #E1ECF4;
+  }
+  .form-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    display: block;
+    margin: 17px 0 6px;
+  }
+  .text-input {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #B7C8D8;
+    border-radius: 9999px;
+    padding: 0 18px;
+    color: var(--ink);
+  }
+  .text-input:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 159, 227, 0.2);
+  }
+  .demo-note {
+    font-size: 11px !important;
+    color: #556B82 !important;
+    background: #F0F5F9;
+    padding: 12px 14px;
+    border-left: 3px solid var(--cyan);
+    border-radius: 0 8px 8px 0;
+    margin-top: 18px;
+  }
+  .toast {
+    position: fixed;
+    z-index: 200;
+    bottom: 22px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    opacity: 0;
+    pointer-events: none;
+    background: #082B4E;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .2s ease;
+    box-shadow: 0 7px 30px rgba(0, 23, 44, 0.3);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+</style>
+
+<script>
+  const backdrop = document.getElementById('dialog-backdrop');
+  const title = document.getElementById('dialog-title');
+  const description = document.getElementById('dialog-description');
+  const form = document.getElementById('demo-form') as HTMLFormElement;
+  const input = document.getElementById('search-term') as HTMLInputElement;
+  const toast = document.getElementById('app-toast');
+  const closeBtn = document.getElementById('dialog-close');
+  let toastTimer: any;
+
+  function showDialog(kind: string | null) {
+    if (!backdrop || !title || !description || !form) return;
+    const isAccess = kind === 'acceso';
+    title.textContent = isAccess ? 'Acceso profesional' : 'Consultar matrícula';
+    description.textContent = isAccess 
+      ? 'Ingresá al sistema de servicios profesionales y autogestión de Cámara Primera.'
+      : 'Verificá en tiempo real si un profesional está matriculado y habilitado ante Cámara Primera.';
+    form.hidden = isAccess;
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (!isAccess && input) {
+      setTimeout(() => input.focus(), 50);
+    }
+  }
+
+  function closeDialog() {
+    if (!backdrop) return;
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showToast(message: string) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  document.querySelectorAll('[data-dialog]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = (btn as HTMLElement).dataset.dialog || null;
+      showDialog(target);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (event) => {
+      if (event.target === backdrop) closeDialog();
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDialog();
+  });
+
+  if (form && input) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!input.value.trim()) {
+        input.focus();
+        return;
+      }
+      closeDialog();
+      showToast(`Búsqueda: "${input.value.trim()}" (La conexión a base de datos de matrículas se activará en producción).`);
+      input.value = '';
+    });
+  }
+
+  document.querySelectorAll('[data-demo]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if ((link as HTMLElement).dataset.dialog) return;
+      event.preventDefault();
+      const demoName = (link as HTMLElement).dataset.demo;
+      showToast(`${demoName}: Módulo disponible próximamente.`);
+    });
+  });
+</script>

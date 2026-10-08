@@ -1,0 +1,360 @@
+/* ================================================================
+   AGENDA Y EVENTOS - CAROUSEL MODERNO Y DE VANGUARDIA
+   ================================================================ */
+
+.events-agenda-section {
+  padding: 56px 0 64px;
+  background: #ffffff;
+  position: relative;
+}
+
+.events-agenda-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+}
+
+/* Tipografía idéntica a "Te damos la bienvenida al Consejo" */
+.events-agenda-title {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.75rem, 2.9vw, 2.75rem);
+  font-weight: 650;
+  line-height: 1.18;
+  color: #0b192c;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* Flechas de navegación circulares en la parte inferior derecha */
+.events-agenda-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.events-nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  padding: 0;
+}
+
+.events-nav-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  color: #0052FF;
+}
+
+.events-nav-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.events-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: #f1f5f9;
+  box-shadow: none;
+}
+
+/* Contenedor del carrusel */
+.events-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 30px;
+  padding: 6px 0;
+}
+
+.events-carousel-track {
+  display: flex;
+  transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Card individual */
+.event-card {
+  flex-shrink: 0;
+  height: 460px;
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  user-select: none;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -8px rgba(15, 23, 42, 0.2), 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Imagen de fondo */
+.event-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.event-card:hover .event-card-img {
+  transform: scale(1.06);
+}
+
+/* Gradiente overlay para contraste perfecto de texto superior y luminosidad en el centro */
+.event-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 26, 45, 0.85) 0%,
+    rgba(11, 26, 45, 0.5) 28%,
+    rgba(11, 26, 45, 0.1) 55%,
+    rgba(11, 26, 45, 0.7) 100%
+  );
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.event-card:hover .event-card-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 26, 45, 0.9) 0%,
+    rgba(11, 26, 45, 0.55) 30%,
+    rgba(11, 26, 45, 0.15) 55%,
+    rgba(11, 26, 45, 0.78) 100%
+  );
+}
+
+/* Contenido dentro de la card */
+.event-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Pills / Tags */
+.event-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-tag-pill {
+  background: #DCE7F5;
+  color: #0b1a2d;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Título de la tarjeta */
+.event-card-title {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+/* Pie de la tarjeta (fecha y detalles) */
+.event-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f1f5f9;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.event-action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  color: #0052FF;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(0.95);
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.event-card:hover .event-action-badge {
+  transform: scale(1);
+  opacity: 1;
+  background: #0052FF;
+  color: #ffffff;
+}
+
+/* Pie de la sección de eventos */
+.events-agenda-footer {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+/* Paginador inferior con círculos / dots */
+.events-agenda-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 0;
+}
+
+.events-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: 1.5px solid #0b1a2d;
+}
+
+.events-dot--active {
+  background: #0b1a2d;
+  border-color: #0b1a2d;
+  transform: scale(1.15);
+}
+
+.events-dot:hover:not(.events-dot--active) {
+  border-color: #0052FF;
+  background: rgba(0, 82, 255, 0.15);
+}
+
+/* Fila de acciones inferior: Botón centrado y Flechas a la derecha */
+.events-agenda-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+/* Botón en azul eléctrico de la identidad institucional */
+.btn-agenda-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0052FF;
+  color: #ffffff;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 13px 32px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(0, 82, 255, 0.32);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-agenda-all:hover {
+  background: #0043d4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px -2px rgba(0, 82, 255, 0.48);
+  color: #ffffff;
+}
+
+.btn-agenda-all:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .events-agenda-footer-actions {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .events-agenda-nav {
+    position: static;
+    transform: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .events-agenda-title {
+    font-size: 26px;
+  }
+  .event-card {
+    height: 420px;
+  }
+  .event-card-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .events-agenda-section {
+    padding: 40px 0 48px;
+  }
+  .events-agenda-title {
+    font-size: 23px;
+  }
+  .events-nav-btn {
+    width: 42px;
+    height: 42px;
+  }
+  .event-card {
+    height: 390px;
+  }
+}

@@ -1,0 +1,144 @@
+/* ---------------- QUICK ACCESS ---------------- */
+.quick-section {
+  position: relative;
+  z-index: 10;
+  margin-top: -44px;
+  padding: 0;
+}
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.quick-item {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 10px 25px rgba(0, 36, 71, 0.10), 0 2px 6px rgba(0, 36, 71, 0.04);
+  transition: all .2s ease;
+}
+.quick-item:hover {
+  box-shadow: 0 16px 32px rgba(0, 36, 71, 0.15);
+  transform: translateY(-3px);
+}
+.quick-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: all .2s ease;
+}
+
+.quick-item[data-theme="cyan"] .quick-icon-wrap {
+  background: #E0F2FE;
+  color: #0284C7;
+}
+.quick-item[data-theme="cyan"]:hover {
+  border-color: #0284C7;
+}
+.quick-item[data-theme="cyan"]:hover .quick-icon-wrap {
+  background: #0284C7;
+  color: #ffffff;
+}
+.quick-item[data-theme="cyan"]:hover .quick-arrow {
+  color: #0284C7;
+}
+
+.quick-item[data-theme="emerald"] .quick-icon-wrap {
+  background: #ECFDF5;
+  color: #059669;
+}
+.quick-item[data-theme="emerald"]:hover {
+  border-color: #059669;
+}
+.quick-item[data-theme="emerald"]:hover .quick-icon-wrap {
+  background: #059669;
+  color: #ffffff;
+}
+.quick-item[data-theme="emerald"]:hover .quick-arrow {
+  color: #059669;
+}
+
+.quick-item[data-theme="amber"] .quick-icon-wrap {
+  background: #FEF3C7;
+  color: #D97706;
+}
+.quick-item[data-theme="amber"]:hover {
+  border-color: #D97706;
+}
+.quick-item[data-theme="amber"]:hover .quick-icon-wrap {
+  background: #D97706;
+  color: #ffffff;
+}
+.quick-item[data-theme="amber"]:hover .quick-arrow {
+  color: #D97706;
+}
+
+.quick-item[data-theme="rose"] .quick-icon-wrap {
+  background: #FFE4E6;
+  color: #E11D48;
+}
+.quick-item[data-theme="rose"]:hover {
+  border-color: #E11D48;
+}
+.quick-item[data-theme="rose"]:hover .quick-icon-wrap {
+  background: #E11D48;
+  color: #ffffff;
+}
+.quick-item[data-theme="rose"]:hover .quick-arrow {
+  color: #E11D48;
+}
+
+.quick-info {
+  flex: 1;
+  min-width: 0;
+}
+.quick-info strong {
+  display: block;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.quick-info span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+.quick-arrow {
+  color: #CBD5E1;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all .2s ease;
+}
+
+@media (max-width: 950px) {
+  .quick-section {
+    margin-top: -34px;
+  }
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .quick-item {
+    padding: 16px 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .quick-section {
+    margin-top: -24px;
+  }
+  .quick-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,874 @@
+/* ================================================================
+   HEADER VANGUARDISTA DE DOS NIVELES (GLASSMORPHISM TRANSPARENTE)
+   ================================================================ */
+@keyframes vanguardHeaderEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vanguard-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.vanguard-header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 24px 0 24px;
+  transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-header--scrolled .vanguard-header-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.vanguard-level-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: transparent;
+  padding-bottom: 8px;
+  max-height: 90px;
+  opacity: 1;
+  transform: translateY(0);
+  overflow: hidden;
+  transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-level-1--collapsed {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-16px);
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: none;
+}
+
+.vanguard-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+}
+.vanguard-brand:hover {
+  opacity: 0.92;
+}
+
+.vanguard-emblem {
+  height: 56px !important;
+  max-height: 56px !important;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.vanguard-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.vanguard-brand-serif {
+  font-family: var(--font-instrument), "Instrument Sans", "Instrument Sans Placeholder", sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  letter-spacing: -0.8px !important;
+  white-space: nowrap;
+}
+
+.vanguard-brand-caps {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: linear-gradient(90deg, #0d6efd 0%, #004b87 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent !important;
+  display: inline-block;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+/* Utilidades Nivel 1 */
+.vanguard-level-1-utilities {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Buscador compacto (Vidrio sutil sobre la aurora) */
+.vanguard-compact-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #002B5C;
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.50), 0 4px 16px rgba(10, 42, 94, 0.05);
+  transition: all 0.20s ease;
+}
+.vanguard-compact-search:hover {
+  background: rgba(255, 255, 255, 0.40);
+  border-color: rgba(0, 159, 227, 0.50);
+  box-shadow: 0 4px 18px rgba(0, 159, 227, 0.14);
+  transform: translateY(-1px);
+}
+.vanguard-compact-search svg {
+  color: #009FE3;
+  flex-shrink: 0;
+}
+.vanguard-search-placeholder {
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.vanguard-kbd {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  background: rgba(255, 255, 255, 0.50);
+  border: 1px solid rgba(203, 213, 225, 0.70);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+/* Botón Primario: Acceso Profesional */
+.vanguard-cta-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #0052FF;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8.5px 18px;
+  border-radius: 9999px;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: 0 2px 8px rgba(0, 82, 255, 0.30) !important;
+  cursor: pointer;
+  transition: all 0.20s ease;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  overflow: hidden;
+}
+.vanguard-cta-navy:hover {
+  background: #003ECC;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 82, 255, 0.42) !important;
+  transform: translateY(-1px);
+}
+
+/* Botón Secundario: Profesionales Habilitados (Outline / Ghost refinado) */
+.vanguard-cta-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  color: #334155;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 650;
+  padding: 7.5px 16px;
+  border-radius: 9999px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  cursor: pointer;
+  transition: all 0.20s ease;
+  white-space: nowrap;
+}
+.vanguard-cta-dark:hover {
+  background: #ffffff;
+  color: #002B5C;
+  border-color: #94A3B8;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+.vanguard-cta-dark--compact {
+  padding: 6px 13px;
+  font-size: 12px;
+}
+
+.vanguard-mobile-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  border-radius: 10px;
+  padding: 8px;
+  color: #002B5C;
+  cursor: pointer;
+}
+
+.vanguard-level-2-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 10px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-level-2-row--scrolled {
+  justify-content: space-between;
+  padding: 4px 0 6px 0;
+}
+
+/* Contenedor del botón casita con revelación fluida */
+.vanguard-scrolled-home-wrap {
+  display: flex;
+  align-items: center;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-10px);
+  pointer-events: none;
+  flex-shrink: 0;
+  transition: max-width 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-level-2-row--scrolled .vanguard-scrolled-home-wrap {
+  max-width: 48px;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  margin-right: 2px;
+}
+
+/* Casita en azul eléctrico (#0052FF) sin círculo */
+.vanguard-scrolled-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  color: #0052FF; /* Azul eléctrico vivo */
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: none;
+  transition: all 0.20s ease;
+}
+
+.vanguard-scrolled-home-btn:hover {
+  background: transparent;
+  border: none;
+  color: #003ECC;
+  filter: drop-shadow(0 2px 8px rgba(0, 82, 255, 0.45));
+  transform: scale(1.12);
+}
+
+.vanguard-scrolled-actions-wrap {
+  display: flex;
+  align-items: center;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(12px);
+  pointer-events: none;
+  flex-shrink: 0;
+  transition: max-width 0.40s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-level-2-row--scrolled .vanguard-scrolled-actions-wrap {
+  max-width: 200px;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.vanguard-level-2-pill {
+  position: relative;
+  margin: 0;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  transition: all 0.30s ease;
+}
+
+.vanguard-nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: nowrap;
+}
+
+.vanguard-nav-item {
+  position: relative;
+}
+
+.vanguard-nav-item--has-drop::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 10px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+.vanguard-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.vanguard-nav-link:hover,
+.vanguard-nav-link--active {
+  background: rgba(0, 0, 0, 0.06);
+  color: #000000;
+}
+
+.vanguard-chevron {
+  transition: transform 0.18s ease;
+}
+.vanguard-nav-link--active .vanguard-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── ESTADO SCROLLED (AL BAJAR): INTEGRADO SIN ISLA ── */
+.vanguard-header--scrolled .vanguard-header-container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.vanguard-scrolled-pill {
+  position: relative;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0;
+  padding: 4px 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: none !important;
+}
+
+.vanguard-scrolled-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+  height: 100%;
+}
+.vanguard-scrolled-emblem {
+  height: 38px;
+  max-height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+.vanguard-scrolled-title {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 750;
+  color: #002B5C;
+  white-space: nowrap;
+}
+
+.vanguard-scrolled-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  margin-left: 12px;
+}
+
+.vanguard-scrolled-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.vanguard-scrolled-search-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.20);
+  color: #0076C0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.vanguard-scrolled-search-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  border-color: #009FE3;
+  transform: scale(1.05);
+}
+
+.vanguard-cta-navy--compact {
+  padding: 6.5px 14px;
+  font-size: 12.5px;
+  line-height: 1;
+  border-radius: 9999px;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: 0 1px 4px rgba(0, 82, 255, 0.25) !important;
+}
+.vanguard-cta-navy--compact:hover {
+  box-shadow: 0 2px 8px rgba(0, 82, 255, 0.35) !important;
+}
+
+/* ── MEGA PANEL DESPLEGABLE (OPACO & ALTA LEGIBILIDAD) ── */
+.vanguard-mega-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: -20px;
+  width: 680px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 20px 50px rgba(10, 42, 94, 0.22);
+  padding: 24px;
+  z-index: 100;
+  animation: vanguardFadeIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-mega-panel--align-right {
+  left: auto !important;
+  right: -20px !important;
+}
+
+.vanguard-mega-panel--compact {
+  width: 530px !important;
+}
+
+.vanguard-mega-panel--no-featured {
+  width: 780px !important;
+}
+
+.vanguard-mega-panel--cols-2-nofeat {
+  width: 530px !important;
+}
+
+.vanguard-mega-panel--servicios {
+  width: 520px !important;
+}
+
+.vanguard-mega-panel--single-nofeat {
+  width: 320px !important;
+}
+
+.vanguard-mega-panel--single-nofeat .vanguard-mega-grid {
+  grid-template-columns: 1fr !important;
+}
+
+/* ── Desplegable: Obra Social (Tono naranja puro al 100% de saturación, suave y translúcido) ── */
+.vanguard-mega-panel--obra-social {
+  background:
+    radial-gradient(ellipse 65% 55% at 94% 10%, hsla(28, 100%, 50%, 0.18) 0%, hsla(24, 100%, 52%, 0.08) 45%, transparent 72%),
+    radial-gradient(ellipse 50% 45% at 6% 92%, hsla(32, 100%, 54%, 0.12) 0%, transparent 65%),
+    rgba(255, 255, 255, 0.98) !important;
+  border-color: hsla(28, 100%, 50%, 0.35) !important;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 20px 50px rgba(10, 42, 94, 0.16) !important;
+}
+
+.vanguard-mega-panel--obra-social .vanguard-mega-featured {
+  background: linear-gradient(135deg, hsla(30, 100%, 97%, 0.95) 0%, hsla(28, 100%, 93%, 0.90) 100%) !important;
+  border: 1px solid hsla(28, 100%, 50%, 0.30) !important;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.06);
+}
+
+.vanguard-mega-panel--obra-social .vanguard-featured-tag {
+  color: hsl(20, 100%, 36%) !important;
+  background: hsla(28, 100%, 50%, 0.16) !important;
+}
+
+.vanguard-mega-panel--obra-social .vanguard-featured-cta {
+  color: hsl(24, 100%, 42%) !important;
+  font-weight: 700;
+}
+
+.vanguard-mega-panel--obra-social .vanguard-mega-item:hover {
+  background: hsla(30, 100%, 96%, 0.9) !important;
+}
+
+/* ── Desplegable: Caja (Tono verde loro / lima puro al 100% de saturación, fresco y ligero) ── */
+.vanguard-mega-panel--caja {
+  background:
+    radial-gradient(ellipse 65% 55% at 94% 10%, hsla(88, 100%, 44%, 0.20) 0%, hsla(82, 100%, 46%, 0.09) 45%, transparent 72%),
+    radial-gradient(ellipse 50% 45% at 6% 92%, hsla(95, 100%, 48%, 0.13) 0%, transparent 65%),
+    rgba(255, 255, 255, 0.98) !important;
+  border-color: hsla(88, 100%, 42%, 0.35) !important;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 20px 50px rgba(10, 42, 94, 0.16) !important;
+}
+
+.vanguard-mega-panel--caja .vanguard-mega-featured {
+  background: linear-gradient(135deg, hsla(85, 100%, 97%, 0.95) 0%, hsla(88, 100%, 92%, 0.90) 100%) !important;
+  border: 1px solid hsla(88, 100%, 42%, 0.30) !important;
+  box-shadow: 0 4px 14px rgba(102, 204, 0, 0.06);
+}
+
+.vanguard-mega-panel--caja .vanguard-featured-tag {
+  color: hsl(92, 100%, 25%) !important;
+  background: hsla(88, 100%, 44%, 0.18) !important;
+}
+
+.vanguard-mega-panel--caja .vanguard-featured-cta {
+  color: hsl(92, 100%, 30%) !important;
+  font-weight: 700;
+}
+
+.vanguard-mega-panel--caja .vanguard-mega-item:hover {
+  background: hsla(85, 100%, 96%, 0.9) !important;
+}
+
+/* Columna con separador tipo línea y encabezado unificado */
+.vanguard-mega-col--framed {
+  background: transparent;
+  border: none;
+  border-left: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 0;
+  padding: 0 0 0 24px;
+  box-shadow: none;
+  gap: 12px;
+}
+
+.vanguard-framed-head {
+  padding: 0;
+  margin-bottom: 2px;
+}
+
+.vanguard-framed-subcols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.vanguard-framed-subcol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vanguard-mega-col--framed .vanguard-mega-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.vanguard-mega-col--framed .vanguard-mega-item:hover {
+  background: #F0F7FD;
+  box-shadow: none;
+}
+
+/* Puente invisible continuo hacia arriba para capturar el puntero sin fricción */
+.vanguard-mega-panel::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: -10px;
+  right: -10px;
+  height: 24px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+@keyframes vanguardFadeIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.vanguard-mega-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 220px;
+  gap: 20px;
+}
+
+.vanguard-mega-grid--cols-1 {
+  grid-template-columns: 1.2fr 220px !important;
+}
+
+.vanguard-mega-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vanguard-mega-heading {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0076C0;
+  margin-bottom: 2px;
+}
+
+.vanguard-mega-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+.vanguard-mega-item:hover {
+  background: #F0F7FD;
+}
+
+.vanguard-mega-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #002B5C;
+}
+
+.vanguard-mega-desc {
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.35;
+}
+
+/* Card Destacada en Panel */
+.vanguard-mega-featured {
+  background: linear-gradient(135deg, rgba(0, 43, 92, 0.05) 0%, rgba(0, 159, 227, 0.08) 100%);
+  border: 1px solid rgba(0, 159, 227, 0.25);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vanguard-featured-tag {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0076C0;
+  background: rgba(0, 159, 227, 0.15);
+  border-radius: 99px;
+  padding: 2px 8px;
+  width: fit-content;
+}
+
+.vanguard-featured-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #002B5C;
+  margin: 0;
+}
+
+.vanguard-featured-desc {
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.vanguard-featured-cta {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0076C0;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.vanguard-featured-cta:hover {
+  text-decoration: underline;
+}
+
+/* ── DRAWER MÓVIL VIDRIO ── */
+.vanguard-mobile-drawer {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  margin-top: 8px;
+  padding: 16px;
+  box-shadow: 0 12px 36px rgba(10, 42, 94, 0.16);
+  animation: vanguardFadeIn 0.20s ease-out;
+}
+.vanguard-mobile-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vanguard-mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+}
+.vanguard-mobile-link:hover {
+  background: rgba(0, 159, 227, 0.08);
+}
+.vanguard-chevron--open {
+  transform: rotate(180deg);
+}
+.vanguard-mobile-sub {
+  padding: 6px 12px 10px 16px;
+  border-left: 2px solid rgba(0, 159, 227, 0.3);
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vanguard-mobile-subheading {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0076C0;
+  margin-top: 4px;
+}
+.vanguard-mobile-subitem {
+  font-size: 13px;
+  color: #334155;
+  text-decoration: none;
+  padding: 4px 0;
+}
+.vanguard-mobile-actions {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(10, 42, 94, 0.08);
+}
+.vanguard-cta-navy--full {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── RESPONSIVE ADAPTATIONS ── */
+@media (max-width: 1180px) {
+  .vanguard-nav-link {
+    padding: 6.5px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .vanguard-brand-serif { font-size: 1.1rem !important; }
+  .vanguard-compact-search .vanguard-search-placeholder,
+  .vanguard-compact-search .vanguard-kbd {
+    display: none;
+  }
+  .vanguard-mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vanguard-mega-panel {
+    width: calc(100vw - 48px);
+    left: 0;
+  }
+  .vanguard-mega-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 840px) {
+  .vanguard-level-2-pill {
+    display: none;
+  }
+  .vanguard-level-2--open {
+    display: block;
+    width: 100%;
+    border-radius: 16px;
+  }
+  .vanguard-scrolled-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .vanguard-cta-navy span {
+    display: none;
+  }
+  .vanguard-cta-navy {
+    padding: 8px 12px;
+  }
+  .vanguard-brand-caps {
+    display: none;
+  }
+}

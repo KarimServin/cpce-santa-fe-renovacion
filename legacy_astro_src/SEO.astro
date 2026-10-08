@@ -1,0 +1,88 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: string;
+}
+
+const {
+  title,
+  description = "Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe - Cámara Primera. Sede Central Santa Fe y Delegaciones. Trámites, legalizaciones, capacitaciones y servicios para profesionales matriculados.",
+  image = "/og-image.jpg",
+  canonicalURL = Astro.url.href,
+  type = "website"
+} = Astro.props;
+
+const siteName = "CPCE Santa Fe - Cámara Primera";
+const fullTitle = title.includes("CPCE") ? title : `${title} | ${siteName}`;
+
+// Schema.org JSON-LD para la institución profesional (Cámara Primera)
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://cpcesfe1.org.ar/#institution",
+      "name": "Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe - Cámara Primera",
+      "alternateName": "CPCE Santa Fe Cámara 1",
+      "url": "https://cpcesfe1.org.ar",
+      "logo": "https://cpcesfe1.org.ar/favicon.svg",
+      "description": description,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "San Lorenzo 1849",
+        "addressLocality": "Santa Fe",
+        "addressRegion": "Santa Fe",
+        "postalCode": "S3000",
+        "addressCountry": "AR",
+        "name": "Sede Central Cámara Primera"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+54-342-459-3450",
+        "contactType": "customer service",
+        "areaServed": "Provincia de Santa Fe (Cámara Primera)",
+        "availableLanguage": "Spanish"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cpcesfe1.org.ar/#website",
+      "url": "https://cpcesfe1.org.ar",
+      "name": siteName,
+      "publisher": {
+        "@id": "https://cpcesfe1.org.ar/#institution"
+      },
+      "inLanguage": "es-AR"
+    }
+  ]
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="es_AR" />
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

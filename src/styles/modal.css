@@ -1,0 +1,103 @@
+/* ---------------- MODAL / DIALOG & TOAST ---------------- */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 23, 45, 0.8);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.dialog-backdrop.open {
+  display: flex;
+}
+.dialog {
+  width: min(460px, 100%);
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 20px 80px rgba(0, 24, 45, 0.35);
+}
+.dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+.dialog h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 21px;
+}
+.dialog p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.close {
+  border: 0;
+  background: #F0F5F9;
+  color: var(--navy);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  transition: background .18s;
+}
+.close:hover {
+  background: #E1ECF4;
+}
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  display: block;
+  margin: 17px 0 6px;
+}
+.text-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #B7C8D8;
+  border-radius: 9999px;
+  padding: 0 18px;
+  color: var(--ink);
+}
+.text-input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0, 159, 227, 0.2);
+}
+.demo-note {
+  font-size: 11px !important;
+  color: #556B82 !important;
+  background: #F0F5F9;
+  padding: 12px 14px;
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  margin-top: 18px;
+}
+.toast {
+  position: fixed;
+  z-index: 200;
+  bottom: 22px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  background: #082B4E;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all .2s ease;
+  box-shadow: 0 7px 30px rgba(0, 23, 44, 0.3);
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

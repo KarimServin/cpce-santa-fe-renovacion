@@ -1,0 +1,252 @@
+---
+// Services.astro (Servicios y Herramientas - Multi-color y Dinámico)
+const services = [
+  {
+    name: "Legalizaciones digitales",
+    description: "Gestión, consulta y verificación de firmas digitales para trabajos profesionales con código QR.",
+    theme: "emerald",
+    icon: `<path d="M7 3h7l5 5v13H7zM14 3v6h5M10 14h6m-6 3h6"/>`
+  },
+  {
+    name: "Matriculación profesional",
+    description: "Requisitos, formularios, costos y procedimiento para la incorporación de nuevos graduados.",
+    theme: "indigo",
+    icon: `<circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2z"/>`
+  },
+  {
+    name: "Firma digital",
+    description: "Emisión, renovación y soporte técnico de certificados criptográficos autorizados ante la ONTI.",
+    theme: "cyan",
+    icon: `<path d="m4 16 9-9 4 4-9 9H4zM14 6l2-2 4 4-2 2M4 20h16"/>`
+  },
+  {
+    name: "Padrón de matriculados",
+    description: "Búsqueda oficial y constatación de profesionales habilitados para el ejercicio en la jurisdicción.",
+    theme: "blue",
+    action: "matricula",
+    icon: `<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5m-5 3h3"/>`
+  },
+  {
+    name: "Honorarios sugeridos",
+    description: "Módulos arancelarios vigentes, pautas mínimas referenciales y calculadores técnicos.",
+    theme: "amber",
+    icon: `<path d="M4 5h16v14H4zM8 9h8M8 13h3m4 0h1M8 16h8"/>`
+  },
+  {
+    name: "Normativa profesional",
+    description: "Resoluciones técnicas FACPCE, circulares de Secretaría Técnica y jurisprudencia contable.",
+    theme: "rose",
+    icon: `<path d="M5 3h14v18H5zM8 7h8m-8 4h8m-8 4h5"/>`
+  },
+  {
+    name: "Caja de seguridad social",
+    description: "Régimen previsional, aportes obligatorios, cobertura de salud y subsidios para matriculados.",
+    theme: "teal",
+    icon: `<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/>`
+  },
+  {
+    name: "Biblioteca técnica",
+    description: "Doctrina especializada, modelos de notas, informes profesionales y publicaciones periódicas.",
+    theme: "orange",
+    icon: `<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>`
+  }
+];
+---
+
+<section class="section services-section" id="servicios" aria-labelledby="servicios-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-kicker">Herramientas y gestiones</span>
+        <h2 id="servicios-title">Servicios para el Profesional</h2>
+      </div>
+      <p class="section-subtitle">
+        Accedé de forma centralizada a las principales gestiones técnicas, arancelarias y de autogestión del Consejo.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      {services.map((item) => (
+        <a 
+          class="service-card" 
+          href="#" 
+          data-demo={item.name}
+          data-dialog={item.action || undefined}
+          data-theme={item.theme}
+        >
+          <div class="service-icon-box">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+          </div>
+          
+          <div class="service-body">
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
+          </div>
+
+          <div class="service-action">
+            <span>Acceder</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 60px 0;
+  }
+  .services-section {
+    background: #ffffff;
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .section-kicker {
+    display: block;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .section h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 0;
+  }
+  .section-subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 480px;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .service-card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: all .18s ease;
+  }
+  .service-card:hover {
+    border-color: #94A3B8;
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+  .service-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    flex: none;
+    transition: all .2s ease;
+  }
+
+  /* Temas de Color por Servicio */
+  .service-card[data-theme="emerald"] .service-icon-box { background: #ECFDF5; color: #059669; }
+  .service-card[data-theme="emerald"]:hover { border-color: #059669; }
+  .service-card[data-theme="emerald"]:hover .service-icon-box { background: #059669; color: #ffffff; }
+  .service-card[data-theme="emerald"] .service-action { color: #059669; }
+
+  .service-card[data-theme="indigo"] .service-icon-box { background: #EEF2FF; color: #4F46E5; }
+  .service-card[data-theme="indigo"]:hover { border-color: #4F46E5; }
+  .service-card[data-theme="indigo"]:hover .service-icon-box { background: #4F46E5; color: #ffffff; }
+  .service-card[data-theme="indigo"] .service-action { color: #4F46E5; }
+
+  .service-card[data-theme="cyan"] .service-icon-box { background: #E0F2FE; color: #0284C7; }
+  .service-card[data-theme="cyan"]:hover { border-color: #0284C7; }
+  .service-card[data-theme="cyan"]:hover .service-icon-box { background: #0284C7; color: #ffffff; }
+  .service-card[data-theme="cyan"] .service-action { color: #0284C7; }
+
+  .service-card[data-theme="blue"] .service-icon-box { background: #F0F7FD; color: #002B5C; }
+  .service-card[data-theme="blue"]:hover { border-color: #002B5C; }
+  .service-card[data-theme="blue"]:hover .service-icon-box { background: #002B5C; color: #ffffff; }
+  .service-card[data-theme="blue"] .service-action { color: #002B5C; }
+
+  .service-card[data-theme="amber"] .service-icon-box { background: #FEF3C7; color: #D97706; }
+  .service-card[data-theme="amber"]:hover { border-color: #D97706; }
+  .service-card[data-theme="amber"]:hover .service-icon-box { background: #D97706; color: #ffffff; }
+  .service-card[data-theme="amber"] .service-action { color: #D97706; }
+
+  .service-card[data-theme="rose"] .service-icon-box { background: #FFE4E6; color: #E11D48; }
+  .service-card[data-theme="rose"]:hover { border-color: #E11D48; }
+  .service-card[data-theme="rose"]:hover .service-icon-box { background: #E11D48; color: #ffffff; }
+  .service-card[data-theme="rose"] .service-action { color: #E11D48; }
+
+  .service-card[data-theme="teal"] .service-icon-box { background: #CCFBF1; color: #0D9488; }
+  .service-card[data-theme="teal"]:hover { border-color: #0D9488; }
+  .service-card[data-theme="teal"]:hover .service-icon-box { background: #0D9488; color: #ffffff; }
+  .service-card[data-theme="teal"] .service-action { color: #0D9488; }
+
+  .service-card[data-theme="orange"] .service-icon-box { background: #FFEDD5; color: #EA580C; }
+  .service-card[data-theme="orange"]:hover { border-color: #EA580C; }
+  .service-card[data-theme="orange"]:hover .service-icon-box { background: #EA580C; color: #ffffff; }
+  .service-card[data-theme="orange"] .service-action { color: #EA580C; }
+  .service-body {
+    flex: 1;
+    margin-bottom: 16px;
+  }
+  .service-body h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .service-body p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .service-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F1F5F9;
+    padding-top: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .arrow {
+    transition: transform .18s ease;
+  }
+  .service-card:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 950px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

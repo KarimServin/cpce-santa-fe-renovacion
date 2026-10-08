@@ -1,0 +1,169 @@
+---
+// Footer.astro (Pie de Página Institucional Formal)
+const currentYear = new Date().getFullYear();
+---
+<footer class="footer" id="contacto" role="contentinfo">
+  <div class="footer-border-top"></div>
+
+  <div class="wrap">
+    <div class="footer-grid">
+      <!-- Columna Institucional -->
+      <div class="footer-brand-col">
+        <div class="footer-seal" aria-hidden="true">CPCE</div>
+        <h3>Consejo Profesional de Ciencias Económicas</h3>
+        <p class="footer-jurisdiction">Provincia de Santa Fe · Cámara Primera</p>
+        <p class="footer-desc">
+          Entidad de derecho público no estatal creada por ley para el gobierno de la matrícula, el control deontológico y la jerarquización del ejercicio profesional en la jurisdicción centro-norte.
+        </p>
+      </div>
+
+      <!-- Sede Central -->
+      <div class="footer-col">
+        <h4>Sede Central Santa Fe</h4>
+        <p class="footer-address">San Lorenzo 1849 (S3000CGI), Ciudad de Santa Fe</p>
+        <p><strong>Teléfonos:</strong> (0342) 459-3450 / 459-3458</p>
+        <p><strong>Atención al público:</strong> Lun a Vie de 7:30 a 15:30 hs</p>
+        <p><strong>Correo electrónico:</strong> cpcesfe@cpcesfe1.org.ar</p>
+        <a class="footer-portal-link" href="https://cpcesfe1.org.ar/" target="_blank" rel="noreferrer">
+          Portal Institucional Cámara Primera ↗
+        </a>
+      </div>
+
+      <!-- Red Territorial -->
+      <div class="footer-col">
+        <h4>Red de Delegaciones</h4>
+        <ul class="footer-delegations-list">
+          <li><strong>Rafaela:</strong> Brown 247 · Tel: (03492) 422-544</li>
+          <li><strong>Reconquista:</strong> General López 865 · Tel: (03482) 420-721</li>
+          <li><strong>Esperanza:</strong> 25 de Mayo 1664 · Tel: (03496) 420-942</li>
+          <li><strong>San Jorge:</strong> Eva Perón 1218 · Tel: (03406) 441-218</li>
+        </ul>
+        <p class="footer-receptorias">
+          Receptorías: Vera, San Cristóbal, Tostado, Ceres y San Justo.
+        </p>
+      </div>
+    </div>
+
+    <!-- Barra Inferior de Derechos -->
+    <div class="footer-bottom">
+      <span>© {currentYear} Consejo Profesional de Ciencias Económicas de Santa Fe - Cámara Primera.</span>
+      <span>San Lorenzo 1849, Santa Fe, República Argentina.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #001733;
+    color: #94A3B8;
+    padding: 0 0 24px;
+    font-size: 13px;
+  }
+  .footer-border-top {
+    height: 3px;
+    background: linear-gradient(90deg, #009FE3 0%, #059669 33%, #D97706 66%, #E11D48 100%);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 36px;
+    padding: 44px 0 32px;
+  }
+  .footer-seal {
+    width: 38px;
+    height: 38px;
+    border: 2px solid #38BDF8;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
+  .footer h3 {
+    font-size: 16px;
+    color: #ffffff;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  .footer-jurisdiction {
+    font-size: 12px;
+    color: #38BDF8;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+  .footer-desc {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #94A3B8;
+    margin: 0;
+    max-width: 380px;
+  }
+  .footer h4 {
+    font-size: 14px;
+    color: #ffffff;
+    margin: 0 0 14px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 6px;
+  }
+  .footer-col p {
+    font-size: 12px;
+    margin: 0 0 8px;
+    line-height: 1.5;
+  }
+  .footer-col strong {
+    color: #E2E8F0;
+  }
+  .footer-address {
+    color: #E2E8F0;
+  }
+  .footer-portal-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #38BDF8;
+  }
+  .footer-portal-link:hover {
+    text-decoration: underline;
+  }
+  .footer-delegations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .footer-receptorias {
+    font-size: 11px;
+    color: #64748B;
+    margin: 0;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: #64748B;
+    font-size: 11px;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-bottom {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>

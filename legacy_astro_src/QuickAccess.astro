@@ -1,0 +1,199 @@
+---
+// QuickAccess.astro (Accesos Rápidos Institucionales - Dinámico y Multi-color)
+const items = [
+  {
+    title: "Gestiones online",
+    subtitle: "Trámites y servicios digitales",
+    href: "#servicios",
+    theme: "cyan",
+    icon: `<path d="M4 5h16v14H4zM8 9h8M8 13h5"/><path d="M7 2v3m10-3v3"/>`
+  },
+  {
+    title: "Ejercicio profesional",
+    subtitle: "Normativas, aranceles y modelos",
+    href: "#servicios",
+    theme: "emerald",
+    icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M8 7h8M8 11h8"/>`
+  },
+  {
+    title: "Capacitación",
+    subtitle: "Cursos, jornadas y formación",
+    href: "#capacitacion",
+    theme: "amber",
+    icon: `<path d="m2 8 10-5 10 5-10 5L2 8Z"/><path d="M6 10v6c3 3 9 3 12 0v-6M22 8v7"/>`
+  },
+  {
+    title: "Seguridad social",
+    subtitle: "Previsión y cobertura médica",
+    href: "#servicios",
+    theme: "rose",
+    icon: `<path d="M12 3v18M17 7.5c0-1.7-2.1-3-5-3s-5 1.3-5 3 2.1 3 5 4.5 5 2.3 5 4.5-2.1 3.5-5 3.5-5-1.4-5-3.5"/>`
+  }
+];
+---
+
+<section class="quick-section" aria-label="Accesos rápidos del Consejo">
+  <div class="wrap">
+    <div class="quick-grid">
+      {items.map((item) => (
+        <a class="quick-item" href={item.href} data-theme={item.theme}>
+          <div class="quick-icon-wrap">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+          </div>
+          <div class="quick-info">
+            <strong>{item.title}</strong>
+            <span>{item.subtitle}</span>
+          </div>
+          <span class="quick-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .quick-section {
+    position: relative;
+    z-index: 10;
+    margin-top: -44px;
+    padding: 0;
+  }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .quick-item {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 10px 25px rgba(0, 36, 71, 0.10), 0 2px 6px rgba(0, 36, 71, 0.04);
+    transition: all .2s ease;
+  }
+  .quick-item:hover {
+    box-shadow: 0 16px 32px rgba(0, 36, 71, 0.15);
+    transform: translateY(-3px);
+  }
+  .quick-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    flex: none;
+    transition: all .2s ease;
+  }
+
+  /* Variaciones de color por categoría */
+  .quick-item[data-theme="cyan"] .quick-icon-wrap {
+    background: #E0F2FE;
+    color: #0284C7;
+  }
+  .quick-item[data-theme="cyan"]:hover {
+    border-color: #0284C7;
+  }
+  .quick-item[data-theme="cyan"]:hover .quick-icon-wrap {
+    background: #0284C7;
+    color: #ffffff;
+  }
+  .quick-item[data-theme="cyan"]:hover .quick-arrow {
+    color: #0284C7;
+  }
+
+  .quick-item[data-theme="emerald"] .quick-icon-wrap {
+    background: #ECFDF5;
+    color: #059669;
+  }
+  .quick-item[data-theme="emerald"]:hover {
+    border-color: #059669;
+  }
+  .quick-item[data-theme="emerald"]:hover .quick-icon-wrap {
+    background: #059669;
+    color: #ffffff;
+  }
+  .quick-item[data-theme="emerald"]:hover .quick-arrow {
+    color: #059669;
+  }
+
+  .quick-item[data-theme="amber"] .quick-icon-wrap {
+    background: #FEF3C7;
+    color: #D97706;
+  }
+  .quick-item[data-theme="amber"]:hover {
+    border-color: #D97706;
+  }
+  .quick-item[data-theme="amber"]:hover .quick-icon-wrap {
+    background: #D97706;
+    color: #ffffff;
+  }
+  .quick-item[data-theme="amber"]:hover .quick-arrow {
+    color: #D97706;
+  }
+
+  .quick-item[data-theme="rose"] .quick-icon-wrap {
+    background: #FFE4E6;
+    color: #E11D48;
+  }
+  .quick-item[data-theme="rose"]:hover {
+    border-color: #E11D48;
+  }
+  .quick-item[data-theme="rose"]:hover .quick-icon-wrap {
+    background: #E11D48;
+    color: #ffffff;
+  }
+  .quick-item[data-theme="rose"]:hover .quick-arrow {
+    color: #E11D48;
+  }
+
+  .quick-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .quick-info strong {
+    display: block;
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .quick-info span {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+  .quick-arrow {
+    color: #CBD5E1;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all .2s ease;
+  }
+
+  @media (max-width: 950px) {
+    .quick-section {
+      margin-top: -34px;
+    }
+    .quick-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .quick-item {
+      padding: 16px 14px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .quick-section {
+      margin-top: -24px;
+    }
+    .quick-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+</style>
