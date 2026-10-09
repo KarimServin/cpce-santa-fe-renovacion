@@ -1,14 +1,22 @@
 /* ================================================================
    SEDE CENTRAL Y DELEGACIONES — ESTÉTICA HERO & EVENTOS
-   Paleta institucional unificada azulada/gris
+   Paleta institucional unificada con degradado sutil hacia arriba y abajo
    ================================================================ */
 
 .sedes-compact-section {
-  padding: 48px 0 56px;
-  background: #ffffff;
+  padding: 56px 0 64px;
+  /* Degradado suave hacia arriba y hacia abajo en azul institucional sutil */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(244, 248, 253, 0.75) 15%,
+    rgba(235, 244, 253, 0.9) 50%,
+    rgba(244, 248, 253, 0.75) 85%,
+    #ffffff 100%
+  );
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 .sedes-compact-section .wrap {
@@ -16,13 +24,29 @@
   z-index: 1;
 }
 
-/* ── MANCHAS DECORATIVAS DE FONDO (Azul eléctrico tirando a índigo) ── */
+/* ── MANCHAS DECORATIVAS DE FONDO (Azul sutil y etéreo con máscara vertical) ── */
 .sedes-glow-container {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.85) 15%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.85) 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.85) 15%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.85) 85%,
+    transparent 100%
+  );
 }
 
 .sedes-glow-blob {
@@ -32,68 +56,66 @@
   will-change: transform;
 }
 
-/* Mancha 1: Superior derecha (detrás de mapa y cabecera) */
+/* Mancha 1: Superior derecha (halo de azul institucional sutil) */
 .sedes-glow-blob--1 {
   width: clamp(380px, 46vw, 620px);
   height: clamp(320px, 40vw, 520px);
-  top: -120px;
+  top: -100px;
   right: -80px;
   background: radial-gradient(
     circle at 45% 45%,
-    rgba(61, 90, 254, 0.32) 0%,
-    rgba(79, 70, 229, 0.22) 42%,
-    rgba(37, 99, 235, 0.10) 65%,
+    rgba(0, 118, 192, 0.11) 0%,
+    rgba(0, 159, 227, 0.07) 38%,
+    rgba(56, 189, 248, 0.02) 65%,
     transparent 76%
   );
-  filter: blur(65px);
+  filter: blur(75px);
 }
 
-/* Mancha 2: Inferior izquierda (detrás del listado de localidades) */
+/* Mancha 2: Inferior izquierda (halo suave en azul cielo) */
 .sedes-glow-blob--2 {
   width: clamp(340px, 40vw, 520px);
   height: clamp(300px, 36vw, 460px);
-  bottom: -100px;
+  bottom: -90px;
   left: -80px;
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(48, 79, 254, 0.28) 0%,
-    rgba(67, 56, 202, 0.20) 40%,
-    rgba(99, 102, 241, 0.08) 68%,
+    rgba(0, 82, 255, 0.09) 0%,
+    rgba(0, 118, 192, 0.06) 40%,
+    rgba(14, 165, 233, 0.02) 68%,
     transparent 78%
   );
-  filter: blur(60px);
+  filter: blur(70px);
 }
 
 /* Mancha 3: Zona superior central/izquierda (halo suave tras título) */
 .sedes-glow-blob--3 {
   width: clamp(280px, 32vw, 440px);
   height: clamp(220px, 26vw, 340px);
-  top: -30px;
+  top: -20px;
   left: 20%;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(79, 70, 229, 0.24) 0%,
-    rgba(37, 99, 235, 0.16) 45%,
-    rgba(99, 102, 241, 0.06) 65%,
+    rgba(0, 159, 227, 0.08) 0%,
+    rgba(0, 118, 192, 0.04) 45%,
     transparent 75%
   );
-  filter: blur(55px);
+  filter: blur(65px);
 }
 
-/* Mancha 4: Zona inferior central (profundidad detrás del card) */
+/* Mancha 4: Zona inferior central (profundidad suave detrás del card) */
 .sedes-glow-blob--4 {
   width: clamp(320px, 36vw, 480px);
   height: clamp(240px, 28vw, 360px);
-  bottom: -40px;
+  bottom: -30px;
   right: 25%;
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(55, 48, 163, 0.22) 0%,
-    rgba(61, 90, 254, 0.18) 42%,
-    rgba(79, 70, 229, 0.08) 65%,
+    rgba(0, 118, 192, 0.07) 0%,
+    rgba(56, 189, 248, 0.04) 42%,
     transparent 75%
   );
-  filter: blur(60px);
+  filter: blur(70px);
 }
 
 @media (prefers-reduced-motion: no-preference) {
