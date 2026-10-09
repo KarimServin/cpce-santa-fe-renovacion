@@ -13,15 +13,6 @@ export default function Footer() {
     }
   };
 
-  const handleScrollToSection = (id: string) => {
-    if (typeof document !== 'undefined') {
-      const el = document.querySelector(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   return (
     <footer className="footer-renovated" id="contacto" role="contentinfo">
       {/* Línea superior con gradiente institucional exacto CPCE */}
@@ -212,65 +203,7 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* ── COLUMNA 3: RED TERRITORIAL (DELEGACIONES) ── */}
-          <div className="footer-col">
-            <span className="footer-col-eyebrow">COBERTURA TERRITORIAL</span>
-            <h3 className="footer-col-title">Delegaciones y Enlaces</h3>
-
-            <div className="footer-delegations-group">
-              <div className="footer-delegation-card">
-                <div className="footer-delegation-head">
-                  <span className="footer-delegation-name">Delegación Rafaela</span>
-                  <span className="footer-delegation-tag">Sede Cabecera</span>
-                </div>
-                <p className="footer-delegation-address">Cervantes 54</p>
-                <p className="footer-delegation-phone">
-                  <a href="tel:03492427663" className="footer-inline-link">Tel: (03492) 427-663</a>
-                </p>
-              </div>
-
-              <div className="footer-delegation-card">
-                <div className="footer-delegation-head">
-                  <span className="footer-delegation-name">Delegación Reconquista</span>
-                  <span className="footer-delegation-tag">Sede Cabecera</span>
-                </div>
-                <p className="footer-delegation-address">Chacabuco 871</p>
-                <p className="footer-delegation-phone">
-                  <a href="tel:03482429761" className="footer-inline-link">Tel: (03482) 429-761</a>
-                </p>
-              </div>
-
-              <div className="footer-delegation-card">
-                <div className="footer-delegation-head">
-                  <span className="footer-delegation-name">Delegación Sastre</span>
-                  <span className="footer-delegation-tag">Sede Cabecera</span>
-                </div>
-                <p className="footer-delegation-address">Emilio Ortiz 1835</p>
-                <p className="footer-delegation-phone">
-                  <a href="tel:03406480508" className="footer-inline-link">Tel: (03406) 480-508</a>
-                </p>
-              </div>
-            </div>
-
-            <div className="footer-receptorias-box">
-              <span className="footer-receptorias-title">Receptorías y Enlaces:</span>
-              <div className="footer-receptorias-chips">
-                {['Esperanza', 'San Jorge', 'Vera', 'San Cristóbal', 'Tostado', 'Ceres', 'San Justo'].map((city) => (
-                  <button
-                    key={city}
-                    type="button"
-                    onClick={() => handleScrollToSection('#delegaciones')}
-                    className="footer-receptoria-chip"
-                    title={`Ver detalles de ${city} en mapa de sedes`}
-                  >
-                    {city}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* ── COLUMNA 4: SERVICIOS Y ECOSISTEMA ── */}
+          {/* ── COLUMNA 3: SERVICIOS Y ECOSISTEMA ── */}
           <div className="footer-col">
             <span className="footer-col-eyebrow">SERVICIOS Y CONSULTAS</span>
             <h3 className="footer-col-title">Accesos Frecuentes</h3>
