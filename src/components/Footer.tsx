@@ -265,6 +265,18 @@ export default function Footer() {
 
               <li>
                 <a
+                  href="/calendar"
+                  className="footer-link-action"
+                >
+                  <svg className="footer-link-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <span>Calendario Institucional</span>
+                </a>
+              </li>
+
+              <li>
+                <a
                   href="https://www.facpce.org.ar/"
                   target="_blank"
                   rel="noreferrer"

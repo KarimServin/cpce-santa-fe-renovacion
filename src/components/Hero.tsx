@@ -359,7 +359,7 @@ export default function Hero() {
                   title: 'Eventos',
                   desc: 'Jornadas, encuentros y actividades académicas',
                   action: () => {
-                    const el = document.querySelector('#capacitacion');
+                    const el = document.querySelector('#agenda-eventos');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                     else showToast('Eventos del Consejo');
                   },

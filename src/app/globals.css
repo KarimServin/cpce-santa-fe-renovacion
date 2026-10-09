@@ -37,3 +37,6 @@
 
 /* 11. Modales, diálogos y notificaciones toast */
 @import '../styles/modal.css';
+
+/* 12. Calendario institucional */
+@import '../styles/calendar.css';

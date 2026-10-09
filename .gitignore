@@ -9,6 +9,7 @@ out/
 build/
 dist/
 .astro/
+.netlify/
 
 # TypeScript
 *.tsbuildinfo

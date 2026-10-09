@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface FeaturedNews {
+interface MainNews {
   tag: string;
   category: string;
   title: string;
@@ -11,50 +11,68 @@ interface FeaturedNews {
   dateFormatted: string;
 }
 
-interface NewsItem {
+interface GridNewsItem {
+  id: string;
   category: string;
-  date: string;
-  dateFormatted: string;
+  tag?: string;
   title: string;
-  description: string;
+  image: string;
+  alt: string;
   link: string;
+  dateFormatted: string;
 }
 
-const featuredNews: FeaturedNews = {
-  tag: "Secretaría Técnica",
-  category: "Normativa & Modelos",
-  title: "Publicación de modelos y guías de aplicación para informes profesionales",
-  description: "Accedé a los nuevos modelos sugeridos por la Secretaría Técnica de Cámara Primera, elaborados conforme a las resoluciones técnicas vigentes y buenas prácticas profesionales.",
-  image: "https://www.argentina.gob.ar/sites/default/files/santa_fe_puente.jpg",
-  alt: "Puente Colgante de Santa Fe sobre la laguna Setúbal",
+const mainNews: MainNews = {
+  tag: "Fondo FAL",
+  category: "Laboral & Seguridad Social",
+  title: "Conferencia sobre el Fondo de Asistencia Laboral: Inscribite a la reunión del 13/10",
+  description: "Exposición especial sobre la operatividad del fondo, esquemas de aportes, entidades habilitadas y su impacto en el ejercicio profesional.",
+  image: "https://images.unsplash.com/photo-1544531585-9847b68c8c86?w=900&auto=format&fit=crop&q=80",
+  alt: "Conferencia sobre el Fondo de Asistencia Laboral",
   link: "https://cpcesfe1.org.ar/noticias/",
-  dateFormatted: "26 de Septiembre, 2026",
+  dateFormatted: "13 Oct 2026",
 };
 
-const recentNews: NewsItem[] = [
+const secondaryNews: GridNewsItem[] = [
   {
-    category: "Institucional",
-    date: "2026-09-24",
-    dateFormatted: "24 Sep 2026",
-    title: "Reunión de Consejo Directivo y agenda de trabajo con delegaciones",
-    description: "Se abordaron los principales proyectos de modernización administrativa y el plan de obras para las sedes del interior.",
-    link: "https://cpcesfe1.org.ar/noticias/",
-  },
-  {
+    id: "ciclo-abc",
     category: "Capacitación",
-    date: "2026-09-20",
-    dateFormatted: "20 Sep 2026",
-    title: "Próximas jornadas tributarias provinciales: apertura de inscripciones",
-    description: "Especialistas analizarán el impacto de las recientes modificaciones normativas y jurisprudencia provincial.",
+    tag: "Ciclo ABC",
+    title: "Séptima edición del Ciclo ABC: ya te podés inscribir en la séptima reunión",
+    image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop&q=80",
+    alt: "Séptima edición del Ciclo ABC",
     link: "https://cpcesfe1.org.ar/noticias/",
+    dateFormatted: "08 Oct 2026",
   },
   {
-    category: "Comunidad",
-    date: "2026-09-15",
-    dateFormatted: "15 Sep 2026",
-    title: "Acto de colación y entrega de diplomas a nuevos profesionales matriculados",
-    description: "Una nueva cohorte de graduados en ciencias económicas se incorporó formalmente a la matrícula de Cámara Primera.",
+    id: "auxiliar-justicia",
+    category: "Poder Judicial",
+    tag: "Auxiliares 2027",
+    title: "Ya se encuentra abierta la inscripción para actuar como Auxiliar de Justicia 2027",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=80",
+    alt: "Inscripción Auxiliares de Justicia 2027",
     link: "https://cpcesfe1.org.ar/noticias/",
+    dateFormatted: "05 Oct 2026",
+  },
+  {
+    id: "premio-belgrano",
+    category: "Institucional",
+    tag: "Premio Belgrano",
+    title: "Lanzamos el Premio Dr. Manuel Belgrano 2026: ¡podés presentar tu trabajo hasta el 30/10!",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80",
+    alt: "Premio Dr. Manuel Belgrano 2026",
+    link: "https://cpcesfe1.org.ar/noticias/",
+    dateFormatted: "02 Oct 2026",
+  },
+  {
+    id: "ganancias-arca",
+    category: "Tributario",
+    tag: "ARCA",
+    title: "Ganancias 2025: nueva prórroga para la presentación de la Declaración Jurada",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80",
+    alt: "ARCA - Prórroga Ganancias 2025",
+    link: "https://cpcesfe1.org.ar/noticias/",
+    dateFormatted: "29 Sep 2026",
   },
 ];
 
@@ -62,7 +80,7 @@ export default function News() {
   return (
     <section className="news-compact-section" id="novedades" aria-labelledby="novedades-title">
       <div className="wrap">
-        {/* Cabecera con estética idéntica a Hero, Eventos y Sedes */}
+        {/* Cabecera institucional */}
         <div className="news-header-wrap">
           <div className="news-header-text">
             <span className="news-eyebrow">
@@ -86,102 +104,101 @@ export default function News() {
           </a>
         </div>
 
-        {/* Layout de 2 columnas: Noticia Destacada + Lista de Novedades Recientes */}
-        <div className="news-unified-layout">
-          {/* Noticia Principal Destacada */}
-          <article className="news-featured-card">
-            <div className="news-featured-media">
-              <img
-                src={featuredNews.image}
-                alt={featuredNews.alt}
-                loading="lazy"
-                width={640}
-                height={340}
-                className="news-featured-img"
-              />
-              <div className="news-featured-floating-tag">
-                <span className="news-pulse-dot" />
-                <span>{featuredNews.tag}</span>
+        {/* Layout estilo Bento / Grilla Editorial: 1 Grande Izquierda + Grilla 2x2 Derecha */}
+        <div className="news-bento-layout">
+          {/* Tarjeta Principal Izquierda */}
+          <article className="news-main-featured-card">
+            <a
+              href={mainNews.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="news-main-card-link"
+              aria-label={mainNews.title}
+            >
+              <div className="news-main-img-wrap">
+                <img
+                  src={mainNews.image}
+                  alt={mainNews.alt}
+                  loading="lazy"
+                  width={720}
+                  height={520}
+                  className="news-main-img"
+                />
+                <div className="news-main-floating-tag">
+                  <span className="news-pulse-dot" />
+                  <span>{mainNews.tag}</span>
+                </div>
               </div>
-            </div>
 
-            <div className="news-featured-body">
-              <div className="news-meta-row">
-                <span className="news-tag-pill news-tag-pill--primary">
-                  {featuredNews.category}
-                </span>
-                <time className="news-meta-date">{featuredNews.dateFormatted}</time>
+              <div className="news-main-white-box">
+                <div className="news-card-meta-row">
+                  <span className="news-tag-pill news-tag-pill--primary">
+                    {mainNews.category}
+                  </span>
+                  <time className="news-meta-date">{mainNews.dateFormatted}</time>
+                </div>
+
+                <h3 className="news-main-headline">
+                  {mainNews.title}
+                </h3>
+
+                <p className="news-main-desc">
+                  {mainNews.description}
+                </p>
+
+                <div className="news-main-action-row">
+                  <span className="news-action-text">
+                    Leer noticia completa
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </span>
+                </div>
               </div>
-
-              <h3 className="news-featured-title">
-                <a href={featuredNews.link} target="_blank" rel="noopener noreferrer">
-                  {featuredNews.title}
-                </a>
-              </h3>
-
-              <p className="news-featured-desc">{featuredNews.description}</p>
-
-              <div className="news-featured-footer">
-                <a
-                  className="news-read-more-btn"
-                  href={featuredNews.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Leer noticia completa
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+            </a>
           </article>
 
-          {/* Columna de Noticias Secundarias en tarjetas individuales */}
-          <div className="news-recent-column">
-            <div className="news-column-title-bar">
-              <span className="news-column-heading">MÁS NOVEDADES</span>
-              <span className="news-column-count">{recentNews.length} recientes</span>
-            </div>
-
-            <div className="news-recent-cards-list">
-              {recentNews.map((news, index) => (
-                <article key={index} className="news-item-card">
-                  <div className="news-item-top">
-                    <span className="news-tag-pill">
+          {/* Grilla 2x2 Derecha */}
+          <div className="news-grid-right" role="region" aria-label="Novedades destacadas">
+            {secondaryNews.map((news) => (
+              <article key={news.id} className="news-grid-card">
+                <a
+                  href={news.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="news-grid-card-link"
+                  aria-label={news.title}
+                >
+                  <div className="news-grid-img-wrap">
+                    <img
+                      src={news.image}
+                      alt={news.alt}
+                      loading="lazy"
+                      width={380}
+                      height={200}
+                      className="news-grid-img"
+                    />
+                    <span className="news-grid-floating-tag">
                       {news.category}
                     </span>
-                    <time dateTime={news.date} className="news-item-date">
-                      {news.dateFormatted}
-                    </time>
                   </div>
 
-                  <h4 className="news-item-title">
-                    <a href={news.link} target="_blank" rel="noopener noreferrer">
+                  <div className="news-grid-white-box">
+                    <h4 className="news-grid-headline">
                       {news.title}
-                    </a>
-                  </h4>
+                    </h4>
 
-                  <p className="news-item-desc">{news.description}</p>
-
-                  <div className="news-item-bottom">
-                    <a
-                      href={news.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="news-item-link"
-                    >
-                      Leer más
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
-                      </svg>
-                    </a>
+                    <div className="news-grid-meta-footer">
+                      <time className="news-grid-date">{news.dateFormatted}</time>
+                      <span className="news-grid-more-link">
+                        Leer más ↗
+                      </span>
+                    </div>
                   </div>
-                </article>
-              ))}
-            </div>
+                </a>
+              </article>
+            ))}
           </div>
         </div>
       </div>
