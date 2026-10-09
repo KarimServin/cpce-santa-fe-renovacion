@@ -3,65 +3,144 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useModal } from '../context/ModalContext';
 
-interface EventItem {
+export interface EventItem {
   id: string;
+  category: string;
   tags: string[];
   title: string;
   date: string;
+  day: string;
+  month: string;
+  time: string;
   location: string;
+  modality: string;
+  status: string;
+  speaker: string;
   image: string;
+  description: string;
+  registrationUrl: string;
 }
 
 const EVENTS_DATA: EventItem[] = [
   {
     id: 'evt-1',
+    category: 'Jornadas',
     tags: ['Tributaria', 'Jornadas'],
     title: 'Jornadas Tributarias Provinciales 2026',
     date: '24 y 25 de Octubre',
+    day: '24-25',
+    month: 'OCT',
+    time: '09:00 a 18:00 hs',
     location: 'Auditorio Sede Central & Streaming',
+    modality: 'Híbrida · Presencial y Online',
+    status: 'Inscripción Abierta',
+    speaker: 'Comisión de Estudios Tributarios CPCE',
     image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1000&auto=format&fit=crop',
+    description:
+      'Análisis integral de reformas fiscales provinciales, jurisprudencia reciente y criterios de liquidación con especialistas de primer nivel.',
+    registrationUrl: 'https://cpcesfe1.org.ar/capacitacion/',
   },
   {
     id: 'evt-2',
+    category: 'Congresos',
     tags: ['Congresos', 'Actualización'],
     title: 'Congreso de Ciencias Económicas',
     date: '12 de Noviembre',
+    day: '12',
+    month: 'NOV',
+    time: '08:30 a 19:30 hs',
     location: 'Santa Fe Capital',
+    modality: 'Presencial',
+    status: 'Inscripción Abierta',
+    speaker: 'Expositores Nacionales e Internacionales',
     image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1000&auto=format&fit=crop',
+    description:
+      'El mayor encuentro profesional de la región. Conferencias magistrales, comisiones de estudio y debate sobre el futuro y transformación del ejercicio profesional.',
+    registrationUrl: 'https://cpcesfe1.org.ar/capacitacion/',
   },
   {
     id: 'evt-3',
+    category: 'Comunidad',
     tags: ['Comunidad CPCE', 'Networking'],
     title: 'Encuentro Anual de Jóvenes Graduados',
     date: '28 de Noviembre',
+    day: '28',
+    month: 'NOV',
+    time: '17:00 a 22:00 hs',
     location: 'Espacio Social y Deportivo',
+    modality: 'Presencial',
+    status: 'Cupos Limitados',
+    speaker: 'Comisión de Jóvenes Graduados',
     image: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=1000&auto=format&fit=crop',
+    description:
+      'Jornada de integración profesional, talleres de inserción laboral independiente, networking entre pares y cóctel de fin de año.',
+    registrationUrl: 'https://cpcesfe1.org.ar/capacitacion/',
   },
   {
     id: 'evt-4',
+    category: 'Innovación',
     tags: ['Innovación', 'Finanzas Tech'],
     title: 'Seminario de IA aplicada a Finanzas',
     date: '04 de Diciembre',
+    day: '04',
+    month: 'DIC',
+    time: '18:00 a 20:30 hs',
     location: 'Modalidad Streaming en Vivo',
+    modality: 'Streaming en Vivo',
+    status: 'Inscripción Abierta',
+    speaker: 'Especialistas en Fintech y Analítica de Datos',
     image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop',
+    description:
+      'Herramientas prácticas de Inteligencia Artificial para análisis financiero predictivo, automatización contable y toma de decisiones estratégicas.',
+    registrationUrl: 'https://cpcesfe1.org.ar/capacitacion/',
   },
   {
     id: 'evt-5',
+    category: 'Práctica Profesional',
     tags: ['Act. Judicial', 'Peritajes'],
     title: 'Taller Práctico de Actuación Judicial',
     date: '10 de Diciembre',
+    day: '10',
+    month: 'DIC',
+    time: '16:00 a 20:00 hs',
     location: 'Sala de Conferencias CPCE',
+    modality: 'Presencial',
+    status: 'Inscripción Abierta',
+    speaker: 'Comisión de Actuación Judicial',
     image: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=1000&auto=format&fit=crop',
+    description:
+      'Entrenamiento práctico para peritos judiciales: confección de informes periciales, contestación de impugnaciones y regulación de honorarios.',
+    registrationUrl: 'https://cpcesfe1.org.ar/capacitacion/',
   },
+];
+
+const CATEGORIES = [
+  'Todos los eventos',
+  'Congresos',
+  'Jornadas',
+  'Innovación',
+  'Comunidad',
 ];
 
 export default function EventsAgenda() {
   const { showToast } = useModal();
+  const [selectedCategory, setSelectedCategory] = useState('Todos los eventos');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [activeModalEvent, setActiveModalEvent] = useState<EventItem | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+
+  // Filtrado reactivo por categoría
+  const filteredEvents = React.useMemo(() => {
+    if (selectedCategory === 'Todos los eventos') return EVENTS_DATA;
+    return EVENTS_DATA.filter(
+      (evt) =>
+        evt.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
+        evt.tags.some((tag) => tag.toLowerCase().includes(selectedCategory.toLowerCase()))
+    );
+  }, [selectedCategory]);
 
   // Ajustar cantidad de tarjetas visibles según tamaño de pantalla
   useEffect(() => {
@@ -81,14 +160,20 @@ export default function EventsAgenda() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const maxIndex = Math.max(0, EVENTS_DATA.length - visibleCards);
+  const maxIndex = Math.max(0, filteredEvents.length - visibleCards);
 
-  // Asegurar que currentIndex no supere maxIndex al cambiar resolución
+  // Asegurar que currentIndex no supere maxIndex al cambiar resolución o filtro
   useEffect(() => {
     if (currentIndex > maxIndex) {
       setCurrentIndex(maxIndex);
     }
   }, [maxIndex, currentIndex]);
+
+  // Manejo de cambio de categoría
+  const handleCategorySelect = (cat: string) => {
+    setSelectedCategory(cat);
+    setCurrentIndex(0);
+  };
 
   const handlePrev = () => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
@@ -123,17 +208,81 @@ export default function EventsAgenda() {
     }
   };
 
-  // Cálculo de gap y ancho de card
-  const gap = visibleCards === 1 ? 16 : visibleCards === 2 ? 18 : 24;
+  // Apertura de modal con detalles del evento
+  const openEventDetails = (event: EventItem, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setActiveModalEvent(event);
+  };
+
+  const closeEventModal = () => {
+    setActiveModalEvent(null);
+  };
+
+  // Manejo de teclado para modal (Escape)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && activeModalEvent) {
+        closeEventModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModalEvent]);
+
+  // Cálculo de gap dinámico
+  const gap = visibleCards === 1 ? 16 : visibleCards === 2 ? 20 : 24;
 
   return (
-    <section className="events-agenda-section" id="agenda-eventos" aria-labelledby="agenda-eventos-title">
+    <section
+      className="events-agenda-section"
+      id="agenda-eventos"
+      aria-labelledby="agenda-eventos-title"
+    >
+      {/* Halo de luz aurora decorativo que conecta con Hero y Chambers */}
+      <div className="events-glow-container" aria-hidden="true">
+        <div className="events-glow-blob events-glow-blob--1" />
+        <div className="events-glow-blob events-glow-blob--2" />
+        <div className="events-glow-blob events-glow-blob--3" />
+        <div className="events-glow-blob events-glow-blob--4" />
+      </div>
+
       <div className="wrap">
-        {/* Cabecera con título limpio y proporcionado */}
-        <div className="events-agenda-head">
-          <h2 id="agenda-eventos-title" className="events-agenda-title">
-            Agenda de Eventos
-          </h2>
+        {/* Cabecera integrada al estilo institucional de Hero, Chambers y Novedades */}
+        <div className="events-header-wrap">
+          <div className="events-header-text">
+            <span className="events-eyebrow">
+              AGENDA INSTITUCIONAL · CAPACITACIÓN Y DESARROLLO
+            </span>
+            <h2 id="agenda-eventos-title" className="events-agenda-title">
+              Agenda de Eventos
+            </h2>
+            <p className="events-agenda-subtitle">
+              Congresos, jornadas tributarias, seminarios y actividades de actualización organizadas por Cámara Primera.
+            </p>
+          </div>
+
+          {/* Selector de categorías temáticas interactivo (con estilo Glassmorphic idéntico a selector de perfiles) */}
+          <div
+            className="events-category-filters"
+            role="tablist"
+            aria-label="Filtrar eventos por categoría"
+          >
+            {CATEGORIES.map((cat) => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`events-category-pill ${isActive ? 'events-category-pill--active' : ''}`}
+                  onClick={() => handleCategorySelect(cat)}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Viewport del Carrusel */}
@@ -151,23 +300,25 @@ export default function EventsAgenda() {
               transform: `translateX(calc(-${currentIndex} * ((100% - ${(visibleCards - 1) * gap}px) / ${visibleCards} + ${gap}px)))`,
             }}
           >
-            {EVENTS_DATA.map((event) => (
-              <div
+            {filteredEvents.map((event) => (
+              <article
                 key={event.id}
                 className="event-card"
                 style={{
                   width: `calc((100% - ${(visibleCards - 1) * gap}px) / ${visibleCards})`,
                 }}
-                onClick={() => showToast(`Inscripción a: ${event.title}`)}
+                onClick={() => openEventDetails(event)}
                 role="button"
                 tabIndex={0}
+                aria-label={`Ver detalles e inscribirse a: ${event.title}`}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
-                    showToast(`Inscripción a: ${event.title}`);
+                    e.preventDefault();
+                    openEventDetails(event);
                   }
                 }}
               >
-                {/* Imagen con fallback */}
+                {/* Imagen de fondo con zoom fluido */}
                 <img
                   className="event-card-img"
                   src={event.image}
@@ -175,29 +326,69 @@ export default function EventsAgenda() {
                   loading="lazy"
                 />
 
-                {/* Capa de contraste y gradiente */}
+                {/* Capas de gradientes para contraste y luminosidad equilibrada */}
                 <div className="event-card-overlay" />
+                <div className="event-card-shimmer" />
 
-                {/* Contenido de la tarjeta */}
+                {/* Contenido dentro de la tarjeta */}
                 <div className="event-card-content">
-                  <div className="event-card-top">
-                    {/* Pills / Tags temáticas */}
+                  {/* Fila superior: Tags con glassmorphism y Badge de calendario */}
+                  <div className="event-card-header-row">
                     <div className="event-tags-list">
                       {event.tags.map((tag, idx) => (
-                        <span key={idx} className="event-tag-pill">
+                        <span
+                          key={idx}
+                          className={`event-tag-pill ${idx === 0 ? 'event-tag-pill--primary' : ''}`}
+                        >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    {/* Título en tipografía prominente */}
-                    <h3 className="event-card-title">{event.title}</h3>
+                    {/* Insignia de fecha calendario flotante en frosted glass */}
+                    <div className="event-date-badge" aria-label={`Fecha: ${event.date}`}>
+                      <span className="event-date-badge-day">{event.day}</span>
+                      <span className="event-date-badge-month">{event.month}</span>
+                    </div>
                   </div>
 
-                  {/* Pie con fecha y badge de acción interactivo */}
-                  <div className="event-card-bottom">
+                  {/* Cuerpo central: Estado con radar pulse, título y locación */}
+                  <div className="event-card-body">
+                    <div className="event-status-pill">
+                      <span className="event-status-dot" />
+                      <span>{event.status}</span>
+                    </div>
+
+                    <h3 className="event-card-title">{event.title}</h3>
+
+                    <div className="event-location-row">
+                      <svg
+                        className="event-loc-icon"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                      >
+                        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      <span className="event-loc-text">{event.location}</span>
+                    </div>
+                  </div>
+
+                  {/* Barra inferior: Fecha completa y Botón de acción con efecto hover */}
+                  <div className="event-card-bottom-bar">
                     <span className="event-meta-pill">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                      >
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                         <line x1="16" y1="2" x2="16" y2="6" />
                         <line x1="8" y1="2" x2="8" y2="6" />
@@ -205,22 +396,36 @@ export default function EventsAgenda() {
                       </svg>
                       {event.date}
                     </span>
-                    <span className="event-action-badge">
-                      Inscribirme
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+
+                    <button
+                      type="button"
+                      className="event-action-badge"
+                      onClick={(e) => openEventDetails(event, e)}
+                      aria-label={`Inscribirme a ${event.title}`}
+                    >
+                      <span>Inscribirme</span>
+                      <svg
+                        className="event-action-arrow"
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.6"
+                      >
                         <path d="M5 12h14M13 6l6 6-6 6" />
                       </svg>
-                    </span>
+                    </button>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
 
         {/* Pie de la sección de eventos */}
         <div className="events-agenda-footer">
-          {/* Paginador con puntos / dots inferiores */}
+          {/* Paginador con dots que se expanden a píldora activa */}
           <div className="events-agenda-dots" role="tablist" aria-label="Páginas de eventos">
             {Array.from({ length: maxIndex + 1 }).map((_, dotIdx) => (
               <button
@@ -235,7 +440,7 @@ export default function EventsAgenda() {
             ))}
           </div>
 
-          {/* Fila inferior: Botón centrado en azul eléctrico y flechas a la derecha */}
+          {/* Fila inferior: Botón centrado en azul y flechas de navegación */}
           <div className="events-agenda-footer-actions">
             <a
               href="https://cpcesfe1.org.ar/capacitacion/"
@@ -244,14 +449,23 @@ export default function EventsAgenda() {
               className="btn-agenda-all"
             >
               Ver toda la agenda
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
             </a>
 
-            {/* Flechas de navegación en la parte inferior derecha */}
-            <div className="events-agenda-nav" aria-label="Navegación de eventos">
+            {/* Flechas de navegación circulares */}
+            <div className="events-agenda-nav" aria-label="Navegación de carrusel">
               <button
                 type="button"
                 className="events-nav-btn events-nav-btn--prev"
@@ -259,7 +473,16 @@ export default function EventsAgenda() {
                 disabled={currentIndex === 0}
                 aria-label="Ver eventos anteriores"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M19 12H5" />
                   <path d="m12 19-7-7 7-7" />
                 </svg>
@@ -271,7 +494,16 @@ export default function EventsAgenda() {
                 disabled={currentIndex >= maxIndex}
                 aria-label="Ver próximos eventos"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
                 </svg>
@@ -280,6 +512,124 @@ export default function EventsAgenda() {
           </div>
         </div>
       </div>
+
+      {/* Modal interactivo de detalle e inscripción a evento */}
+      {activeModalEvent && (
+        <div
+          className="event-modal-backdrop"
+          onClick={closeEventModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="event-modal-title"
+        >
+          <div
+            className="event-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Cabecera con imagen y overlay */}
+            <div className="event-modal-header">
+              <img
+                src={activeModalEvent.image}
+                alt={activeModalEvent.title}
+                className="event-modal-header-img"
+              />
+              <div className="event-modal-header-overlay" />
+              <button
+                type="button"
+                className="event-modal-close-btn"
+                onClick={closeEventModal}
+                aria-label="Cerrar modal"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="event-modal-header-badges">
+                <span className="event-modal-category-badge">
+                  {activeModalEvent.category}
+                </span>
+                <span className="event-modal-status-badge">
+                  <span className="event-status-dot" />
+                  {activeModalEvent.status}
+                </span>
+              </div>
+            </div>
+
+            {/* Contenido del modal */}
+            <div className="event-modal-body">
+              <h3 id="event-modal-title" className="event-modal-title">
+                {activeModalEvent.title}
+              </h3>
+              <p className="event-modal-desc">
+                {activeModalEvent.description}
+              </p>
+
+              {/* Grilla de metadatos del evento */}
+              <div className="event-modal-grid">
+                <div className="event-modal-item">
+                  <span className="event-modal-item-label">FECHA Y HORARIO</span>
+                  <div className="event-modal-item-val">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0052FF" strokeWidth="2.2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>{activeModalEvent.date} · {activeModalEvent.time}</span>
+                  </div>
+                </div>
+
+                <div className="event-modal-item">
+                  <span className="event-modal-item-label">MODALIDAD Y SEDE</span>
+                  <div className="event-modal-item-val">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0052FF" strokeWidth="2.2">
+                      <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span>{activeModalEvent.location}</span>
+                  </div>
+                </div>
+
+                <div className="event-modal-item">
+                  <span className="event-modal-item-label">DISERTANTES / ORGANIZACIÓN</span>
+                  <div className="event-modal-item-val">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0052FF" strokeWidth="2.2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <span>{activeModalEvent.speaker}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botones de acción del modal */}
+              <div className="event-modal-actions">
+                <a
+                  href={activeModalEvent.registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="event-modal-btn-submit"
+                  onClick={() => {
+                    showToast(`Redirigiendo a inscripción: ${activeModalEvent.title}`);
+                  }}
+                >
+                  Inscribirme online en Portal CPCE ↗
+                </a>
+                <button
+                  type="button"
+                  className="event-modal-btn-secondary"
+                  onClick={() => {
+                    showToast(`Recordatorio guardado para: ${activeModalEvent.title}`);
+                    closeEventModal();
+                  }}
+                >
+                  Guardar recordatorio
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

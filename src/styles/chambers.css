@@ -1,22 +1,15 @@
 /* ================================================================
-   SEDE CENTRAL Y DELEGACIONES — ESTÉTICA HERO & EVENTOS
-   Paleta institucional unificada con degradado sutil hacia arriba y abajo
+   SEDE CENTRAL Y DELEGACIONES — ESTÉTICA Y FONDO EXACTO DEL HERO
+   Fondo blanco total (#ffffff) con manchas aurora azul concentradas a la izquierda
    ================================================================ */
 
 .sedes-compact-section {
-  padding: 56px 0 64px;
-  /* Degradado suave hacia arriba y hacia abajo en azul institucional sutil */
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(244, 248, 253, 0.75) 15%,
-    rgba(235, 244, 253, 0.9) 50%,
-    rgba(244, 248, 253, 0.75) 85%,
-    #ffffff 100%
-  );
+  padding: 56px 0 68px;
+  background: #ffffff;
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .sedes-compact-section .wrap {
@@ -24,29 +17,13 @@
   z-index: 1;
 }
 
-/* ── MANCHAS DECORATIVAS DE FONDO (Azul sutil y etéreo con máscara vertical) ── */
+/* ── MANCHAS AURORA EXACTAS DEL HERO ── */
 .sedes-glow-container {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.85) 15%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.85) 85%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.85) 15%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.85) 85%,
-    transparent 100%
-  );
 }
 
 .sedes-glow-blob {
@@ -56,118 +33,42 @@
   will-change: transform;
 }
 
-/* Mancha 1: Superior derecha (halo de azul institucional sutil) */
+/* Mancha superior izquierda: halo exacto del Hero tras el título y kicker */
 .sedes-glow-blob--1 {
-  width: clamp(380px, 46vw, 620px);
-  height: clamp(320px, 40vw, 520px);
-  top: -100px;
-  right: -80px;
-  background: radial-gradient(
-    circle at 45% 45%,
-    rgba(0, 118, 192, 0.11) 0%,
-    rgba(0, 159, 227, 0.07) 38%,
-    rgba(56, 189, 248, 0.02) 65%,
-    transparent 76%
-  );
-  filter: blur(75px);
+  width: 340px;
+  height: 260px;
+  top: -140px;
+  left: -90px;
+  background: radial-gradient(circle at 40% 40%, rgba(0, 82, 255, 0.35) 0%, rgba(14, 165, 233, 0.18) 35%, transparent 70%);
+  filter: blur(50px);
 }
 
-/* Mancha 2: Inferior izquierda (halo suave en azul cielo) */
+/* Mancha inferior izquierda: halo exacto del Hero detrás de las localidades */
 .sedes-glow-blob--2 {
-  width: clamp(340px, 40vw, 520px);
-  height: clamp(300px, 36vw, 460px);
-  bottom: -90px;
-  left: -80px;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(0, 82, 255, 0.09) 0%,
-    rgba(0, 118, 192, 0.06) 40%,
-    rgba(14, 165, 233, 0.02) 68%,
-    transparent 78%
-  );
-  filter: blur(70px);
+  display: block;
+  width: 380px;
+  height: 250px;
+  bottom: clamp(10px, 3.5vh, 40px);
+  left: clamp(10px, 5vw, 110px);
+  background: radial-gradient(ellipse at 45% 55%, rgba(0, 82, 255, 0.28) 0%, rgba(14, 165, 233, 0.16) 40%, transparent 72%);
+  filter: blur(52px);
 }
 
-/* Mancha 3: Zona superior central/izquierda (halo suave tras título) */
-.sedes-glow-blob--3 {
-  width: clamp(280px, 32vw, 440px);
-  height: clamp(220px, 26vw, 340px);
-  top: -20px;
-  left: 20%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 159, 227, 0.08) 0%,
-    rgba(0, 118, 192, 0.04) 45%,
-    transparent 75%
-  );
-  filter: blur(65px);
-}
-
-/* Mancha 4: Zona inferior central (profundidad suave detrás del card) */
+/* El sector del mapa permanece 100% blanco y limpio como en el Hero */
+.sedes-glow-blob--3,
 .sedes-glow-blob--4 {
-  width: clamp(320px, 36vw, 480px);
-  height: clamp(240px, 28vw, 360px);
-  bottom: -30px;
-  right: 25%;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(0, 118, 192, 0.07) 0%,
-    rgba(56, 189, 248, 0.04) 42%,
-    transparent 75%
-  );
-  filter: blur(70px);
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .sedes-glow-blob--1 {
-    animation: sedes-drift-1 28s ease-in-out infinite alternate;
+    animation: aurora-drift-top-left 42s ease-in-out infinite alternate;
   }
   .sedes-glow-blob--2 {
-    animation: sedes-drift-2 32s ease-in-out infinite alternate;
-  }
-  .sedes-glow-blob--3 {
-    animation: sedes-drift-3 24s ease-in-out infinite alternate;
-  }
-  .sedes-glow-blob--4 {
-    animation: sedes-drift-4 30s ease-in-out infinite alternate;
+    animation: aurora-drift-3 36s ease-in-out infinite alternate;
   }
 }
 
-@keyframes sedes-drift-1 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(-30px, 25px) scale(1.06);
-  }
-}
-
-@keyframes sedes-drift-2 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(25px, -20px) scale(1.05);
-  }
-}
-
-@keyframes sedes-drift-3 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(20px, 18px) scale(1.04);
-  }
-}
-
-@keyframes sedes-drift-4 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(-20px, -15px) scale(1.05);
-  }
-}
 
 /* ── 1. CABECERA INSTITUCIONAL (Tipografía sincronizada con Eventos y Hero) ── */
 .sedes-header-wrap {
