@@ -9,8 +9,8 @@ export default function Home() {
     <main id="inicio">
       <Hero />
       <EventsAgenda />
-      <Chambers />
       <News />
+      <Chambers />
     </main>
   );
 }

@@ -87,7 +87,7 @@
   font-family: var(--font-instrument), "Instrument Sans", "Instrument Sans Placeholder", sans-serif !important;
   font-size: 22px !important;
   font-weight: 700 !important;
-  color: #334155 !important;
+  color: #000000 !important;
   letter-spacing: -0.8px !important;
   white-space: nowrap;
 }
@@ -834,9 +834,7 @@
     display: none;
   }
   .vanguard-mobile-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none !important;
   }
   .vanguard-mega-panel {
     width: calc(100vw - 48px);
@@ -872,3 +870,821 @@
     display: none;
   }
 }
+
+/* ================================================================
+   NUEVO: HEADER ULTRA-FINO, BOTÓN HAMBURGUESA GLASSMORFO Y LOGO CENTRADO
+   ================================================================ */
+
+.vanguard-unified-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 0;
+  min-height: 54px;
+  position: relative;
+}
+
+.vanguard-header--scrolled .vanguard-unified-bar {
+  padding: 6px 0;
+  min-height: 48px;
+}
+
+/* LADO IZQUIERDO: HAMBURGUESA GLASS */
+.vanguard-bar-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-start;
+}
+
+/* CENTRO: LOGO INSTITUCIONAL */
+.vanguard-bar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  text-align: center;
+}
+
+.vanguard-bar-center .vanguard-brand {
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.vanguard-header--scrolled .vanguard-bar-center .vanguard-emblem {
+  height: 42px !important;
+  max-height: 42px !important;
+}
+
+/* LADO DERECHO: ACCIONES */
+.vanguard-bar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 10px;
+}
+
+/* BOTÓN HAMBURGUESA GLASSMORFO */
+.vanguard-glass-hamburger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 9999px;
+  padding: 8px 18px;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    0 4px 14px rgba(10, 42, 94, 0.08);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #002B5C;
+}
+
+.vanguard-glass-hamburger:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 82, 255, 0.4);
+  box-shadow:
+    0 6px 20px rgba(0, 82, 255, 0.18),
+    inset 0 1px 1px #ffffff;
+  transform: translateY(-1px);
+  color: #0052FF;
+}
+
+.vanguard-glass-hamburger--active {
+  background: #0052FF !important;
+  color: #ffffff !important;
+  border-color: #0052FF !important;
+  box-shadow: 0 4px 16px rgba(0, 82, 255, 0.35) !important;
+}
+
+.vanguard-hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+}
+
+.vanguard-h-line {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-h-line--1 {
+  width: 18px;
+}
+
+.vanguard-h-line--2 {
+  width: 14px;
+}
+
+.vanguard-h-line--3 {
+  width: 18px;
+}
+
+.vanguard-glass-hamburger--active .vanguard-h-line--1 {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.vanguard-glass-hamburger--active .vanguard-h-line--2 {
+  opacity: 0;
+  transform: translateX(-6px);
+}
+
+.vanguard-glass-hamburger--active .vanguard-h-line--3 {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.vanguard-hamburger-label {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ================================================================
+   CONTENEDOR DEL MEGAPANEL LATERAL MODERNO (FLYOUT HACIA LA DERECHA)
+   ================================================================ */
+
+.vertical-menu-backdrop {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+  animation: vanguardFadeIn 0.2s ease-out;
+}
+
+.vertical-menu-container {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 20px;
+  background: rgba(255, 255, 255, 0.985);
+  backdrop-filter: blur(32px) saturate(1.6);
+  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border-radius: 16px;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 18px 48px -8px rgba(15, 23, 42, 0.18),
+    0 4px 12px rgba(15, 23, 42, 0.06);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: verticalMenuSlideIn 0.20s cubic-bezier(0.16, 1, 0.3, 1);
+  width: auto;
+  min-width: 820px;
+  max-width: 1060px;
+}
+
+@keyframes verticalMenuSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.vertical-menu-close-fab {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(255, 255, 255, 0.9);
+  color: #64748b;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.15s ease;
+}
+
+.vertical-menu-close-fab:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  transform: scale(1.08);
+}
+
+/* CUERPO DEL MENÚ: COLUMNA IZQUIERDA + FLYOUT DERECHA SIN SCROLL */
+.vertical-menu-body {
+  display: flex;
+  min-height: auto;
+  max-height: none;
+}
+
+/* COLUMNA 1: LISTADO VERTICAL (SIN SCROLL) */
+.vertical-menu-categories {
+  width: 260px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid #f1f5f9;
+  padding: 12px 10px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vertical-category-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 9px;
+  color: #1e293b;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.vertical-category-item:hover {
+  background: #f8fafc;
+  color: #0052FF;
+}
+
+.vertical-category-item--active {
+  background: #eff6ff !important;
+  color: #0052FF !important;
+  font-weight: 750;
+}
+
+.vertical-category-item--home {
+  border-bottom: 1px dashed #e2e8f0;
+  margin-bottom: 2px;
+  padding-bottom: 6px;
+  border-radius: 8px;
+}
+
+.vertical-category-row--last {
+  border-top: 1px solid #f1f5f9;
+  margin-top: 6px;
+  padding-top: 6px;
+}
+
+.vertical-category-item--action {
+  color: #0052FF;
+  background: rgba(0, 82, 255, 0.05);
+  font-weight: 700;
+}
+
+.vertical-category-item--action:hover {
+  background: rgba(0, 82, 255, 0.12);
+  color: #003ecc;
+}
+
+.vertical-category-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vertical-category-icon {
+  display: flex;
+  align-items: center;
+  color: #0052FF;
+  flex-shrink: 0;
+}
+
+.vertical-category-arrow {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.vertical-category-item--active .vertical-category-arrow {
+  color: #0052FF;
+  transform: translateX(2px);
+}
+
+/* COLUMNA 2 (DESKTOP): FLYOUT MULTICOLUMNA ESTILIZADO SIN SCROLL */
+.vertical-menu-flyout {
+  flex: 1;
+  background: #fcfdfe;
+  padding: 16px 26px 18px 28px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-flyout-content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vertical-flyout-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vertical-flyout-main-title {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 750;
+  color: #002B5C;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.vertical-flyout-line {
+  height: 2.5px;
+  width: 32px;
+  background: #0052FF;
+  border-radius: 2px;
+}
+
+.vertical-flyout-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.vertical-flyout-grid--no-featured {
+  width: 100%;
+}
+
+/* Columnas y items del megamenu con excelente legibilidad y holgura */
+.vertical-menu-flyout .vanguard-mega-col {
+  gap: 5px;
+}
+
+.vertical-menu-flyout .vanguard-mega-heading {
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.vertical-menu-flyout .vanguard-mega-item {
+  padding: 6px 10px;
+  border-radius: 6px;
+  gap: 1.5px;
+}
+
+.vertical-menu-flyout .vanguard-mega-title {
+  font-size: 12.5px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.vertical-menu-flyout .vanguard-mega-desc {
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.vertical-menu-flyout .vanguard-framed-subcols {
+  gap: 10px;
+}
+
+.vertical-menu-flyout .vanguard-mega-col--framed {
+  padding-left: 14px;
+}
+
+.vertical-menu-flyout .vanguard-mega-featured {
+  padding: 12px;
+  border-radius: 10px;
+  gap: 4px;
+}
+
+.vertical-menu-flyout .vanguard-featured-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.vertical-menu-flyout .vanguard-featured-title {
+  font-size: 13px;
+}
+
+.vertical-menu-flyout .vanguard-featured-desc {
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.vertical-menu-flyout .vanguard-featured-cta {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.vertical-flyout-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* FOOTER DEL MENÚ */
+.vertical-menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 18px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.vertical-menu-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vertical-menu-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #0052FF;
+  color: #ffffff;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.vertical-menu-btn-primary:hover {
+  background: #003ecc;
+}
+
+.vertical-menu-footer-caption {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ── COMPORTAMIENTO MOBILE FIRST ── */
+@media (max-width: 1023px) {
+  .vanguard-bar-center .vanguard-brand-caps {
+    display: none;
+  }
+  .vanguard-bar-center .vanguard-brand-serif {
+    font-size: 1.05rem !important;
+  }
+  .vanguard-bar-center .vanguard-emblem {
+    height: 40px !important;
+  }
+
+  .vertical-menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+    border: none;
+    z-index: 10000;
+  }
+
+  .vertical-menu-body {
+    flex-direction: column;
+    height: calc(100vh - 120px);
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .vertical-menu-categories {
+    width: 100%;
+    border-right: none;
+    padding: 16px;
+  }
+
+  .vertical-mobile-accordion-content {
+    padding: 12px 14px;
+    background: #f8fafc;
+    border-radius: 12px;
+    margin: 4px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-left: 3px solid #0052FF;
+  }
+
+  .vertical-mobile-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vertical-mobile-group-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0076C0;
+  }
+
+  .vertical-mobile-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .vertical-subitem-link {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+
+  .vertical-subitem-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .vertical-subitem-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  .vertical-mobile-featured-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 82, 255, 0.2);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vertical-featured-cta {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0052FF;
+    text-decoration: underline;
+  }
+
+  .vertical-menu-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .vertical-menu-footer-links {
+    flex-direction: column;
+  }
+
+  .vertical-menu-btn-primary,
+  .vertical-menu-btn-outline {
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .vertical-menu-footer-caption {
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .vanguard-hamburger-label {
+    display: none;
+  }
+  .vanguard-glass-hamburger {
+    padding: 9px 12px;
+  }
+}
+
+/* ================================================================
+   TEMA OBRA SOCIAL (DSS): TONOS NARANJAS EN MENÚ LATERAL Y LOGO DSS
+   ================================================================ */
+
+.vanguard-brand--dss {
+  animation: vanguardFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanguard-emblem--dss {
+  height: 54px !important;
+  max-height: 54px !important;
+  width: auto !important;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.08));
+}
+
+.vanguard-header--scrolled .vanguard-bar-center .vanguard-emblem--dss {
+  height: 42px !important;
+  max-height: 42px !important;
+}
+
+.vanguard-glass-hamburger--obra-social {
+  border-color: rgba(249, 115, 22, 0.45);
+  color: #c2410c;
+}
+
+.vanguard-glass-hamburger--obra-social:hover {
+  background: rgba(255, 247, 237, 0.92);
+  border-color: rgba(234, 88, 12, 0.55);
+  box-shadow:
+    0 6px 20px rgba(234, 88, 12, 0.2),
+    inset 0 1px 1px #ffffff;
+  color: #ea580c;
+}
+
+.vanguard-glass-hamburger--active.vanguard-glass-hamburger--obra-social {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%) !important;
+  color: #ffffff !important;
+  border-color: #ea580c !important;
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.38) !important;
+}
+
+/* Contenedor principal del menú lateral en modo Obra Social */
+.vertical-menu-container.vanguard-mega-panel--obra-social {
+  border-color: rgba(249, 115, 22, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 20px 50px -8px rgba(234, 88, 12, 0.22),
+    0 4px 14px rgba(234, 88, 12, 0.1) !important;
+}
+
+/* Columna izquierda (Categorías) en tonos naranjas */
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-categories {
+  background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
+  border-right: 1px solid rgba(249, 115, 22, 0.24);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item {
+  color: #431407;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item:hover {
+  background: rgba(249, 115, 22, 0.14);
+  color: #c2410c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--active {
+  background: linear-gradient(90deg, #ea580c 0%, #f97316 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.28);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-arrow {
+  color: #c2410c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--active .vertical-category-arrow {
+  color: #ffffff !important;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-row--last {
+  border-top-color: rgba(249, 115, 22, 0.22);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--action {
+  color: #c2410c;
+  background: rgba(249, 115, 22, 0.12);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--action:hover {
+  background: rgba(249, 115, 22, 0.22);
+  color: #9a3412;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-icon {
+  color: #ea580c;
+}
+
+/* Columna derecha (Flyout) en tonos naranjas */
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-flyout {
+  background:
+    radial-gradient(ellipse 70% 60% at 92% 12%, hsla(28, 100%, 50%, 0.22) 0%, hsla(24, 100%, 52%, 0.1) 48%, transparent 75%),
+    radial-gradient(ellipse 55% 50% at 8% 90%, hsla(32, 100%, 54%, 0.15) 0%, transparent 65%),
+    #fffaf5;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-flyout-main-title {
+  color: #c2410c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-flyout-line {
+  background: linear-gradient(90deg, #ea580c 0%, #fb923c 100%);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-heading {
+  color: #ea580c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-title {
+  color: #7c2d12;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-desc {
+  color: #9a3412;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item:hover,
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item--selected {
+  background: rgba(254, 215, 170, 0.6) !important;
+  box-shadow: inset 3px 0 0 #ea580c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item:hover .vanguard-mega-title,
+.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item--selected .vanguard-mega-title {
+  color: #c2410c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-close-fab {
+  border-color: rgba(249, 115, 22, 0.35);
+  background: rgba(255, 247, 237, 0.92);
+  color: #c2410c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-close-fab:hover {
+  background: #ffedd5;
+  color: #9a3412;
+  border-color: #f97316;
+}
+
+/* Footer del menú lateral en tonos naranjas */
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-footer {
+  background: #ffedd5;
+  border-top: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-btn-primary {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.28);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-btn-primary:hover {
+  background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-footer-caption {
+  color: #9a3412;
+}
+
+/* Acordeón mobile en tonos naranjas */
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-accordion-content {
+  background: #fff7ed;
+  border-left-color: #ea580c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-group-title {
+  color: #ea580c;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-link {
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-link--selected {
+  background: #ffedd5;
+  border-color: #f97316;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-title {
+  color: #7c2d12;
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-featured-card {
+  background: #fffaf5;
+  border-color: rgba(249, 115, 22, 0.35);
+}
+
+.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-featured-cta {
+  color: #ea580c;
+}
+
+
+

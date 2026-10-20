@@ -4,18 +4,20 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useModal } from '../context/ModalContext';
 import { useHeaderScroll } from './header/useHeaderScroll';
 import { InstitutionalBrand } from './header/InstitutionalBrand';
-import { NavigationList } from './header/NavigationList';
 import { HeaderActions } from './header/HeaderActions';
-import { MobileDrawer } from './header/MobileDrawer';
+import { VerticalMenuDrawer } from './header/VerticalMenuDrawer';
 
 export default function Header() {
   const { openDialog, showToast } = useModal();
   const { isScrolled, isPastHero } = useHeaderScroll();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('institucional');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const isObraSocial = activeCategoryId === 'obra-social';
 
   // Shortcut "/" to focus search
   useEffect(() => {
@@ -69,9 +71,17 @@ export default function Header() {
   }, []);
 
   const handleItemAction = useCallback(
-    (action?: { type: 'toast' | 'dialog' | 'link'; target?: string }) => {
+    (
+      action?: { type: 'toast' | 'dialog' | 'link'; target?: string },
+      options?: { keepMenuOpen?: boolean; categoryId?: string }
+    ) => {
+      if (options?.categoryId) {
+        setActiveCategoryId(options.categoryId);
+      }
       setActiveDropdown(null);
-      setIsMenuOpen(false);
+      if (!options?.keepMenuOpen) {
+        setIsMenuOpen(false);
+      }
       if (!action) return;
       if (action.type === 'dialog' && action.target) {
         openDialog(action.target);
@@ -87,15 +97,21 @@ export default function Header() {
 
   return (
     <header
-      className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'}`}
+      className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'} ${
+        isObraSocial ? 'vanguard-header--obra-social' : ''
+      }`}
       style={{
         backgroundColor: isScrolled
-          ? 'rgba(235, 245, 255, 0.45)'
+          ? isObraSocial
+            ? 'rgba(255, 245, 235, 0.55)'
+            : 'rgba(235, 245, 255, 0.45)'
           : 'rgba(255, 255, 255, 0.22)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         borderBottom: isScrolled
-          ? '1px solid rgba(0, 118, 192, 0.12)'
+          ? isObraSocial
+            ? '1px solid rgba(234, 88, 12, 0.22)'
+            : '1px solid rgba(0, 118, 192, 0.12)'
           : '1px solid rgba(255, 255, 255, 0.35)',
         boxShadow: isScrolled
           ? '0 10px 32px -4px rgba(15, 23, 42, 0.16), 0 2px 8px -2px rgba(15, 23, 42, 0.08)'
@@ -104,68 +120,37 @@ export default function Header() {
       }}
     >
       <div className="vanguard-header-container">
-        {/* NIVEL 1: IDENTIDAD INSTITUCIONAL + UTILIDADES (Se contrae y desvanece suavemente al llegar a SOY) */}
-        <div className={`vanguard-level-1 ${isScrolled ? 'vanguard-level-1--collapsed' : ''}`}>
-          <InstitutionalBrand />
-
-          <div className="vanguard-level-1-utilities">
-            <HeaderActions
-              onFocusSearch={focusSearch}
-              onOpenAccess={handleOpenAccess}
-              onOpenHabilitados={() => openDialog('matricula')}
-            />
-
-            {/* Mobile Menu Toggle */}
+        {/* BARRA ÚNICA ULTRA-FINA: HAMBURGUESA GLASSMORFA (IZQ) + LOGO CENTRADO (CENTRO) + ACCESOS (DER) */}
+        <div className="vanguard-unified-bar">
+          {/* LADO IZQUIERDO: BOTÓN HAMBURGUESA GLASSMORFO */}
+          <div className="vanguard-bar-left">
             <button
               type="button"
-              className="vanguard-mobile-toggle"
+              className={`vanguard-glass-hamburger ${isMenuOpen ? 'vanguard-glass-hamburger--active' : ''} ${
+                isObraSocial ? 'vanguard-glass-hamburger--obra-social' : ''
+              }`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Abrir menú de navegación"
               aria-expanded={isMenuOpen}
+              aria-label="Abrir menú de navegación"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d={isMenuOpen ? 'M18 6L6 18M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
-              </svg>
+              <div className="vanguard-hamburger-lines">
+                <span className="vanguard-h-line vanguard-h-line--1" />
+                <span className="vanguard-h-line vanguard-h-line--2" />
+                <span className="vanguard-h-line vanguard-h-line--3" />
+              </div>
+              <span className="vanguard-hamburger-label">MENÚ</span>
             </button>
           </div>
-        </div>
 
-        {/* NIVEL 2: MENÚ DE NAVEGACIÓN + BOTÓN HOME + ACCESO (Transiciona suavemente) */}
-        <div className={`vanguard-level-2-row ${isScrolled ? 'vanguard-level-2-row--scrolled' : ''}`}>
-          {/* Botón Home (Casita azul eléctrico) visible al scrollear */}
-          <div className="vanguard-scrolled-home-wrap">
-            <a
-              href="/"
-              className="vanguard-scrolled-home-btn"
-              aria-label="Ir al inicio"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.1 1 12h3v9a1 1 0 0 0 1 1h5v-6h4v6h5a1 1 0 0 0 1-1v-9h3L12 2.1z" />
-              </svg>
-            </a>
+          {/* CENTRO: LOGO INSTITUCIONAL CENTRADO */}
+          <div className="vanguard-bar-center">
+            <InstitutionalBrand isObraSocial={isObraSocial} />
           </div>
 
-          <nav
-            className={`vanguard-level-2-pill ${isMenuOpen ? 'vanguard-level-2--open' : ''}`}
-            aria-label="Navegación principal"
-          >
-            <NavigationList
-              activeDropdown={activeDropdown}
-              onDropdownEnter={handleDropdownEnter}
-              onDropdownLeave={handleDropdownLeave}
-              onToggleDropdown={handleToggleDropdown}
-              onItemAction={handleItemAction}
-              onCloseDropdown={() => setActiveDropdown(null)}
-            />
-          </nav>
-
-          <div className="vanguard-scrolled-actions-wrap">
+          {/* LADO DERECHO: BUSCADOR + ACCESO PROFESIONAL */}
+          <div className="vanguard-bar-right">
             <HeaderActions
-              compact
+              compact={isScrolled}
               onFocusSearch={focusSearch}
               onOpenAccess={handleOpenAccess}
               onOpenHabilitados={() => openDialog('matricula')}
@@ -173,13 +158,13 @@ export default function Header() {
           </div>
         </div>
 
-        {/* ── MENÚ MÓVIL DESPLEGABLE ── */}
-        <MobileDrawer
-          isOpen={isMenuOpen && !isScrolled}
-          expandedId={mobileExpanded}
-          onToggleExpand={(id) => setMobileExpanded((prev) => (prev === id ? null : id))}
+        {/* ── MENÚ VERTICAL DESPLEGABLE CON FLYOUT MULTICOLUMNA ── */}
+        <VerticalMenuDrawer
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
           onItemAction={handleItemAction}
-          onOpenAccess={handleOpenAccess}
+          activeItemId={activeCategoryId}
+          onSelectCategory={setActiveCategoryId}
         />
       </div>
     </header>
