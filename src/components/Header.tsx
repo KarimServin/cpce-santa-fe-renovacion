@@ -144,7 +144,8 @@ export default function Header() {
 
           {/* CENTRO: LOGO INSTITUCIONAL CENTRADO */}
           <div className="vanguard-bar-center">
-            <InstitutionalBrand isObraSocial={isObraSocial} />
+            {/* El logo central es fijo: no cambia al recorrer categorías del menú */}
+            <InstitutionalBrand />
           </div>
 
           {/* LADO DERECHO: BUSCADOR + ACCESO PROFESIONAL */}

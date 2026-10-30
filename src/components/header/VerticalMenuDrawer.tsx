@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { HOME_CONTENT, NavItem } from '../../content/home';
 
 interface VerticalMenuDrawerProps {
@@ -84,12 +85,19 @@ export function VerticalMenuDrawer({
 
   return (
     <>
-      {/* Fondo backdrop difuminado */}
-      <div
-        className="vertical-menu-backdrop"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      {/* Fondo backdrop difuminado.
+          Se renderiza en document.body mediante portal: el <header> tiene backdrop-filter,
+          lo que lo convierte en containing block de los hijos position:fixed y recortaba
+          el backdrop a una franja oscura dentro del header. */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="vertical-menu-backdrop"
+            onClick={onClose}
+            aria-hidden="true"
+          />,
+          document.body
+        )}
 
       {/* Flyout panel */}
       <div

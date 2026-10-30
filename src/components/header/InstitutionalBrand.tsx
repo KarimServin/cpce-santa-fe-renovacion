@@ -4,26 +4,14 @@ import React from 'react';
 
 interface InstitutionalBrandProps {
   compact?: boolean;
-  isObraSocial?: boolean;
 }
 
-export function InstitutionalBrand({ compact = false, isObraSocial = false }: InstitutionalBrandProps) {
-  if (isObraSocial) {
-    return (
-      <a
-        href="#dss"
-        className={`vanguard-brand vanguard-brand--dss ${compact ? 'vanguard-scrolled-brand' : ''}`}
-        aria-label="Departamento de Servicios Sociales (DSS) - CPCE Santa Fe"
-      >
-        <img
-          src="/images/logo-dss.png"
-          alt="DSS - Departamento de Servicios Sociales"
-          className={compact ? 'vanguard-scrolled-emblem vanguard-emblem--dss' : 'vanguard-emblem vanguard-emblem--dss'}
-        />
-      </a>
-    );
-  }
-
+/**
+ * Logo institucional central del navbar.
+ * Siempre muestra el isologo del CPCE: no debe cambiar según la categoría
+ * que se recorra en el menú desplegable (Obra Social / DSS, Caja, etc.).
+ */
+export function InstitutionalBrand({ compact = false }: InstitutionalBrandProps) {
   if (compact) {
     return (
       <a href="/" className="vanguard-scrolled-brand" aria-label="CPCE Santa Fe">
