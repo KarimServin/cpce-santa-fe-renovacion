@@ -83,7 +83,7 @@ export function VerticalMenuDrawer({
   // Clase temática si es obra-social o caja
   const themeClass = currentActiveItem ? `vanguard-mega-panel--${currentActiveItem.id}` : '';
 
-  return (
+  const panel = (
     <>
       {/* Fondo backdrop difuminado.
           Se renderiza en document.body mediante portal: el <header> tiene backdrop-filter,
@@ -437,4 +437,13 @@ export function VerticalMenuDrawer({
       </div>
     </>
   );
+
+  // En mobile el menú es pantalla completa (position: fixed). Como el <header> tiene
+  // backdrop-filter, un hijo fixed quedaría atrapado dentro del header, así que se
+  // renderiza en document.body.
+  if (isMobile && typeof document !== 'undefined') {
+    return createPortal(panel, document.body);
+  }
+
+  return panel;
 }

@@ -1048,7 +1048,7 @@
   animation: verticalMenuSlideIn 0.20s cubic-bezier(0.16, 1, 0.3, 1);
   width: auto;
   min-width: 820px;
-  max-width: 1060px;
+  max-width: min(1060px, calc(100vw - 40px));
 }
 
 @keyframes verticalMenuSlideIn {
@@ -1365,24 +1365,42 @@
     bottom: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     min-width: 100vw;
     max-width: 100vw;
     border-radius: 0;
     border: none;
     z-index: 10000;
+    animation: none;
+  }
+
+  .vertical-menu-close-fab {
+    top: max(12px, env(safe-area-inset-top));
+    right: 14px;
+    width: 38px;
+    height: 38px;
   }
 
   .vertical-menu-body {
+    flex: 1 1 auto;
+    min-height: 0;
     flex-direction: column;
-    height: calc(100vh - 120px);
+    height: auto;
     max-height: none;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .vertical-menu-categories {
     width: 100%;
     border-right: none;
-    padding: 16px;
+    padding: 56px 16px 16px;
+  }
+
+  .vertical-menu-footer {
+    flex-shrink: 0;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
 
   .vertical-mobile-accordion-content {
@@ -1483,6 +1501,28 @@
   }
   .vanguard-glass-hamburger {
     padding: 9px 12px;
+  }
+  .vanguard-header-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .vanguard-bar-left,
+  .vanguard-bar-right {
+    flex: 0 0 auto;
+    min-width: 0;
+    gap: 6px;
+  }
+  .vanguard-bar-center {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .vanguard-bar-center .vanguard-brand-text {
+    display: none;
+  }
+  .vanguard-bar-center .vanguard-emblem {
+    height: 36px !important;
+    max-height: 36px !important;
+    width: auto !important;
   }
 }
 
