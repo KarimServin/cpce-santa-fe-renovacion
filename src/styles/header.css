@@ -1513,16 +1513,23 @@
     gap: 6px;
   }
   .vanguard-bar-center {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  .vanguard-bar-center .vanguard-brand-text {
     display: none;
   }
-  .vanguard-bar-center .vanguard-emblem {
-    height: 36px !important;
-    max-height: 36px !important;
-    width: auto !important;
+  /* Mobile: sin logo central; acceso a la izquierda y hamburguesa a la derecha */
+  .vanguard-bar-right {
+    order: 1;
+    justify-content: flex-start;
+  }
+  .vanguard-bar-left {
+    order: 2;
+    justify-content: flex-end;
+  }
+  .vanguard-glass-hamburger {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
   }
 }
 
