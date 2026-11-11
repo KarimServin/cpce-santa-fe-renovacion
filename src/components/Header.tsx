@@ -89,7 +89,10 @@ export default function Header() {
       }`}
     >
       {/* BARRA SUPERIOR OSCURA: ¿Cómo matricularte? + redes + software profesional */}
-      <TopBar onHowToRegister={() => showToast('¿Cómo matricularte?')} />
+      <TopBar
+        onHowToRegister={() => showToast('¿Cómo matricularte?')}
+        onStudent={() => showToast('¿Sos estudiante?')}
+      />
 
       {/* BARRA PRINCIPAL: HAMBURGUESA + LOGO (IZQ) · DSS Y CAJA (DER) */}
       <div className="vanguard-main-bar">

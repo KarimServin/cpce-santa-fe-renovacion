@@ -4,6 +4,7 @@ import React from 'react';
 
 interface TopBarProps {
   onHowToRegister: () => void;
+  onStudent: () => void;
 }
 
 const SOCIAL_LINKS = [
@@ -48,17 +49,23 @@ const SOCIAL_LINKS = [
 ];
 
 /**
- * Barra superior oscura: acceso rápido a "¿Cómo matricularte?" (izquierda),
- * redes sociales y acceso al software profesional (derecha).
+ * Barra superior oscura: accesos rápidos "¿Cómo matricularte?" y "¿Sos estudiante?"
+ * (izquierda), redes sociales y acceso al software profesional (derecha).
  * No es sticky: se desplaza con la página y queda solo la barra principal fija.
  */
-export function TopBar({ onHowToRegister }: TopBarProps) {
+export function TopBar({ onHowToRegister, onStudent }: TopBarProps) {
   return (
     <div className="vanguard-topbar">
       <div className="vanguard-topbar-inner">
-        <button type="button" className="vanguard-topbar-link" onClick={onHowToRegister}>
-          ¿Cómo matricularte?
-        </button>
+        <div className="vanguard-topbar-left">
+          <button type="button" className="vanguard-topbar-link" onClick={onHowToRegister}>
+            ¿Cómo matricularte?
+          </button>
+          <span className="vanguard-topbar-divider" aria-hidden="true" />
+          <button type="button" className="vanguard-topbar-link" onClick={onStudent}>
+            ¿Sos estudiante?
+          </button>
+        </div>
 
         <div className="vanguard-topbar-right">
           <ul className="vanguard-topbar-social" aria-label="Redes sociales del Consejo">
@@ -83,8 +90,13 @@ export function TopBar({ onHowToRegister }: TopBarProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="vanguard-topbar-cta"
+            aria-label="Software profesional"
           >
-            Software profesional
+            {/* En mobile se muestra la versión corta para que entren los dos accesos de la izquierda */}
+            <span className="vanguard-topbar-cta-full">Software profesional</span>
+            <span className="vanguard-topbar-cta-short" aria-hidden="true">
+              Software
+            </span>
           </a>
         </div>
       </div>

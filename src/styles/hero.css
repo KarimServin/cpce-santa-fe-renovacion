@@ -312,6 +312,11 @@
 /* ── 6. ACCESOS RÁPIDOS POR PERFIL (debajo del hero) ─────────── */
 .hero-access-section {
   padding: 28px 0 8px;
+  /* Las tarjetas entran desde 56 px a la derecha (slideFromRightSnappy): sin este recorte, en
+     mobile se salen de la pantalla durante la animación, el documento se ensancha y la página
+     queda con desplazamiento lateral. `clip` (y no `hidden`) no crea un contenedor de scroll
+     y deja visible el desborde vertical (sombras, hover). */
+  overflow-x: clip;
 }
 
 .hero-access-section .hero-profile-selector-wrap {
