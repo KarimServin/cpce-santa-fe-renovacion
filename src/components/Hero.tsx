@@ -4,68 +4,80 @@ import React, { useState } from 'react';
 import HeroBand from './HeroBand';
 import { useModal } from '../context/ModalContext';
 
+const SUGGESTED_SEARCHES = [
+  'Inscripción peritos 2027',
+  'Aranceles octubre 2026',
+  'RT 54',
+  'Cursos con cupo',
+];
+
 export default function Hero() {
   const { showToast, openDialog } = useModal();
   const [searchTerm, setSearchTerm] = useState('');
   const [userProfile, setUserProfile] = useState<'Matriculado' | 'Estudiante/Graduado' | 'Perito/Síndico' | 'Público General'>('Matriculado');
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      showToast(`Buscando: "${searchTerm}"`);
+  const runSearch = (term: string) => {
+    const query = term.trim();
+    if (query) {
+      showToast(`Buscando: "${query}"`);
     }
   };
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    runSearch(searchTerm);
+  };
+
+  const handleSuggestion = (term: string) => {
+    setSearchTerm(term);
+    runSearch(term);
+  };
+
   return (
-    <section className="hero-section" id="inicio" aria-labelledby="hero-title">
-      <HeroBand>
-        <div className="hero-minimal-wrap">
-          <p className="hero-minimal-eyebrow">
-            NUEVA WEB · CPCE SANTA FE CÁMARA I
-          </p>
-          <h1 id="hero-title" className="hero-minimal-title">
-            Te damos la bienvenida al Consejo
-          </h1>
+    <>
+      <section className="hero-section" id="inicio" aria-labelledby="hero-title">
+        <HeroBand>
+          <div className="hero-center">
+            <h1 id="hero-title" className="hero-center-title">
+              Te damos la bienvenida al Consejo
+            </h1>
 
-          {/* Buscador minimalista integrado */}
-          <form className="hero-minimal-search" onSubmit={handleSearch} role="search">
-            <svg
-              className="hero-search-input-icon"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              type="text"
-              className="hero-minimal-input"
-              placeholder="Buscar trámites, normas, resoluciones, cursos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              aria-label="Buscar en el portal"
-            />
-            {searchTerm && (
-              <button
-                type="button"
-                className="hero-search-clear-btn"
-                onClick={() => setSearchTerm('')}
-                aria-label="Limpiar búsqueda"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
+            <form className="hero-center-search" onSubmit={handleSearch} role="search">
+              <input
+                id="hero-search-input"
+                type="text"
+                className="hero-center-input"
+                placeholder="Buscá trámites, normas, resoluciones, cursos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="Buscar en el portal"
+                autoComplete="off"
+              />
+              <button type="submit" className="hero-center-submit">
+                Buscar
               </button>
-            )}
-            <button type="submit" className="hero-search-submit-btn">
-              Buscar
-            </button>
-          </form>
+            </form>
 
+            <div className="hero-suggestions" role="group" aria-label="Búsquedas sugeridas">
+              <span className="hero-suggestions-label">Búsquedas sugeridas:</span>
+              {SUGGESTED_SEARCHES.map((term) => (
+                <button
+                  key={term}
+                  type="button"
+                  className="hero-suggestion-chip"
+                  onClick={() => handleSuggestion(term)}
+                >
+                  {term}
+                </button>
+              ))}
+            </div>
+          </div>
+        </HeroBand>
+      </section>
+
+      {/* Accesos rápidos por perfil (se mantienen debajo del hero) */}
+      <section className="hero-access-section" aria-label="Accesos rápidos por perfil">
+        <div className="hero-content-wrap">
           {/* Selector de perfil Soy */}
           <div className="hero-profile-selector-wrap" role="group" aria-label="Selecciona tu perfil">
             <span className="hero-profile-label">SOY:</span>
@@ -408,7 +420,7 @@ export default function Hero() {
             </div>
           )}
         </div>
-      </HeroBand>
-    </section>
+      </section>
+    </>
   );
 }

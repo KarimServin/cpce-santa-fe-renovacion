@@ -15,7 +15,7 @@
 /* ── 2. SECCIÓN HERO BANNER CON EL ESTILO EXACTO DEL HOME ─────── */
 .calendar-hero-section {
   position: relative;
-  margin-top: -110px; /* Sube bajo el navbar transparente para que la luz aurora se trasluzca */
+  margin-top: calc((var(--vanguard-topbar-h) + var(--vanguard-mainbar-h)) * -1); /* Sube bajo el navbar transparente para que la luz aurora se trasluzca */
   padding-top: clamp(140px, 17vh, 170px);
   padding-bottom: 24px;
   background: #ffffff;
@@ -438,7 +438,6 @@
   inset: 0;
   background: rgba(0, 27, 58, 0.6);
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   z-index: 2000;
   display: flex;
   align-items: center;

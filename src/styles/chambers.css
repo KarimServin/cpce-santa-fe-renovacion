@@ -377,7 +377,6 @@ h2.sedes-main-title,
   gap: 6px;
   background: rgba(241, 245, 249, 0.85);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   padding: 4px;
   border-radius: 9999px;
   border: 1px solid rgba(226, 232, 240, 0.9);
@@ -476,7 +475,6 @@ h2.sedes-main-title,
 .sede-compact-card {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1.5px solid rgba(226, 232, 240, 0.9);
   border-radius: 16px;
   padding: 11px 14px;
@@ -629,7 +627,6 @@ h2.sedes-main-title,
   grid-template-columns: 46% 54%;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(226, 232, 240, 0.95);
   border-radius: 22px;
   overflow: hidden;
@@ -807,7 +804,6 @@ h2.sedes-main-title,
   z-index: 2;
   background: rgba(255, 255, 255, 0.90);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 9999px;
   padding: 5px 12px;

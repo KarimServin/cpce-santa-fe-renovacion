@@ -1,35 +1,187 @@
 /* ================================================================
    HEADER VANGUARDISTA DE DOS NIVELES (GLASSMORPHISM TRANSPARENTE)
    ================================================================ */
+/* Solo transform (sin opacity): una animación de opacidad sobre el header lo vuelve
+   "backdrop root" y los hijos con backdrop-filter dejarían de difuminar el hero. */
 @keyframes vanguardHeaderEntrance {
   0% {
-    opacity: 0;
     transform: translateY(-16px);
   }
   100% {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
+:root {
+  /* Alturas fijas del navbar. La barra superior sale de pantalla al hacer scroll
+     (sticky con top negativo) y el hero sube por detrás de ambas barras para que
+     el vidrio difumine la imagen de fondo. */
+  --vanguard-topbar-h: 44px;
+  --vanguard-mainbar-h: 84px;
+}
+
 .vanguard-header {
   position: sticky;
-  top: 0;
+  top: calc(var(--vanguard-topbar-h) * -1);
   z-index: 1000;
   width: 100%;
-  animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
+/* Contenedor ancho: hamburguesa y accesos DSS/Caja quedan cerca de los bordes de la pantalla */
 .vanguard-header-container {
-  max-width: 1280px;
+  max-width: 1600px;
+  height: 100%;
   margin: 0 auto;
-  padding: 10px 24px 0 24px;
-  transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0 28px;
 }
 
-.vanguard-header--scrolled .vanguard-header-container {
-  padding-top: 8px;
-  padding-bottom: 8px;
+/* ── BARRA SUPERIOR: vidrio navy translúcido y difuminado ── */
+.vanguard-topbar {
+  height: var(--vanguard-topbar-h);
+  background: linear-gradient(180deg, rgba(10, 42, 94, 0.9) 0%, rgba(10, 42, 94, 0.84) 100%);
+  backdrop-filter: blur(18px) saturate(1.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  transition: background 0.3s ease;
+}
+
+.vanguard-header--obra-social .vanguard-topbar {
+  background: linear-gradient(180deg, rgba(124, 45, 18, 0.92) 0%, rgba(124, 45, 18, 0.86) 100%);
+}
+
+.vanguard-topbar-inner {
+  max-width: 1600px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.vanguard-topbar-link {
+  background: transparent;
+  border: 0;
+  padding: 4px 0;
+  color: #ffffff;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
+}
+
+.vanguard-topbar-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vanguard-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.vanguard-topbar-social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vanguard-topbar-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.vanguard-topbar-social-link:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.vanguard-topbar-social-link:focus-visible,
+.vanguard-topbar-link:focus-visible,
+.vanguard-topbar-cta:focus-visible {
+  outline-color: #ffffff;
+  outline-offset: 2px;
+}
+
+.vanguard-topbar-cta {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 22px;
+  border-radius: 9999px;
+  background: #0052FF;
+  color: #ffffff;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 82, 255, 0.4);
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.vanguard-topbar-cta:hover {
+  background: #003ECC;
+  box-shadow: 0 4px 14px rgba(0, 82, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.vanguard-header--obra-social .vanguard-topbar-cta {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.45);
+}
+
+.vanguard-header--obra-social .vanguard-topbar-cta:hover {
+  background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+}
+
+/* ── BARRA PRINCIPAL: vidrio esmerilado (translúcido con blur) sobre el hero ── */
+.vanguard-main-bar {
+  height: var(--vanguard-mainbar-h);
+  /* Degradado horizontal: parte de un blanco azulado a la izquierda y se carga de azul hacia la derecha */
+  background: linear-gradient(90deg, rgba(244, 248, 255, 0.68) 0%, rgba(222, 235, 255, 0.74) 60%, rgba(190, 214, 255, 0.8) 100%);
+  backdrop-filter: blur(22px) saturate(1.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 10px 30px -14px rgba(15, 23, 42, 0.18);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vanguard-header--scrolled .vanguard-main-bar {
+  background: linear-gradient(90deg, rgba(245, 249, 255, 0.84) 0%, rgba(226, 238, 255, 0.87) 60%, rgba(196, 218, 255, 0.9) 100%);
+  backdrop-filter: blur(26px) saturate(1.9);
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 1px 0 rgba(15, 23, 42, 0.05),
+    0 14px 34px -14px rgba(15, 23, 42, 0.26);
+}
+
+.vanguard-header--obra-social .vanguard-main-bar {
+  background: linear-gradient(180deg, rgba(255, 237, 213, 0.78) 0%, rgba(255, 237, 213, 0.68) 100%);
+  border-bottom-color: rgba(251, 146, 60, 0.4);
+}
+
+.vanguard-header--obra-social.vanguard-header--scrolled .vanguard-main-bar {
+  background: linear-gradient(180deg, rgba(255, 244, 232, 0.9) 0%, rgba(255, 244, 232, 0.86) 100%);
+  border-bottom-color: rgba(234, 88, 12, 0.28);
 }
 
 .vanguard-level-1 {
@@ -58,10 +210,11 @@
   pointer-events: none;
 }
 
+/* ── LOGO INSTITUCIONAL: logo original (emblema + denominación completa) ── */
 .vanguard-brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  flex-shrink: 0;
   text-decoration: none;
   transition: opacity 0.18s ease;
 }
@@ -69,43 +222,17 @@
   opacity: 0.92;
 }
 
-.vanguard-emblem {
-  height: 56px !important;
-  max-height: 56px !important;
+.vanguard-brand-logo {
+  display: block;
+  height: 70px;
   width: auto;
-  object-fit: contain;
-  flex-shrink: 0;
 }
 
-.vanguard-brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.15;
-}
-
-.vanguard-brand-serif {
-  font-family: var(--font-instrument), "Instrument Sans", "Instrument Sans Placeholder", sans-serif !important;
-  font-size: 22px !important;
-  font-weight: 700 !important;
-  color: #000000 !important;
-  letter-spacing: -0.8px !important;
-  white-space: nowrap;
-}
-
-.vanguard-brand-caps {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  background: linear-gradient(90deg, #0d6efd 0%, #004b87 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent !important;
-  display: inline-block;
-  margin-top: 3px;
-  white-space: nowrap;
+/* Versión reducida (solo emblema) para pantallas muy angostas */
+.vanguard-brand-emblem-only {
+  display: none;
+  height: 40px;
+  width: auto;
 }
 
 /* Utilidades Nivel 1 */
@@ -122,7 +249,6 @@
   gap: 8px;
   background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 9999px;
   padding: 7px 16px;
@@ -321,7 +447,6 @@
   margin: 0;
   background: transparent !important;
   backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
   border: none !important;
   box-shadow: none !important;
   padding: 4px 0 6px 0;
@@ -388,17 +513,10 @@
   transform: rotate(180deg);
 }
 
-/* ── ESTADO SCROLLED (AL BAJAR): INTEGRADO SIN ISLA ── */
-.vanguard-header--scrolled .vanguard-header-container {
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-
 .vanguard-scrolled-pill {
   position: relative;
   background: transparent !important;
   backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
   border: none !important;
   border-radius: 0;
   padding: 4px 0;
@@ -408,28 +526,6 @@
   justify-content: space-between;
   gap: 16px;
   box-shadow: none !important;
-}
-
-.vanguard-scrolled-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  flex-shrink: 0;
-  height: 100%;
-}
-.vanguard-scrolled-emblem {
-  height: 38px;
-  max-height: 38px;
-  width: auto;
-  object-fit: contain;
-}
-.vanguard-scrolled-title {
-  font-family: var(--font-outfit), 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 750;
-  color: #002B5C;
-  white-space: nowrap;
 }
 
 .vanguard-scrolled-nav {
@@ -487,7 +583,6 @@
   width: 680px;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(40px) saturate(1.6);
-  -webkit-backdrop-filter: blur(40px) saturate(1.6);
   border: 1px solid rgba(203, 213, 225, 0.85);
   border-radius: 16px;
   box-shadow:
@@ -748,7 +843,6 @@
 .vanguard-mobile-drawer {
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(28px) saturate(1.5);
-  -webkit-backdrop-filter: blur(28px) saturate(1.5);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
   margin-top: 8px;
@@ -828,7 +922,6 @@
 }
 
 @media (max-width: 1023px) {
-  .vanguard-brand-serif { font-size: 1.1rem !important; }
   .vanguard-compact-search .vanguard-search-placeholder,
   .vanguard-compact-search .vanguard-kbd {
     display: none;
@@ -866,100 +959,85 @@
   .vanguard-cta-navy {
     padding: 8px 12px;
   }
-  .vanguard-brand-caps {
-    display: none;
-  }
 }
 
 /* ================================================================
-   NUEVO: HEADER ULTRA-FINO, BOTÓN HAMBURGUESA GLASSMORFO Y LOGO CENTRADO
+   BARRA PRINCIPAL: HAMBURGUESA + LOGO (IZQ) · DSS Y CAJA (DER)
    ================================================================ */
 
 .vanguard-unified-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   width: 100%;
-  padding: 8px 0;
-  min-height: 54px;
+  height: 100%;
   position: relative;
 }
 
-.vanguard-header--scrolled .vanguard-unified-bar {
-  padding: 6px 0;
-  min-height: 48px;
-}
-
-/* LADO IZQUIERDO: HAMBURGUESA GLASS */
+/* IZQUIERDA: HAMBURGUESA + LOGO */
 .vanguard-bar-left {
   display: flex;
   align-items: center;
-  flex: 1;
-  justify-content: flex-start;
+  gap: 14px;
+  min-width: 0;
 }
 
-/* CENTRO: LOGO INSTITUCIONAL */
-.vanguard-bar-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 2;
-  text-align: center;
+/* El logo va siempre junto a la hamburguesa (patrón estándar: marca arriba a la izquierda).
+   Si alguna vez se vuelve a centrar, usar márgenes automáticos y NO transform: un
+   translate(-50%) deja el logo en medio píxel y el navegador vuelve borrosas las letras. */
+.vanguard-bar-left .vanguard-brand {
+  margin: 0;
+  min-width: 0;
 }
 
-.vanguard-bar-center .vanguard-brand {
-  justify-content: center;
-  margin: 0 auto;
+@media (min-width: 1100px) {
+  .vanguard-bar-left {
+    gap: 18px;
+  }
 }
 
-.vanguard-header--scrolled .vanguard-bar-center .vanguard-emblem {
-  height: 42px !important;
-  max-height: 42px !important;
-}
-
-/* LADO DERECHO: ACCIONES */
+/* DERECHA: INSTITUCIONES VINCULADAS */
 .vanguard-bar-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1;
-  gap: 10px;
+  flex-shrink: 0;
 }
 
-/* BOTÓN HAMBURGUESA GLASSMORFO */
+/* BOTÓN HAMBURGUESA: minimalista. Sin relleno ni sombra, solo un contorno fino que lo delata como botón */
 .vanguard-glass-hamburger {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  border-radius: 9999px;
-  padding: 8px 18px;
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    0 4px 14px rgba(10, 42, 94, 0.08);
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgba(15, 23, 42, 0.28);
+  border-radius: 8px;
+  color: #0f172a;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #002B5C;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .vanguard-glass-hamburger:hover {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 82, 255, 0.4);
-  box-shadow:
-    0 6px 20px rgba(0, 82, 255, 0.18),
-    inset 0 1px 1px #ffffff;
-  transform: translateY(-1px);
-  color: #0052FF;
+  background: rgba(15, 23, 42, 0.07);
+  border-color: rgba(15, 23, 42, 0.55);
 }
 
-.vanguard-glass-hamburger--active {
-  background: #0052FF !important;
-  color: #ffffff !important;
-  border-color: #0052FF !important;
-  box-shadow: 0 4px 16px rgba(0, 82, 255, 0.35) !important;
+.vanguard-glass-hamburger:focus-visible {
+  outline: 2px solid rgba(0, 82, 255, 0.55);
+  outline-offset: 2px;
+}
+
+/* Abierto: contorno y ícono en el color institucional */
+.vanguard-glass-hamburger--active,
+.vanguard-glass-hamburger--active:hover {
+  background: rgba(10, 42, 94, 0.08);
+  border-color: #0a2a5e;
+  color: #0a2a5e;
 }
 
 .vanguard-hamburger-lines {
@@ -967,27 +1045,16 @@
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-  width: 18px;
+  width: 16px;
 }
 
 .vanguard-h-line {
   display: block;
+  width: 16px;
   height: 2px;
   background: currentColor;
-  border-radius: 2px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.vanguard-h-line--1 {
-  width: 18px;
-}
-
-.vanguard-h-line--2 {
-  width: 14px;
-}
-
-.vanguard-h-line--3 {
-  width: 18px;
+  border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .vanguard-glass-hamburger--active .vanguard-h-line--1 {
@@ -996,23 +1063,166 @@
 
 .vanguard-glass-hamburger--active .vanguard-h-line--2 {
   opacity: 0;
-  transform: translateX(-6px);
 }
 
 .vanguard-glass-hamburger--active .vanguard-h-line--3 {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-.vanguard-hamburger-label {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+/* DSS / CAJA: logos oficiales como co-marca, sin caja ni borde (igual que el logo del CPCE).
+   Un rótulo chico a la izquierda dice qué son; el ↗ en la esquina, el fondo tenue al pasar
+   el mouse y el tooltip indican que llevan a otro sitio. Los logos quedan centrados en el
+   mismo eje vertical que el logo principal. */
+.vanguard-institutions {
+  display: flex;
+  align-items: center;
+}
+
+.vanguard-institutions-label {
+  /* min-content parte el texto en dos líneas: "Sitios" / "institucionales" */
+  width: min-content;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-align: right;
   text-transform: uppercase;
+  color: #475569;
+}
+
+.vanguard-institutions-list {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Separador vertical fino antes de cada logo (rótulo | DSS | Caja) */
+.vanguard-institutions-item {
+  display: flex;
+  align-items: center;
+}
+
+.vanguard-institutions-item::before {
+  content: '';
+  flex-shrink: 0;
+  width: 1px;
+  height: 30px;
+  margin: 0 8px;
+  background: rgba(15, 23, 42, 0.16);
+}
+
+.vanguard-institution {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 5px 4px 7px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #64748b;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.vanguard-institution:focus-visible {
+  outline: 2px solid rgba(0, 82, 255, 0.55);
+  outline-offset: 1px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.vanguard-institution--dss:focus-visible {
+  color: #ea580c;
+}
+
+.vanguard-institution--caja:focus-visible {
+  color: #3f7d00;
+}
+
+/* Solo en dispositivos con mouse: en táctiles el :hover queda "pegado" después del toque */
+@media (hover: hover) {
+  .vanguard-institution:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .vanguard-institution--dss:hover {
+    color: #ea580c;
+  }
+
+  .vanguard-institution--caja:hover {
+    color: #3f7d00;
+  }
+}
+
+/* Alturas equilibradas a ojo: el DSS es compacto y muy saturado; la Caja es apaisada y su
+   texto es chico, así que va apenas más alta. Si cambian, actualizar `sizes` de la Caja en
+   InstitutionLinks.tsx (ancho = alto × 3,78). */
+.vanguard-institution-logo {
+  display: block;
+  width: auto;
+  height: 42px;
+}
+
+.vanguard-institution-logo--caja {
+  height: 44px;
+}
+
+/* ↗ arriba a la derecha del logo, donde se espera el ícono de "sitio externo" */
+.vanguard-institution-arrow {
+  align-self: flex-start;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.vanguard-institution:hover .vanguard-institution-arrow,
+.vanguard-institution:focus-visible .vanguard-institution-arrow {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+/* Tooltip con el destino. El texto sale de data-hint; los lectores de pantalla usan el aria-label */
+.vanguard-institution::after {
+  content: attr(data-hint);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  padding: 6px 9px;
+  background: #0f172a;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.vanguard-institution:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: hover) {
+  .vanguard-institution:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
 }
 
 /* ================================================================
-   CONTENEDOR DEL MEGAPANEL LATERAL MODERNO (FLYOUT HACIA LA DERECHA)
+   MENÚ DESPLEGABLE (compacto y minimalista): tarjeta chica anclada bajo
+   la hamburguesa, lista de categorías a la izquierda y enlaces a la
+   derecha. Colores del tema mediante variables (--menu-accent*).
    ================================================================ */
 
 .vertical-menu-backdrop {
@@ -1021,90 +1231,85 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.28);
   z-index: 998;
   animation: vanguardFadeIn 0.2s ease-out;
 }
 
 .vertical-menu-container {
+  /* Tema por defecto (azul institucional) */
+  --menu-accent: #0052FF;
+  --menu-accent-ink: #0a2a5e;
+  --menu-accent-soft: #eff4ff;
+  --menu-accent-line: #bfd1ff;
+
   position: absolute;
   top: calc(100% + 6px);
-  left: 20px;
-  background: rgba(255, 255, 255, 0.985);
-  backdrop-filter: blur(32px) saturate(1.6);
-  -webkit-backdrop-filter: blur(32px) saturate(1.6);
-  border-radius: 16px;
-  border: 1px solid rgba(203, 213, 225, 0.9);
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    0 18px 48px -8px rgba(15, 23, 42, 0.18),
-    0 4px 12px rgba(15, 23, 42, 0.06);
-  z-index: 1001;
+  left: max(28px, calc((100% - 1544px) / 2));
+  width: max-content;
+  min-width: 640px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - var(--vanguard-mainbar-h) - 24px);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  animation: verticalMenuSlideIn 0.20s cubic-bezier(0.16, 1, 0.3, 1);
-  width: auto;
-  min-width: 820px;
-  max-width: min(1060px, calc(100vw - 40px));
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.28);
+  z-index: 1001;
+  animation: verticalMenuSlideIn 0.16s ease-out;
 }
 
 @keyframes verticalMenuSlideIn {
   from {
     opacity: 0;
-    transform: translateY(-5px) scale(0.99);
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
+/* En desktop el menú se cierra con la hamburguesa (que pasa a "X"), Escape o clic afuera */
 .vertical-menu-close-fab {
+  display: none;
   position: absolute;
   top: 10px;
   right: 12px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
   cursor: pointer;
   z-index: 20;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .vertical-menu-close-fab:hover {
   background: #f1f5f9;
   color: #0f172a;
-  border-color: #cbd5e1;
-  transform: scale(1.08);
 }
 
-/* CUERPO DEL MENÚ: COLUMNA IZQUIERDA + FLYOUT DERECHA SIN SCROLL */
+/* CUERPO: CATEGORÍAS (IZQ) + ENLACES (DER) */
 .vertical-menu-body {
   display: flex;
-  min-height: auto;
-  max-height: none;
+  width: 100%;
 }
 
-/* COLUMNA 1: LISTADO VERTICAL (SIN SCROLL) */
+/* COLUMNA 1: LISTADO VERTICAL */
 .vertical-menu-categories {
-  width: 260px;
+  width: 220px;
   flex-shrink: 0;
-  background: #ffffff;
-  border-right: 1px solid #f1f5f9;
-  padding: 12px 10px;
-  overflow: visible;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  padding: 8px 0;
+  border-right: 1px solid #e2e8f0;
 }
 
 .vertical-category-row {
@@ -1116,51 +1321,46 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  border-radius: 9px;
-  color: #1e293b;
+  padding: 7px 12px 7px 11px;
+  border-left: 2px solid transparent;
+  color: #334155;
   font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 13px;
-  font-weight: 650;
+  font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
   user-select: none;
 }
 
 .vertical-category-item:hover {
   background: #f8fafc;
-  color: #0052FF;
+  color: #0f172a;
 }
 
-.vertical-category-item--active {
-  background: #eff6ff !important;
-  color: #0052FF !important;
-  font-weight: 750;
-}
-
-.vertical-category-item--home {
-  border-bottom: 1px dashed #e2e8f0;
-  margin-bottom: 2px;
-  padding-bottom: 6px;
-  border-radius: 8px;
+.vertical-category-item--active,
+.vertical-category-item--active:hover {
+  background: var(--menu-accent-soft);
+  border-left-color: var(--menu-accent);
+  color: var(--menu-accent-ink);
+  font-weight: 600;
 }
 
 .vertical-category-row--last {
-  border-top: 1px solid #f1f5f9;
   margin-top: 6px;
   padding-top: 6px;
+  border-top: 1px solid #e2e8f0;
 }
 
 .vertical-category-item--action {
-  color: #0052FF;
-  background: rgba(0, 82, 255, 0.05);
-  font-weight: 700;
+  justify-content: flex-start;
+  color: var(--menu-accent-ink);
+  font-weight: 500;
 }
 
 .vertical-category-item--action:hover {
-  background: rgba(0, 82, 255, 0.12);
-  color: #003ecc;
+  background: #f8fafc;
+  color: var(--menu-accent);
 }
 
 .vertical-category-left {
@@ -1172,31 +1372,34 @@
 .vertical-category-icon {
   display: flex;
   align-items: center;
-  color: #0052FF;
+  color: var(--menu-accent);
   flex-shrink: 0;
 }
 
 .vertical-category-arrow {
-  color: #94a3b8;
   display: flex;
   align-items: center;
-  transition: transform 0.15s ease;
+  color: #94a3b8;
   flex-shrink: 0;
 }
 
-.vertical-category-item--active .vertical-category-arrow {
-  color: #0052FF;
-  transform: translateX(2px);
+.vertical-category-arrow svg {
+  width: 13px;
+  height: 13px;
 }
 
-/* COLUMNA 2 (DESKTOP): FLYOUT MULTICOLUMNA ESTILIZADO SIN SCROLL */
+.vertical-category-item--active .vertical-category-arrow {
+  color: var(--menu-accent);
+}
+
+/* COLUMNA 2 (DESKTOP): ENLACES EN COLUMNAS */
 .vertical-menu-flyout {
   flex: 1;
-  background: #fcfdfe;
-  padding: 16px 26px 18px 28px;
-  overflow: visible;
+  min-width: 0;
   display: flex;
   flex-direction: column;
+  padding: 14px 22px 16px 24px;
+  background: #ffffff;
 }
 
 .vertical-flyout-content-wrap {
@@ -1208,92 +1411,126 @@
 .vertical-flyout-header {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .vertical-flyout-main-title {
-  font-family: var(--font-outfit), 'Outfit', sans-serif;
-  font-size: 16px;
-  font-weight: 750;
-  color: #002B5C;
-  letter-spacing: -0.01em;
   margin: 0;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: #0f172a;
 }
 
 .vertical-flyout-line {
-  height: 2.5px;
-  width: 32px;
-  background: #0052FF;
-  border-radius: 2px;
+  display: none;
 }
 
+/* Columnas con ancho propio (ignora el grid en línea del JSX): el panel se ajusta al contenido */
 .vertical-flyout-grid {
-  display: grid;
-  gap: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
 }
 
 .vertical-flyout-grid--no-featured {
   width: 100%;
 }
 
-/* Columnas y items del megamenu con excelente legibilidad y holgura */
 .vertical-menu-flyout .vanguard-mega-col {
-  gap: 5px;
+  flex: 0 1 auto;
+  min-width: 140px;
+  gap: 0;
 }
 
 .vertical-menu-flyout .vanguard-mega-heading {
-  font-size: 11px;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748b;
 }
 
 .vertical-menu-flyout .vanguard-mega-item {
-  padding: 6px 10px;
-  border-radius: 6px;
-  gap: 1.5px;
+  padding: 6px 8px;
+  margin-left: -8px;
+  border-radius: 4px;
+  box-shadow: none;
 }
 
 .vertical-menu-flyout .vanguard-mega-title {
-  font-size: 12.5px;
-  font-weight: 650;
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1.3;
+  white-space: nowrap;
+  color: #1e293b;
 }
 
+/* Minimalista: en el desplegable solo se muestran los títulos */
 .vertical-menu-flyout .vanguard-mega-desc {
-  font-size: 11px;
-  line-height: 1.3;
+  display: none;
+}
+
+.vertical-menu-flyout .vanguard-mega-item:hover,
+.vertical-menu-flyout .vanguard-mega-item--selected {
+  background: var(--menu-accent-soft) !important;
+  box-shadow: none;
+}
+
+.vertical-menu-flyout .vanguard-mega-item:hover .vanguard-mega-title,
+.vertical-menu-flyout .vanguard-mega-item--selected .vanguard-mega-title {
+  color: var(--menu-accent-ink);
 }
 
 .vertical-menu-flyout .vanguard-framed-subcols {
-  gap: 10px;
+  gap: 20px;
 }
 
 .vertical-menu-flyout .vanguard-mega-col--framed {
-  padding-left: 14px;
+  padding-left: 18px;
+  border-left: 1px solid #e2e8f0;
 }
 
-.vertical-menu-flyout .vanguard-mega-featured {
-  padding: 12px;
-  border-radius: 10px;
+/* Tarjeta destacada: caja simple con borde */
+.vertical-menu-container .vanguard-mega-featured {
+  flex: 0 0 190px;
   gap: 4px;
+  padding: 12px;
+  background: var(--menu-accent-soft) !important;
+  border: 1px solid var(--menu-accent-line) !important;
+  border-radius: 6px;
+  box-shadow: none !important;
 }
 
-.vertical-menu-flyout .vanguard-featured-tag {
+.vertical-menu-container .vanguard-featured-tag {
+  padding: 0;
+  background: transparent !important;
+  border-radius: 0;
   font-size: 10px;
-  padding: 2px 6px;
+  letter-spacing: 0.08em;
+  color: var(--menu-accent-ink) !important;
 }
 
-.vertical-menu-flyout .vanguard-featured-title {
+.vertical-menu-container .vanguard-featured-title {
   font-size: 13px;
+  color: #0f172a;
 }
 
-.vertical-menu-flyout .vanguard-featured-desc {
-  font-size: 11px;
-  line-height: 1.3;
+.vertical-menu-container .vanguard-featured-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #475569;
 }
 
-.vertical-menu-flyout .vanguard-featured-cta {
-  font-size: 11px;
+.vertical-menu-container .vanguard-featured-cta {
   margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--menu-accent-ink) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .vertical-flyout-empty {
@@ -1305,12 +1542,13 @@
   font-size: 13px;
 }
 
-/* FOOTER DEL MENÚ */
+/* PIE DEL MENÚ: en desktop se oculta (el acceso profesional ya está en la barra superior) */
 .vertical-menu-footer {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 18px;
+  gap: 16px;
+  padding: 12px 16px;
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
 }
@@ -1324,39 +1562,29 @@
 .vertical-menu-btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: #0052FF;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--menu-accent);
   color: #ffffff;
-  border-radius: 7px;
-  font-size: 11.5px;
+  border-radius: 4px;
+  font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .vertical-menu-btn-primary:hover {
-  background: #003ecc;
+  background: var(--menu-accent-ink);
 }
 
 .vertical-menu-footer-caption {
-  font-size: 11px;
-  color: #64748b;
+  font-size: 12px;
   font-weight: 500;
+  color: #64748b;
 }
 
-/* ── COMPORTAMIENTO MOBILE FIRST ── */
+/* ── MENÚ A PANTALLA COMPLETA EN TABLET / MOBILE ── */
 @media (max-width: 1023px) {
-  .vanguard-bar-center .vanguard-brand-caps {
-    display: none;
-  }
-  .vanguard-bar-center .vanguard-brand-serif {
-    font-size: 1.05rem !important;
-  }
-  .vanguard-bar-center .vanguard-emblem {
-    height: 40px !important;
-  }
-
   .vertical-menu-container {
     position: fixed;
     top: 0;
@@ -1368,25 +1596,30 @@
     height: 100dvh;
     min-width: 100vw;
     max-width: 100vw;
-    border-radius: 0;
+    max-height: none;
+    overflow-y: hidden;
     border: none;
+    border-radius: 0;
+    box-shadow: none;
     z-index: 10000;
     animation: none;
   }
 
   .vertical-menu-close-fab {
+    display: flex;
     top: max(12px, env(safe-area-inset-top));
     right: 14px;
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
   }
 
   .vertical-menu-body {
     flex: 1 1 auto;
     min-height: 0;
     flex-direction: column;
-    height: auto;
-    max-height: none;
+    max-width: none;
+    margin: 0;
+    padding: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -1394,24 +1627,41 @@
 
   .vertical-menu-categories {
     width: 100%;
+    padding: 64px 0 16px;
     border-right: none;
-    padding: 56px 16px 16px;
   }
 
   .vertical-menu-footer {
+    display: flex;
     flex-shrink: 0;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+  }
+
+  .vertical-menu-footer-links {
+    flex-direction: column;
+  }
+
+  .vertical-menu-btn-primary {
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .vertical-menu-footer-caption {
+    text-align: center;
   }
 
   .vertical-mobile-accordion-content {
-    padding: 12px 14px;
-    background: #f8fafc;
-    border-radius: 12px;
-    margin: 4px 0 10px 0;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    border-left: 3px solid #0052FF;
+    margin: 0 0 8px;
+    padding: 14px 16px 14px 20px;
+    background: #f8fafc;
+    border-left: 3px solid var(--menu-accent);
   }
 
   .vertical-mobile-group {
@@ -1422,316 +1672,191 @@
 
   .vertical-mobile-group-title {
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #0076C0;
+    color: #64748b;
   }
 
   .vertical-mobile-items-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0;
   }
 
   .vertical-subitem-link {
     display: flex;
     flex-direction: column;
-    padding: 8px 10px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
     text-decoration: none;
   }
 
+  .vertical-subitem-link--selected .vertical-subitem-title {
+    color: var(--menu-accent);
+  }
+
   .vertical-subitem-title {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #1e293b;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
   }
 
   .vertical-subitem-desc {
-    font-size: 11.5px;
-    color: #64748b;
     margin-top: 2px;
+    font-size: 12px;
+    color: #64748b;
   }
 
   .vertical-mobile-featured-card {
-    background: #ffffff;
-    border: 1px solid rgba(0, 82, 255, 0.2);
-    border-radius: 10px;
-    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    padding: 12px;
+    background: var(--menu-accent-soft);
+    border: 1px solid var(--menu-accent-line);
+    border-radius: 6px;
   }
 
   .vertical-featured-cta {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    color: #0052FF;
+    color: var(--menu-accent-ink);
     text-decoration: underline;
   }
+}
 
-  .vertical-menu-footer {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
+/* ── RESPONSIVE DE LA BARRA PRINCIPAL ── */
+/* Tablet: barra más baja y logos más chicos */
+@media (max-width: 1099px) {
+  :root {
+    --vanguard-mainbar-h: 76px;
   }
-
-  .vertical-menu-footer-links {
-    flex-direction: column;
+  .vanguard-brand-logo {
+    height: 50px;
   }
-
-  .vertical-menu-btn-primary,
-  .vertical-menu-btn-outline {
-    justify-content: center;
-    width: 100%;
-    padding: 10px;
+  .vanguard-institution-logo {
+    height: 34px;
   }
-
-  .vertical-menu-footer-caption {
-    text-align: center;
+  .vanguard-institution-logo--caja {
+    height: 36px;
   }
 }
 
 @media (max-width: 640px) {
-  .vanguard-hamburger-label {
-    display: none;
-  }
-  .vanguard-glass-hamburger {
-    padding: 9px 12px;
-  }
   .vanguard-header-container {
     padding-left: 12px;
     padding-right: 12px;
   }
-  .vanguard-bar-left,
-  .vanguard-bar-right {
-    flex: 0 0 auto;
-    min-width: 0;
-    gap: 6px;
+  .vanguard-topbar-inner {
+    padding: 0 12px;
   }
-  .vanguard-bar-center {
+  .vanguard-topbar-social {
     display: none;
   }
-  /* Mobile: sin logo central; acceso a la izquierda y hamburguesa a la derecha */
-  .vanguard-bar-right {
-    order: 1;
-    justify-content: flex-start;
+  :root {
+    --vanguard-mainbar-h: 66px;
   }
+  .vanguard-unified-bar {
+    gap: 8px;
+  }
+  /* Mobile: logo + DSS/Caja a la izquierda y hamburguesa a la derecha */
   .vanguard-bar-left {
+    display: contents;
+  }
+  .vanguard-bar-left .vanguard-brand {
+    order: 1;
+  }
+  .vanguard-brand-logo {
+    height: 40px;
+  }
+  .vanguard-bar-right {
     order: 2;
-    justify-content: flex-end;
+    flex-shrink: 1;
+    margin-right: auto;
+    min-width: 0;
   }
   .vanguard-glass-hamburger {
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    justify-content: center;
-    gap: 0;
+    order: 3;
+  }
+  /* Mobile: sin rótulo (no hay lugar) y la Caja se recorta a su árbol */
+  .vanguard-institutions-label,
+  .vanguard-institutions-item:first-child::before {
+    display: none;
+  }
+  .vanguard-institutions-item::before {
+    height: 24px;
+    margin: 0 4px;
+  }
+  .vanguard-institution {
+    padding: 3px 3px 3px 5px;
+  }
+  .vanguard-institution-logo {
+    height: 32px;
+  }
+  .vanguard-institution-logo--caja {
+    width: 39px;
+    height: 32px;
+    object-fit: cover;
+    object-position: left center;
+  }
+  .vanguard-institution-arrow {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 440px) {
+  .vanguard-brand-logo {
+    display: none;
+  }
+  .vanguard-brand-emblem-only {
+    display: block;
   }
 }
 
 /* ================================================================
-   TEMA OBRA SOCIAL (DSS): TONOS NARANJAS EN MENÚ LATERAL Y LOGO DSS
+   TEMAS DEL MENÚ: OBRA SOCIAL (naranja) Y CAJA (verde)
+   Solo cambian las variables de acento; la estructura es la misma.
    ================================================================ */
 
-.vanguard-brand--dss {
-  animation: vanguardFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+.vertical-menu-container.vanguard-mega-panel--obra-social {
+  --menu-accent: #ea580c;
+  --menu-accent-ink: #9a3412;
+  --menu-accent-soft: #fff3e8;
+  --menu-accent-line: #fdc9a0;
 }
 
-.vanguard-emblem--dss {
-  height: 54px !important;
-  max-height: 54px !important;
-  width: auto !important;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.08));
+.vertical-menu-container.vanguard-mega-panel--caja {
+  --menu-accent: #4d9a00;
+  --menu-accent-ink: #2f6100;
+  --menu-accent-soft: #f1fae3;
+  --menu-accent-line: #bfe28a;
 }
 
-.vanguard-header--scrolled .vanguard-bar-center .vanguard-emblem--dss {
-  height: 42px !important;
-  max-height: 42px !important;
+/* Neutraliza los degradés heredados del mega panel anterior: el menú es de fondo blanco liso */
+.vertical-menu-container.vanguard-mega-panel--obra-social,
+.vertical-menu-container.vanguard-mega-panel--caja {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.28) !important;
 }
 
+/* Hamburguesa con el color del tema Obra Social */
 .vanguard-glass-hamburger--obra-social {
-  border-color: rgba(249, 115, 22, 0.45);
-  color: #c2410c;
+  border-color: rgba(234, 88, 12, 0.45);
+  color: #9a3412;
 }
 
 .vanguard-glass-hamburger--obra-social:hover {
-  background: rgba(255, 247, 237, 0.92);
-  border-color: rgba(234, 88, 12, 0.55);
-  box-shadow:
-    0 6px 20px rgba(234, 88, 12, 0.2),
-    inset 0 1px 1px #ffffff;
-  color: #ea580c;
+  background: rgba(234, 88, 12, 0.08);
+  border-color: rgba(234, 88, 12, 0.75);
 }
 
-.vanguard-glass-hamburger--active.vanguard-glass-hamburger--obra-social {
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%) !important;
-  color: #ffffff !important;
-  border-color: #ea580c !important;
-  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.38) !important;
-}
-
-/* Contenedor principal del menú lateral en modo Obra Social */
-.vertical-menu-container.vanguard-mega-panel--obra-social {
-  border-color: rgba(249, 115, 22, 0.45) !important;
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    0 20px 50px -8px rgba(234, 88, 12, 0.22),
-    0 4px 14px rgba(234, 88, 12, 0.1) !important;
-}
-
-/* Columna izquierda (Categorías) en tonos naranjas */
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-categories {
-  background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
-  border-right: 1px solid rgba(249, 115, 22, 0.24);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item {
-  color: #431407;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item:hover {
-  background: rgba(249, 115, 22, 0.14);
+.vanguard-glass-hamburger--active.vanguard-glass-hamburger--obra-social,
+.vanguard-glass-hamburger--active.vanguard-glass-hamburger--obra-social:hover {
+  background: rgba(234, 88, 12, 0.1);
+  border-color: #c2410c;
   color: #c2410c;
 }
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--active {
-  background: linear-gradient(90deg, #ea580c 0%, #f97316 100%) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.28);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-arrow {
-  color: #c2410c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--active .vertical-category-arrow {
-  color: #ffffff !important;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-row--last {
-  border-top-color: rgba(249, 115, 22, 0.22);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--action {
-  color: #c2410c;
-  background: rgba(249, 115, 22, 0.12);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-item--action:hover {
-  background: rgba(249, 115, 22, 0.22);
-  color: #9a3412;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-category-icon {
-  color: #ea580c;
-}
-
-/* Columna derecha (Flyout) en tonos naranjas */
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-flyout {
-  background:
-    radial-gradient(ellipse 70% 60% at 92% 12%, hsla(28, 100%, 50%, 0.22) 0%, hsla(24, 100%, 52%, 0.1) 48%, transparent 75%),
-    radial-gradient(ellipse 55% 50% at 8% 90%, hsla(32, 100%, 54%, 0.15) 0%, transparent 65%),
-    #fffaf5;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-flyout-main-title {
-  color: #c2410c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-flyout-line {
-  background: linear-gradient(90deg, #ea580c 0%, #fb923c 100%);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-heading {
-  color: #ea580c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-title {
-  color: #7c2d12;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-desc {
-  color: #9a3412;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item:hover,
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item--selected {
-  background: rgba(254, 215, 170, 0.6) !important;
-  box-shadow: inset 3px 0 0 #ea580c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item:hover .vanguard-mega-title,
-.vertical-menu-container.vanguard-mega-panel--obra-social .vanguard-mega-item--selected .vanguard-mega-title {
-  color: #c2410c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-close-fab {
-  border-color: rgba(249, 115, 22, 0.35);
-  background: rgba(255, 247, 237, 0.92);
-  color: #c2410c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-close-fab:hover {
-  background: #ffedd5;
-  color: #9a3412;
-  border-color: #f97316;
-}
-
-/* Footer del menú lateral en tonos naranjas */
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-footer {
-  background: #ffedd5;
-  border-top: 1px solid rgba(249, 115, 22, 0.25);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-btn-primary {
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.28);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-btn-primary:hover {
-  background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-menu-footer-caption {
-  color: #9a3412;
-}
-
-/* Acordeón mobile en tonos naranjas */
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-accordion-content {
-  background: #fff7ed;
-  border-left-color: #ea580c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-group-title {
-  color: #ea580c;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-link {
-  border-color: rgba(249, 115, 22, 0.25);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-link--selected {
-  background: #ffedd5;
-  border-color: #f97316;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-subitem-title {
-  color: #7c2d12;
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-mobile-featured-card {
-  background: #fffaf5;
-  border-color: rgba(249, 115, 22, 0.35);
-}
-
-.vertical-menu-container.vanguard-mega-panel--obra-social .vertical-featured-cta {
-  color: #ea580c;
-}
-
-
 

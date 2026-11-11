@@ -16,7 +16,7 @@ export default function HeroBand({ children }: HeroBandProps) {
       <div className="aurora-blob aurora-blob--3" aria-hidden="true" />
       <div className="aurora-blob aurora-blob--4" aria-hidden="true" />
 
-      {/* Foto institucional anclada a la derecha fundida suavemente con el fondo */}
+      {/* Foto institucional a todo el ancho, disuelta en blanco hacia la derecha */}
       <div className="hero-bg-photo-fade" aria-hidden="true">
         <Image
           src="/images/sede-cpce-hero.jpg"
@@ -24,7 +24,7 @@ export default function HeroBand({ children }: HeroBandProps) {
           fill
           priority
           className="hero-bg-photo-img"
-          sizes="(max-width: 1024px) 100vw, 65vw"
+          sizes="100vw"
         />
         <div className="hero-bg-photo-overlay" />
       </div>
