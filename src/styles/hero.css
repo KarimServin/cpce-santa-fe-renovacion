@@ -110,21 +110,24 @@
 .hero-bg-photo-img {
   object-fit: cover;
   object-position: 30% 28%;
+  /* Se disuelve en blanco hacia la izquierda: la foto se ve plena a la derecha */
   -webkit-mask-image: linear-gradient(
     to right,
-    #000000 0%,
-    #000000 30%,
-    rgba(0, 0, 0, 0.88) 52%,
-    rgba(0, 0, 0, 0.68) 72%,
-    rgba(0, 0, 0, 0.5) 100%
+    transparent 0%,
+    rgba(0, 0, 0, 0.08) 12%,
+    rgba(0, 0, 0, 0.3) 30%,
+    rgba(0, 0, 0, 0.7) 52%,
+    #000000 72%,
+    #000000 100%
   );
   mask-image: linear-gradient(
     to right,
-    #000000 0%,
-    #000000 30%,
-    rgba(0, 0, 0, 0.88) 52%,
-    rgba(0, 0, 0, 0.68) 72%,
-    rgba(0, 0, 0, 0.5) 100%
+    transparent 0%,
+    rgba(0, 0, 0, 0.08) 12%,
+    rgba(0, 0, 0, 0.3) 30%,
+    rgba(0, 0, 0, 0.7) 52%,
+    #000000 72%,
+    #000000 100%
   );
   filter: saturate(1.08) contrast(1.03);
 }

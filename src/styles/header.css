@@ -174,7 +174,7 @@
 .vanguard-main-bar {
   height: var(--vanguard-mainbar-h);
   /* Degradado horizontal: parte de un blanco azulado a la izquierda y se carga de azul hacia la derecha */
-  background: linear-gradient(90deg, rgba(244, 248, 255, 0.68) 0%, rgba(222, 235, 255, 0.74) 60%, rgba(190, 214, 255, 0.8) 100%);
+  background: linear-gradient(90deg, rgba(244, 248, 255, 0.42) 0%, rgba(222, 235, 255, 0.48) 60%, rgba(190, 214, 255, 0.55) 100%);
   backdrop-filter: blur(22px) saturate(1.9);
   /* Sin borde inferior: la línea blanca marcaba un corte duro contra el hero */
   box-shadow:
@@ -184,7 +184,8 @@
 }
 
 .vanguard-header--scrolled .vanguard-main-bar {
-  background: linear-gradient(90deg, rgba(245, 249, 255, 0.84) 0%, rgba(226, 238, 255, 0.87) 60%, rgba(196, 218, 255, 0.9) 100%);
+  /* Con scroll queda algo más opaca que arriba: pasa sobre texto y tarjetas, no sobre la foto */
+  background: linear-gradient(90deg, rgba(245, 249, 255, 0.66) 0%, rgba(226, 238, 255, 0.7) 60%, rgba(196, 218, 255, 0.76) 100%);
   backdrop-filter: blur(26px) saturate(1.9);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
@@ -193,11 +194,11 @@
 }
 
 .vanguard-header--obra-social .vanguard-main-bar {
-  background: linear-gradient(180deg, rgba(255, 237, 213, 0.78) 0%, rgba(255, 237, 213, 0.68) 100%);
+  background: linear-gradient(180deg, rgba(255, 237, 213, 0.55) 0%, rgba(255, 237, 213, 0.45) 100%);
 }
 
 .vanguard-header--obra-social.vanguard-header--scrolled .vanguard-main-bar {
-  background: linear-gradient(180deg, rgba(255, 244, 232, 0.9) 0%, rgba(255, 244, 232, 0.86) 100%);
+  background: linear-gradient(180deg, rgba(255, 244, 232, 0.76) 0%, rgba(255, 244, 232, 0.72) 100%);
 }
 
 .vanguard-level-1 {
