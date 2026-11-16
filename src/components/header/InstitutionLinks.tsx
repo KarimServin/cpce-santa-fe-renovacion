@@ -20,17 +20,7 @@ interface Institution {
   toastLabel: string;
 }
 
-/*
-  Logo de la Caja en dos líneas (496 × 146), tal como aparece en Figma a 40 px de alto (136 px
-  de ancho). Hay versiones remuestreadas (Lanczos) para cada tamaño y densidad; `sizes` debe
-  coincidir con las alturas de header.css (40 / 32 / 28 px, y en mobile 24 px recortado al árbol).
-*/
-const CAJA_WIDTHS = [109, 136, 164, 170, 204, 218, 272, 327, 408];
-const CAJA_SRCSET = [
-  ...CAJA_WIDTHS.map((w) => `/images/logo-caja-dos-lineas-${w}.png ${w}w`),
-  '/images/logo-caja-dos-lineas.png 496w',
-].join(', ');
-
+// Los dos logos son vectoriales (SVG), así que se ven nítidos a cualquier tamaño y densidad
 const INSTITUTIONS: Institution[] = [
   {
     id: 'dss',
@@ -45,13 +35,8 @@ const INSTITUTIONS: Institution[] = [
     id: 'caja',
     name: 'Caja',
     description: 'Caja de Seguridad Social',
-    logo: {
-      src: '/images/logo-caja-dos-lineas.png',
-      width: 496,
-      height: 146,
-      srcSet: CAJA_SRCSET,
-      sizes: '(min-width: 1024px) 136px, (min-width: 861px) 109px, (min-width: 641px) 95px, 82px',
-    },
+    // Armado con las piezas vectoriales del logo en Figma ("Botón · Acceso externo", Caja), 136 × 40
+    logo: { src: '/images/header/logo-caja.svg', width: 136, height: 40 },
     href: 'https://www.cajaprofesional.org.ar/',
     hint: 'Ir a cajaprofesional.org.ar',
     toastLabel: 'Caja de Seguridad Social',

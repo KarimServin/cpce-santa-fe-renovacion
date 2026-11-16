@@ -46,9 +46,15 @@
   animation: heroPhotoEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
 }
 
-.hero-band-img {
+/* Video aéreo de la ciudad (1920 × 1080) cubriendo toda la banda */
+.hero-band-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center;
 }
 
 /* "Capa de color" de Figma: Neutros/Gris 900 al 20 % sobre la imagen, para que el título
