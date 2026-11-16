@@ -13,20 +13,36 @@
 }
 
 :root {
-  /* Alturas del encabezado (Figma: 48 + 140 = 188 px). La barra superior sale de pantalla
-     al hacer scroll (sticky con top negativo) y queda fija solo la barra principal. */
+  /* Alturas del encabezado (Figma: 48 + 140 = 188 px) */
   --vanguard-topbar-h: 48px;
   --vanguard-mainbar-h: 140px;
+  /* Barra principal compacta al hacer scroll (solo escritorio, ver más abajo) */
+  --vanguard-mainbar-compact-h: 76px;
   /* Margen lateral del diseño: 77 px en un ancho de 1440 px */
   --vanguard-gutter: clamp(16px, 5.35vw, 77px);
+  --vanguard-header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Grande arriba (como en Figma) y compacto al bajar. El encabezado es fijo y el espaciador
+   de abajo reserva siempre los 188 px: así, al compactarse, el contenido no salta. Al hacer
+   scroll la barra azul sale por arriba y la blanca se achica (--vanguard-mainbar-compact-h). */
 .vanguard-header {
-  position: sticky;
-  top: calc(var(--vanguard-topbar-h) * -1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   width: 100%;
+  transition: transform var(--vanguard-header-transition);
   animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.vanguard-header--scrolled {
+  transform: translateY(calc(var(--vanguard-topbar-h) * -1));
+}
+
+.vanguard-header-spacer {
+  height: calc(var(--vanguard-topbar-h) + var(--vanguard-mainbar-h));
 }
 
 .vanguard-header-container {
@@ -163,7 +179,7 @@
 .vanguard-main-bar {
   height: var(--vanguard-mainbar-h);
   background: var(--cpce-blanco);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: height var(--vanguard-header-transition), background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Con scroll queda fija arriba: la "Sombra Vertical" del sistema la separa del contenido */
@@ -213,6 +229,7 @@
   display: block;
   height: 84px;
   width: auto;
+  transition: height var(--vanguard-header-transition);
 }
 
 /* Versión reducida (solo emblema) para pantallas muy angostas */
@@ -1074,7 +1091,8 @@
   font: inherit;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.18s ease;
+  transition: border-color 0.18s ease, width var(--vanguard-header-transition),
+    padding var(--vanguard-header-transition);
 }
 
 /* Caja: el logo va alineado a la izquierda (padding 16 / 32) */
@@ -1087,6 +1105,7 @@
   display: block;
   width: auto;
   height: 40px;
+  transition: height var(--vanguard-header-transition), width var(--vanguard-header-transition);
 }
 
 .vanguard-institution-logo--dss {
@@ -1380,6 +1399,47 @@
   }
   .site-menu-group {
     width: 100%;
+  }
+}
+
+/* ── COMPACTO AL HACER SCROLL (escritorio) ──
+   Arriba de la página se ve como en Figma (140 px); al bajar la barra blanca pasa a 76 px:
+   logo de 52 px y accesos DSS/Caja de 160 px con logos de 28 px. */
+@media (min-width: 1024px) {
+  .vanguard-header--scrolled .vanguard-main-bar {
+    height: var(--vanguard-mainbar-compact-h);
+  }
+  .vanguard-header--scrolled .vanguard-brand-logo {
+    height: 52px;
+  }
+  .vanguard-header--scrolled .vanguard-institution {
+    width: 160px;
+    padding: 8px 14px;
+  }
+  .vanguard-header--scrolled .vanguard-institution--caja {
+    padding: 8px 28px 8px 14px;
+  }
+  .vanguard-header--scrolled .vanguard-institution-logo {
+    height: 28px;
+  }
+  .vanguard-header--scrolled .vanguard-institution-logo--dss {
+    width: 57px;
+  }
+  .vanguard-header--scrolled .vanguard-institution-arrow {
+    top: 4px;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vanguard-header,
+  .vanguard-main-bar,
+  .vanguard-brand-logo,
+  .vanguard-institution,
+  .vanguard-institution-logo {
+    transition: none;
   }
 }
 

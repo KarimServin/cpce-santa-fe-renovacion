@@ -52,54 +52,60 @@ export default function Header() {
   );
 
   return (
-    <header
-      ref={headerRef}
-      className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'}`}
-    >
-      {/* BARRA SUPERIOR: ¿Cómo matricularte? + redes + software profesional */}
-      <TopBar
-        onHowToRegister={() => showToast('¿Cómo matricularte?')}
-        onStudent={() => showToast('¿Sos estudiante?')}
-      />
+    <>
+      <header
+        ref={headerRef}
+        className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'}`}
+      >
+        {/* BARRA SUPERIOR: ¿Cómo matricularte? + redes + software profesional */}
+        <TopBar
+          onHowToRegister={() => showToast('¿Cómo matricularte?')}
+          onStudent={() => showToast('¿Sos estudiante?')}
+        />
 
-      {/* BARRA PRINCIPAL: MENÚ + LOGO (IZQ) · DSS Y CAJA (DER) */}
-      <div className="vanguard-main-bar">
-        <div className="vanguard-header-container">
-          <div className="vanguard-unified-bar">
-            <div className="vanguard-bar-left">
-              {/* Abierto se convierte en el "Botón · Cerrar" del diseño (círculo azul con una X) */}
-              <button
-                ref={menuButtonRef}
-                type="button"
-                className={`vanguard-glass-hamburger ${isMenuOpen ? 'vanguard-glass-hamburger--active' : ''}`}
-                onClick={() => (isMenuOpen ? closeMenu() : setIsMenuOpen(true))}
-                aria-expanded={isMenuOpen}
-                aria-controls="site-menu"
-                aria-label={isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
-              >
-                <div className="vanguard-hamburger-lines">
-                  <span className="vanguard-h-line vanguard-h-line--1" />
-                  <span className="vanguard-h-line vanguard-h-line--2" />
-                  <span className="vanguard-h-line vanguard-h-line--3" />
-                </div>
-              </button>
+        {/* BARRA PRINCIPAL: MENÚ + LOGO (IZQ) · DSS Y CAJA (DER) */}
+        <div className="vanguard-main-bar">
+          <div className="vanguard-header-container">
+            <div className="vanguard-unified-bar">
+              <div className="vanguard-bar-left">
+                {/* Abierto se convierte en el "Botón · Cerrar" del diseño (círculo azul con una X) */}
+                <button
+                  ref={menuButtonRef}
+                  type="button"
+                  className={`vanguard-glass-hamburger ${isMenuOpen ? 'vanguard-glass-hamburger--active' : ''}`}
+                  onClick={() => (isMenuOpen ? closeMenu() : setIsMenuOpen(true))}
+                  aria-expanded={isMenuOpen}
+                  aria-controls="site-menu"
+                  aria-label={isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+                >
+                  <div className="vanguard-hamburger-lines">
+                    <span className="vanguard-h-line vanguard-h-line--1" />
+                    <span className="vanguard-h-line vanguard-h-line--2" />
+                    <span className="vanguard-h-line vanguard-h-line--3" />
+                  </div>
+                </button>
 
-              <InstitutionalBrand />
-            </div>
+                <InstitutionalBrand />
+              </div>
 
-            <div className="vanguard-bar-right">
-              <InstitutionLinks onSelectWithoutLink={showToast} />
+              <div className="vanguard-bar-right">
+                <InstitutionLinks onSelectWithoutLink={showToast} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <VerticalMenuDrawer
-        isOpen={isMenuOpen}
-        onClose={closeMenu}
-        onSelectPending={handlePendingLink}
-        headerRef={headerRef}
-      />
-    </header>
+        <VerticalMenuDrawer
+          isOpen={isMenuOpen}
+          onClose={closeMenu}
+          onSelectPending={handlePendingLink}
+          headerRef={headerRef}
+        />
+      </header>
+
+      {/* El encabezado es fijo: este espacio reserva su alto completo (188 px) para que el
+          contenido empiece debajo y no salte cuando el encabezado se compacta al bajar */}
+      <div className="vanguard-header-spacer" aria-hidden="true" />
+    </>
   );
 }
