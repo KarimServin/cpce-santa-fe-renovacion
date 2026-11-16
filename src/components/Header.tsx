@@ -104,8 +104,9 @@ export default function Header() {
         />
       </header>
 
-      {/* El encabezado es fijo: este espacio reserva su alto completo (168 px) para que el
-          contenido empiece debajo y no salte cuando el encabezado se compacta al bajar */}
+      {/* En desktop el encabezado es fijo: este espacio reserva su alto (168 px) para que el
+          contenido empiece debajo. En celulares y tablets no se muestra (el encabezado se
+          desplaza con la página) */}
       <div className="vanguard-header-spacer" aria-hidden="true" />
     </>
   );

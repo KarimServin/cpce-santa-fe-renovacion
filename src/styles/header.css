@@ -17,8 +17,6 @@
      redujo a 120 (menos aire arriba y abajo, mismo logo de 84 px): total 48 + 120 = 168 px */
   --vanguard-topbar-h: 48px;
   --vanguard-mainbar-h: 120px;
-  /* Barra principal compacta al hacer scroll (solo escritorio, ver más abajo) */
-  --vanguard-mainbar-compact-h: 100px;
   /* Margen lateral del diseño: 77 px en un ancho de 1440 px */
   --vanguard-gutter: clamp(16px, 5.35vw, 77px);
   /* Transición pausada y pareja (aceleración y frenado suaves), sin rebotes */
@@ -33,26 +31,32 @@
   }
 }
 
-/* Grande arriba (como en Figma) y compacto al bajar. El encabezado es fijo y el espaciador
-   de abajo reserva siempre el alto completo (168 px): así, al compactarse, el contenido no salta. Al hacer
-   scroll la barra azul sale por arriba y la blanca se achica (--vanguard-mainbar-compact-h). */
+/* Desktop (≥ 1024 px): el encabezado queda fijo arriba y no cambia al hacer scroll; el
+   espaciador de abajo reserva su alto (168 px) para que el contenido empiece debajo.
+   Celulares y tablets: el encabezado va en el flujo normal y se desplaza con la página. */
 .vanguard-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 1000;
   width: 100%;
-  transition: transform var(--vanguard-header-transition);
   animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-.vanguard-header--scrolled {
-  transform: translateY(calc(var(--vanguard-topbar-h) * -1));
+.vanguard-header-spacer {
+  display: none;
 }
 
-.vanguard-header-spacer {
-  height: calc(var(--vanguard-topbar-h) + var(--vanguard-mainbar-h));
+@media (min-width: 1024px) {
+  .vanguard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .vanguard-header-spacer {
+    display: block;
+    height: calc(var(--vanguard-topbar-h) + var(--vanguard-mainbar-h));
+  }
 }
 
 .vanguard-header-container {
@@ -1428,31 +1432,6 @@
   }
   .site-menu-group {
     width: 100%;
-  }
-}
-
-/* ── COMPACTO AL HACER SCROLL (escritorio) ──
-   Arriba de la página la barra blanca mide 120 px. Al bajar pasa a 100 px
-   con un cambio moderado (logo de 84 → 64 px, DSS/Caja de 56 → 44 px), todo con la misma
-   transición pausada para que se lea como un solo movimiento. */
-@media (min-width: 1024px) {
-  .vanguard-header--scrolled .vanguard-main-bar {
-    height: var(--vanguard-mainbar-compact-h);
-  }
-  .vanguard-header--scrolled .vanguard-brand-logo {
-    height: 64px;
-  }
-  .vanguard-header--scrolled .vanguard-institution {
-    padding: 10px 26px 10px 12px;
-  }
-  .vanguard-header--scrolled .vanguard-institution-logo {
-    height: 44px;
-  }
-  .vanguard-header--scrolled .vanguard-institution-arrow {
-    top: 6px;
-    right: 6px;
-    width: 14px;
-    height: 14px;
   }
 }
 

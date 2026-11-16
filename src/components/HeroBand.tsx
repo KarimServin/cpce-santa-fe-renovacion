@@ -22,7 +22,8 @@ export default function HeroBand({ children }: HeroBandProps) {
     video.defaultMuted = true;
 
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const gestures = ['pointerdown', 'touchstart', 'keydown'] as const;
+    // iOS solo acepta reproducir dentro de un gesto completo (touchend / click), no en touchstart
+    const gestures = ['touchend', 'click', 'keydown', 'pointerdown'] as const;
 
     // Si el celular bloqueó la reproducción automática (p. ej. iPhone en modo ahorro de energía),
     // el video arranca con el primer toque o tecla en cualquier parte de la página
@@ -66,7 +67,10 @@ export default function HeroBand({ children }: HeroBandProps) {
           preload="auto"
           disablePictureInPicture
         >
-          <source src="/videos/hero-ciudad.mp4" type="video/mp4" />
+          {/* Safari (iPhone, iPad, Mac) toma la versión QuickTime nativa del archivo original;
+              el resto de los navegadores no reconoce ese tipo y pasa al MP4 estándar */}
+          <source src="/videos/hero-ciudad.mov" type="video/quicktime" />
+          <source src="/videos/hero-ciudad-web.mp4" type="video/mp4" />
         </video>
       </div>
       <div className="hero-band-tint" aria-hidden="true" />

@@ -53,12 +53,13 @@ export function VerticalMenuDrawer({
     return () => query.removeEventListener('change', update);
   }, []);
 
-  // El panel arranca en el borde inferior del encabezado (168 px arriba de todo, 100 px con
-  // scroll) y el botón de cerrar va justo encima del botón de menú
+  // El panel arranca en el borde inferior del encabezado (168 px en desktop, donde es fijo) y
+  // el botón de cerrar va justo encima del botón de menú
   useLayoutEffect(() => {
     if (!isOpen) return;
     const measure = () => {
-      setTop(Math.round(headerRef.current?.getBoundingClientRect().bottom ?? 0));
+      // En celulares el encabezado se desplaza con la página: si ya subió, el panel va arriba
+      setTop(Math.max(0, Math.round(headerRef.current?.getBoundingClientRect().bottom ?? 0)));
       const button = anchorRef.current?.getBoundingClientRect();
       setAnchor(button ? { top: button.top, left: button.left, size: button.width } : null);
     };
