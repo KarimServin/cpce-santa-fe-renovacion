@@ -28,7 +28,7 @@ const INSTITUTIONS: Institution[] = [
     description: 'Departamento de Servicios Sociales',
     // Logo vectorial exportado de Figma ("logo DSS"), recortado a su dibujo (sin los márgenes
     // transparentes del original de 82 × 40) para que a la misma altura pese igual que el de Caja
-    logo: { src: '/images/header/logo-dss.svg', width: 74.5, height: 29.4 },
+    logo: { src: '/images/header/logo-dss-recortado.svg', width: 74.5, height: 29.4 },
     hint: 'Obra Social · DSS',
     toastLabel: 'Obra Social - DSS',
   },
