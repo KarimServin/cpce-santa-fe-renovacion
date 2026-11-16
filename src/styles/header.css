@@ -1086,12 +1086,13 @@
   width: 186px;
   padding: 12px 16px;
   background: transparent;
-  border: 1px solid var(--neutro-100);
+  /* Sin borde visible (pedido del cliente); se deja transparente para conservar las medidas */
+  border: 1px solid transparent;
   border-radius: 12px;
   font: inherit;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.18s ease, width var(--vanguard-header-transition),
+  transition: background-color 0.18s ease, width var(--vanguard-header-transition),
     padding var(--vanguard-header-transition);
 }
 
@@ -1125,14 +1126,10 @@
   outline-offset: 2px;
 }
 
-/* El diseño solo define el estado normal: al pasar el mouse el borde toma el acento de cada institución */
+/* Sin borde, al pasar el mouse se marca el área con un fondo gris muy suave */
 @media (hover: hover) {
-  .vanguard-institution--dss:hover {
-    border-color: var(--dss-naranja-acento);
-  }
-
-  .vanguard-institution--caja:hover {
-    border-color: var(--caja-verde-acento);
+  .vanguard-institution:hover {
+    background: var(--neutro-50);
   }
 }
 
