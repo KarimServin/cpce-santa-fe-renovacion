@@ -50,7 +50,8 @@ const INSTITUTIONS: Institution[] = [
       width: 496,
       height: 146,
       srcSet: CAJA_SRCSET,
-      sizes: '(min-width: 1024px) 136px, (min-width: 861px) 109px, (min-width: 641px) 95px, 82px',
+      sizes:
+        '(min-width: 1024px) and (max-height: 900px) 109px, (min-width: 1024px) 136px, (min-width: 861px) 109px, (min-width: 641px) 95px, 82px',
     },
     href: 'https://www.cajaprofesional.org.ar/',
     hint: 'Ir a cajaprofesional.org.ar',
