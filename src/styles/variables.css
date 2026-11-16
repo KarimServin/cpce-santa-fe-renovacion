@@ -57,6 +57,31 @@
   --shadow-card-hover: 0 10px 24px rgba(0, 36, 71, 0.09);
   --radius-card: 12px;
   --radius-pill: 9999px;
+
+  /* Sistema de diseño Fase 2 (Figma "CPCE1_Web_Fase2", estilos) */
+  --cpce-azul-base: #064b76;
+  --cpce-azul-acento: #006eee;
+  --cpce-gris-fresco: #96989a;
+  --cpce-blanco: #fefefe;
+  --dss-naranja-base: #cd6209;
+  --dss-naranja-acento: #ef720b;
+  --caja-verde-base: #008a33;
+  --caja-verde-acento: #33bc67;
+  --alerta-rojo-base: #cd0909;
+  --alerta-rojo-acento: #ef0b0b;
+  --neutro-50: #f4f5f6;
+  --neutro-100: #e3e5e7;
+  --neutro-300: #96989a;
+  --neutro-500: #5f6368;
+  --neutro-900: #222629;
+  --perfil-celeste: #0096f0;
+  --perfil-verde: #37c6b1;
+  --perfil-lila: #ab83dd;
+  /* "Sombra Vertical": drop shadow 0 6 con radio 6 al 12 % */
+  --sombra-vertical: 0 6px 6px rgba(0, 0, 0, 0.12);
+  /* Tipografía del sistema: Lato (Google Fonts solo trae 400/700/900: Medium cae en 400
+     y ExtraBold en 900) */
+  --font-sistema: var(--font-lato), 'Lato', system-ui, -apple-system, sans-serif;
 }
 
 * {

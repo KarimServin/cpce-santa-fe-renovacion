@@ -29,6 +29,9 @@
 /* 8. Novedades y actualidad */
 @import '../styles/news.css';
 
+/* 8.1. Herramientas frecuentes (accesos por perfil) */
+@import '../styles/frequent-tools.css';
+
 /* 9. Capacitación y educación */
 @import '../styles/education.css';
 

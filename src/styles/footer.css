@@ -1,493 +1,262 @@
 /* ================================================================
-   FOOTER INSTITUCIONAL CPCE SANTA FE — CÁMARA PRIMERA
-   Estética Hero & Vanguardia: Paleta unificada azulada/gris,
-   manchas aurora de fondo, tarjetas refinadas y logo oficial.
+   PIE DE PÁGINA INSTITUCIONAL — CPCE SANTA FE · CÁMARA I
+   Figma: "Pie de página" (1440 × 380). Fondo azul oscuro con esquinas superiores de 42 px,
+   cuatro "Columnas" de 297,5 px con 32 px entre sí y el "Pie inferior" (copyright + legales).
+   Tipografía Lato: SemiBold (600) se ve con el 700 cargado y Medium (500) con el 400.
    ================================================================ */
 
-.footer-renovated {
-  position: relative;
-  background: #ffffff;
-  color: #334155;
-  overflow: hidden;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  border-top: 1px solid rgba(226, 232, 240, 0.9);
+.footer {
+  /* Variable "dark-blue" de Figma (no está entre los estilos del sistema) */
+  background: #032b49;
+  border-radius: 42px 42px 0 0;
+  color: var(--cpce-blanco);
+  font-family: var(--font-sistema);
 }
 
-/* ── 1. LÍNEA SUPERIOR DE GRADIENTE INSTITUCIONAL ── */
-.footer-gradient-accent {
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(90deg, #0052FF 0%, #009FE3 45%, #002B5C 100%);
+.footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px var(--vanguard-gutter) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-/* ── 2. MANCHAS AURORA DECORATIVAS DE FONDO (HERO & CHAMBERS STYLE) ── */
-.footer-aurora-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.footer-aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.footer-aurora-blob--left {
-  width: clamp(380px, 45vw, 600px);
-  height: clamp(300px, 35vw, 480px);
-  bottom: -120px;
-  left: -100px;
-  background: radial-gradient(
-    circle at 45% 45%,
-    rgba(0, 82, 255, 0.12) 0%,
-    rgba(14, 165, 233, 0.08) 38%,
-    rgba(37, 99, 235, 0.03) 60%,
-    transparent 74%
-  );
-  filter: blur(60px);
-}
-
-.footer-aurora-blob--right {
-  width: clamp(360px, 40vw, 540px);
-  height: clamp(280px, 32vw, 420px);
-  top: -80px;
-  right: -90px;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(0, 82, 255, 0.10) 0%,
-    rgba(79, 70, 229, 0.07) 40%,
-    transparent 70%
-  );
-  filter: blur(65px);
-}
-
-/* ── 3. CONTENEDOR PRINCIPAL ── */
-.footer-content-wrap {
-  position: relative;
-  z-index: 1;
-}
-
-.footer-main-grid {
+/* ── "Columnas": cuatro columnas iguales ── */
+.footer-columns {
   display: grid;
-  grid-template-columns: 1.4fr 1.15fr 1fr;
-  gap: 48px;
-  padding: 56px 0 44px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  align-items: start;
 }
 
-/* ── 4. COLUMNA 1: IDENTIDAD INSTITUCIONAL & LOGO ── */
-.footer-brand-col {
+.footer-col {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 12px;
 }
 
-.footer-brand-logo-link {
-  display: inline-block;
-  margin-bottom: 16px;
-  text-decoration: none;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+/* "Seguinos": logo negativo arriba y redes 48 px más abajo */
+.footer-col--brand {
+  gap: 48px;
 }
 
-.footer-brand-logo-link:hover {
-  transform: translateY(-2px);
-  opacity: 0.92;
+/* Título "Seguinos" y redes, separados 12 px */
+.footer-follow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.footer-brand-logo {
-  width: 275px;
+/* ── "logo negativo": caja de 249,6 × 80 con el logo (236,35 × 69,42) desplazado 6 / 5,3 px ── */
+.footer-logo-link {
+  display: block;
+  max-width: 100%;
+  padding: 5.29px 7.29px 5.29px 5.97px;
+  border-radius: 4px;
+}
+
+.footer-logo {
+  display: block;
+  width: 236.35px;
   max-width: 100%;
   height: auto;
-  display: block;
-  object-fit: contain;
+  /* "Sombra · 3": blanco al 40 %, radio 2 */
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.4));
 }
 
-.footer-brand-eyebrow {
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #0052FF;
-  margin-bottom: 12px;
-  display: block;
+/* ── Títulos de columna (Títulos/H4: Lato SemiBold 18 / 24) ── */
+.footer-heading {
+  margin: 0;
+  font-family: var(--font-sistema);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--cpce-blanco);
 }
 
-.footer-brand-desc {
-  font-size: 13px;
-  line-height: 1.62;
-  color: #475569;
-  margin: 0 0 16px;
-  max-width: 360px;
+/* ── Listas de enlaces ("Enlace · Pie de página": Lato Medium 14 / 20, espaciado 1 %) ── */
+.footer-links,
+.footer-social,
+.footer-legal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Cada renglón mide 20 px (el body usa 15 px / 1,6 y agrandaría la línea) */
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.footer-brand-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.footer-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  background: rgba(0, 82, 255, 0.06);
-  border: 1px solid rgba(0, 82, 255, 0.16);
-  color: #0052FF;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-/* Redes Sociales y Canales */
-.footer-social-wrap {
+.footer-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.footer-social-label {
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #64748B;
+.footer-contact {
+  font-style: normal;
 }
 
-.footer-social-icons {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+.footer-link,
+.footer-text,
+.footer-copy {
+  font-family: var(--font-sistema);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.14px;
 }
 
-.footer-social-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1.5px solid #E2E8F0;
-  color: #0b192c;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(11, 25, 44, 0.04);
+.footer-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cpce-blanco);
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.footer-social-btn:hover {
-  background: #0052FF;
-  border-color: #0052FF;
-  color: #ffffff;
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 82, 255, 0.25);
+.footer-text {
+  color: var(--cpce-blanco);
 }
 
-.footer-social-btn--whatsapp:hover {
-  background: #059669;
-  border-color: #059669;
-  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.25);
+/* Estado hover del componente: subrayado con grosor y posición de la fuente */
+.footer-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
 }
 
-/* ── 5. ENCABEZADOS DE COLUMNAS ── */
-.footer-col-eyebrow {
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #0052FF;
-  margin-bottom: 6px;
-  display: block;
-}
-
-.footer-col-title {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: #0b192c;
-  letter-spacing: -0.015em;
-  margin: 0 0 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ── 6. COLUMNA 2: SEDE CENTRAL SANTA FE ── */
-.footer-contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  margin-bottom: 20px;
-}
-
-.footer-contact-item {
+/* ── "Redes sociales": íconos de 16 px separados 14 px ── */
+.footer-social {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #334155;
+  gap: 14px;
 }
 
-.footer-contact-icon {
-  width: 17px;
-  height: 17px;
-  color: #0076C0;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.footer-contact-detail {
+.footer-social li {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
 }
 
-.footer-contact-detail strong {
-  font-size: 11.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #64748B;
-  font-weight: 700;
+.footer-social-link {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  transition: opacity 0.18s ease;
 }
 
-.footer-contact-detail span {
-  color: #1e293b;
-  font-weight: 500;
+/* Área táctil más grande sin mover los íconos */
+.footer-social-link::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
 }
 
-.footer-inline-link {
-  color: #0076C0;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.18s ease;
+.footer-social-link img {
+  display: block;
 }
 
-.footer-inline-link:hover {
-  color: #0052FF;
-  text-decoration: underline;
+.footer-social-link:hover {
+  opacity: 0.72;
 }
 
-.footer-portal-btn {
-  display: inline-flex;
+/* ── "Pie inferior": copyright (gris 300) a la izquierda y enlaces legales a la derecha ── */
+.footer-bottom {
+  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  max-width: 250px;
-  padding: 10px 16px;
-  background: #0b192c;
-  color: #ffffff;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(11, 25, 44, 0.12);
+  gap: 24px;
 }
 
-.footer-portal-btn:hover {
-  background: #0052FF;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 82, 255, 0.25);
-}
-
-/* ── 7. COLUMNA 3: SERVICIOS Y ENLACES ── */
-.footer-links-list {
-  list-style: none;
-  padding: 0;
+.footer-copy {
+  flex: 1 1 0;
+  min-width: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  color: var(--neutro-300);
 }
 
-.footer-link-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 550;
-  color: #334155;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.18s ease;
-}
-
-.footer-link-bullet {
-  color: #0076C0;
+.footer-legal {
   flex-shrink: 0;
-  transition: transform 0.18s ease, color 0.18s ease;
-}
-
-.footer-link-action:hover {
-  color: #0052FF;
-  transform: translateX(3px);
-}
-
-.footer-link-action:hover .footer-link-bullet {
-  color: #0052FF;
-  transform: translateX(2px);
-}
-
-/* ── 9. BARRA INFERIOR / COPYRIGHT & ACCIONES ── */
-.footer-bottom-bar {
-  border-top: 1px solid rgba(226, 232, 240, 0.9);
-  padding: 24px 0 32px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 24px;
 }
 
-.footer-bottom-legal {
-  max-width: 680px;
+/* ── Foco visible en blanco (el azul global no contrasta sobre el fondo oscuro) ── */
+.footer a:focus-visible,
+.footer button:focus-visible {
+  outline: 2px solid var(--cpce-blanco);
+  outline-offset: 3px;
 }
 
-.footer-bottom-copy {
-  margin: 0 0 4px;
-  font-size: 12px;
-  color: #475569;
-  font-weight: 600;
-}
-
-.footer-bottom-sub {
-  margin: 0;
-  font-size: 11.5px;
-  color: #64748B;
-}
-
-.footer-bottom-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.footer-bottom-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer-bottom-link-btn {
-  background: transparent;
-  border: none;
+.footer-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 550;
-  color: #64748B;
-  cursor: pointer;
-  transition: color 0.18s ease;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.footer-bottom-link-btn:hover {
-  color: #0052FF;
-  text-decoration: underline;
-}
-
-.footer-bottom-separator {
-  color: #CBD5E1;
-  font-size: 12px;
-}
-
-.footer-back-to-top-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
-  background: #ffffff;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 9999px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 650;
-  color: #0b192c;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(11, 25, 44, 0.04);
-}
-
-.footer-back-to-top-btn:hover {
-  background: #0b192c;
-  border-color: #0b192c;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(11, 25, 44, 0.15);
-}
-
-/* ── 8. RESPONSIVE / MEDIA QUERIES ── */
-@media (max-width: 1024px) {
-  .footer-main-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── TABLET: el logo y "Seguinos" pasan a una fila y debajo quedan tres columnas ── */
+@media (max-width: 1023px) {
+  .footer-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px 32px;
-    padding: 48px 0 36px;
   }
 
-  .footer-brand-col {
-    grid-column: span 2;
-    max-width: 580px;
+  .footer-col--brand {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 32px;
   }
 }
 
-@media (max-width: 680px) {
-  .footer-main-grid {
-    grid-template-columns: 1fr;
+/* ── MOBILE: todo en una columna ── */
+@media (max-width: 640px) {
+  .footer {
+    border-radius: 28px 28px 0 0;
+  }
+
+  .footer-inner {
+    padding: 40px var(--vanguard-gutter) 32px;
     gap: 32px;
-    padding: 40px 0 28px;
   }
 
-  .footer-brand-col {
-    grid-column: span 1;
-    max-width: 100%;
+  .footer-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
   }
 
-  .footer-brand-logo {
-    width: 240px;
+  .footer-col--brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
   }
 
-  .footer-bottom-bar {
+  .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
-
-  .footer-bottom-actions {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .footer-bottom-links {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .footer-back-to-top-btn {
-    align-self: flex-start;
-    margin-top: 4px;
-  }
 }
 
-@media (max-width: 480px) {
-  .footer-brand-logo {
-    width: 220px;
+@media (prefers-reduced-motion: reduce) {
+  .footer-social-link {
+    transition: none;
   }
 }
-

@@ -1,449 +1,170 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { HOME_CONTENT, NavItem } from '../../content/home';
+import Link from 'next/link';
+import { SITE_MENU, MenuLink } from '../../content/menu';
 
 interface VerticalMenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onItemAction: (
-    action?: { type: 'toast' | 'dialog' | 'link'; target?: string },
-    options?: { keepMenuOpen?: boolean; categoryId?: string }
-  ) => void;
-  activeItemId?: string;
-  onSelectCategory?: (id: string) => void;
+  /** Enlace sin página propia todavía: el encabezado muestra un aviso. */
+  onSelectPending: (link: MenuLink) => void;
+  /** Encabezado: el panel se ubica justo debajo de su borde inferior. */
+  headerRef: React.RefObject<HTMLElement | null>;
 }
 
-export function VerticalMenuDrawer({
-  isOpen,
-  onClose,
-  onItemAction,
-  activeItemId: controlledActiveItemId,
-  onSelectCategory,
-}: VerticalMenuDrawerProps) {
-  const [isMobile, setIsMobile] = useState(false);
-  const [internalActiveId, setInternalActiveId] = useState<string>(HOME_CONTENT.navItems[0]?.id || 'institucional');
-  const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
-  const [selectedSubTitle, setSelectedSubTitle] = useState<string | null>(null);
-  const drawerRef = useRef<HTMLDivElement | null>(null);
+const MOBILE_QUERY = '(max-width: 1023px)';
 
-  const activeItemId = controlledActiveItemId ?? internalActiveId;
-  const setActiveItemId = (id: string) => {
-    setInternalActiveId(id);
-    onSelectCategory?.(id);
-  };
+/**
+ * Menú desplegable según Figma (componente "Menú desplegable"): panel blanco de 920 px con
+ * radio 42 bajo el encabezado, con la lista de secciones a la izquierda (280 px) y el
+ * contenido de la sección activa a la derecha (640 px). En pantallas angostas las secciones
+ * se despliegan como acordeón.
+ */
+export function VerticalMenuDrawer({ isOpen, onClose, onSelectPending, headerRef }: VerticalMenuDrawerProps) {
+  const [activeId, setActiveId] = useState(SITE_MENU[0].id);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [top, setTop] = useState(0);
+  const firstItemRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const query = window.matchMedia(MOBILE_QUERY);
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
   }, []);
 
-  // Cerrar al pulsar Escape
+  // El panel arranca en el borde inferior del encabezado (188 px arriba de todo, 140 px con scroll)
+  useLayoutEffect(() => {
+    if (!isOpen) return;
+    const measure = () => setTop(Math.round(headerRef.current?.getBoundingClientRect().bottom ?? 0));
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [isOpen, headerRef]);
+
+  // Mientras está abierto: sin scroll de fondo, Escape cierra y el foco entra al menú
   useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
+      if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    firstItemRef.current?.focus({ preventScroll: true });
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
-  // Lock scroll en mobile
-  useEffect(() => {
-    if (isOpen && isMobile) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+  if (!isOpen || typeof document === 'undefined') return null;
+
+  const activeSection = SITE_MENU.find((section) => section.id === activeId) ?? SITE_MENU[0];
+
+  const renderLink = (link: MenuLink) => {
+    const label = link.external ? `${link.label} ↗` : link.label;
+    if (link.href) {
+      return link.external ? (
+        <a className="site-menu-link" href={link.href} target="_blank" rel="noopener noreferrer" onClick={onClose}>
+          {label}
+        </a>
+      ) : (
+        <Link className="site-menu-link" href={link.href} onClick={onClose}>
+          {label}
+        </Link>
+      );
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen, isMobile]);
+    return (
+      <button type="button" className="site-menu-link" onClick={() => onSelectPending(link)}>
+        {label}
+      </button>
+    );
+  };
 
-  if (!isOpen) return null;
+  const renderGroups = (sectionId: string) => {
+    const section = SITE_MENU.find((s) => s.id === sectionId);
+    if (!section) return null;
+    return (
+      <div className="site-menu-groups">
+        {section.groups.map((group, index) => (
+          <div key={group.label ?? index} className="site-menu-group">
+            {group.label && <p className="site-menu-group-label">{group.label.toUpperCase()}</p>}
+            <ul className="site-menu-group-links">
+              {group.links.map((link) => (
+                <li key={link.label}>{renderLink(link)}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
-  const currentActiveItem =
-    HOME_CONTENT.navItems.find((item) => item.id === activeItemId) || HOME_CONTENT.navItems[0];
-  const hasSubmenu = Boolean(
-    currentActiveItem?.children &&
-      currentActiveItem.children.columns &&
-      currentActiveItem.children.columns.length > 0
+  const chevron = (active: boolean) => (
+    <img
+      src={active ? '/images/header/icono-chevron-activo.svg' : '/images/header/icono-chevron.svg'}
+      alt=""
+      width={16}
+      height={16}
+      className="site-menu-chevron"
+    />
   );
 
-  const colCount = currentActiveItem?.children?.columns?.length || 1;
-  const hasFeatured = Boolean(currentActiveItem?.children?.featured);
-  const hasFramedSubCols = currentActiveItem?.children?.columns?.some((c) => c.framed && c.subColumns);
-
-  // Clase temática si es obra-social o caja
-  const themeClass = currentActiveItem ? `vanguard-mega-panel--${currentActiveItem.id}` : '';
-
-  const panel = (
+  // Se monta en document.body para que el fondo cubra toda la pantalla
+  return createPortal(
     <>
-      {/* Fondo backdrop difuminado.
-          Se renderiza en document.body mediante portal: el <header> tiene backdrop-filter,
-          lo que lo convierte en containing block de los hijos position:fixed y recortaba
-          el backdrop a una franja oscura dentro del header. */}
-      {typeof document !== 'undefined' &&
-        createPortal(
-          <div
-            className="vertical-menu-backdrop"
-            onClick={onClose}
-            aria-hidden="true"
-          />,
-          document.body
-        )}
-
-      {/* Flyout panel */}
-      <div
-        ref={drawerRef}
-        className={`vertical-menu-container ${themeClass}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menú de navegación"
-      >
-        {/* Botón flotante para cerrar en esquina superior */}
-        <button
-          type="button"
-          className="vertical-menu-close-fab"
-          onClick={onClose}
-          aria-label="Cerrar menú"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-        </button>
-
-        {/* Cuerpo del menú */}
-        <div className="vertical-menu-body">
-          {/* COLUMNA 1 (IZQUIERDA): Categorías principales en vertical */}
-          <div className="vertical-menu-categories">
-            {/* Opciones principales de navegación */}
-            {HOME_CONTENT.navItems.map((item: NavItem) => {
-              const hasChildren = Boolean(
-                item.children && item.children.columns && item.children.columns.length > 0
-              );
-              const isActive = activeItemId === item.id;
-              const isMobileExpanded = mobileExpandedId === item.id;
-
-              return (
-                <div key={item.id} className="vertical-category-row">
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    className={`vertical-category-item ${isActive ? 'vertical-category-item--active' : ''}`}
-                    onMouseEnter={() => {
-                      if (!isMobile) setActiveItemId(item.id);
-                    }}
-                    onClick={() => {
-                      setActiveItemId(item.id);
-                      if (isMobile) {
-                        setMobileExpandedId(isMobileExpanded ? null : item.id);
+      <div className="site-menu-backdrop" style={{ top }} onClick={onClose} aria-hidden="true" />
+      <div className="site-menu-layer" style={{ top }}>
+        <div className="vanguard-header-container">
+          <nav
+            id="site-menu"
+            className="site-menu-panel"
+            aria-label="Menú principal"
+            style={{ maxHeight: `calc(100vh - ${top}px - 16px)` }}
+          >
+            <ul className="site-menu-sections">
+              {SITE_MENU.map((section, index) => {
+                const isActive = isMobile ? expandedId === section.id : activeId === section.id;
+                return (
+                  <li key={section.id}>
+                    <button
+                      ref={index === 0 ? firstItemRef : undefined}
+                      type="button"
+                      className={`site-menu-section-btn ${isActive ? 'site-menu-section-btn--active' : ''}`}
+                      aria-expanded={isMobile ? isActive : undefined}
+                      aria-current={!isMobile && isActive ? 'true' : undefined}
+                      onMouseEnter={isMobile ? undefined : () => setActiveId(section.id)}
+                      onFocus={isMobile ? undefined : () => setActiveId(section.id)}
+                      onClick={() =>
+                        isMobile
+                          ? setExpandedId((current) => (current === section.id ? null : section.id))
+                          : setActiveId(section.id)
                       }
-                      if (!hasChildren && item.action) {
-                        onItemAction(item.action, { categoryId: item.id });
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        setActiveItemId(item.id);
-                        if (isMobile) setMobileExpandedId(isMobileExpanded ? null : item.id);
-                      }
-                    }}
-                  >
-                    <div className="vertical-category-left">
-                      <span className="vertical-category-title">{item.label}</span>
-                    </div>
+                    >
+                      <span>{section.label}</span>
+                      {chevron(isActive)}
+                    </button>
+                    {isMobile && isActive && <div className="site-menu-accordion">{renderGroups(section.id)}</div>}
+                  </li>
+                );
+              })}
+            </ul>
 
-                    {hasChildren && (
-                      <span className="vertical-category-arrow">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d={isMobile && isMobileExpanded ? 'M6 9l6 6 6-6' : 'M9 18l6-6-6-6'} />
-                        </svg>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Mobile inline acordeón */}
-                  {isMobile && isMobileExpanded && hasChildren && item.children && (
-                    <div className="vertical-mobile-accordion-content">
-                      {item.children.columns.map((col, cIdx) => (
-                        <div key={cIdx} className="vertical-mobile-group">
-                          <div className="vertical-mobile-group-title">{col.heading}</div>
-                          <div className="vertical-mobile-items-list">
-                            {(col.subColumns ? col.subColumns.flat() : (col.items || [])).map((sub, sIdx) => (
-                              <a
-                                key={sIdx}
-                                href={sub.href}
-                                className={`vertical-subitem-link ${selectedSubTitle === sub.title ? 'vertical-subitem-link--selected' : ''}`}
-                                onClick={(e) => {
-                                  setActiveItemId(item.id);
-                                  setSelectedSubTitle(sub.title);
-                                  const isObra = item.id === 'obra-social';
-                                  if (sub.action) {
-                                    e.preventDefault();
-                                    onItemAction(sub.action, { keepMenuOpen: isObra, categoryId: item.id });
-                                  } else if (isObra) {
-                                    e.preventDefault();
-                                  } else {
-                                    onClose();
-                                  }
-                                }}
-                              >
-                                <span className="vertical-subitem-title">{sub.title}</span>
-                                {sub.desc && <span className="vertical-subitem-desc">{sub.desc}</span>}
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-
-                      {item.children.featured && (
-                        <div className="vertical-mobile-featured-card">
-                          <span className="vertical-featured-tag">{item.children.featured.tag}</span>
-                          <h4 className="vertical-featured-title">{item.children.featured.title}</h4>
-                          <p className="vertical-featured-desc">{item.children.featured.desc}</p>
-                          <a
-                            href={item.children.featured.href}
-                            className="vertical-featured-cta"
-                            onClick={(e) => {
-                              setActiveItemId(item.id);
-                              if (item.id === 'obra-social') {
-                                e.preventDefault();
-                                onItemAction({ type: 'toast', target: 'Obra Social - DSS' }, { keepMenuOpen: true, categoryId: item.id });
-                              } else {
-                                onClose();
-                              }
-                            }}
-                          >
-                            {item.children.featured.cta}
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            {/* Acceso final: Consultar profesionales habilitados */}
-            <div className="vertical-category-row vertical-category-row--last">
-              <div
-                role="button"
-                tabIndex={0}
-                className="vertical-category-item vertical-category-item--action"
-                onClick={() => {
-                  onClose();
-                  onItemAction({ type: 'dialog', target: 'matricula' });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    onClose();
-                    onItemAction({ type: 'dialog', target: 'matricula' });
-                  }
-                }}
-              >
-                <div className="vertical-category-left">
-                  <span className="vertical-category-icon">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <polyline points="16 11 18 13 22 9" />
-                    </svg>
-                  </span>
-                  <span className="vertical-category-title">Consultar profesionales habilitados</span>
-                </div>
+            {!isMobile && (
+              <div className="site-menu-content">
+                <p className="site-menu-title">{activeSection.label}</p>
+                {renderGroups(activeSection.id)}
               </div>
-            </div>
-          </div>
-
-          {/* COLUMNA 2 (DERECHA EN DESKTOP): MEGAPANEL CON MULTICOLUMNAS ORIGINALES */}
-          {!isMobile && (
-            <div className="vertical-menu-flyout">
-              {hasSubmenu && currentActiveItem?.children ? (
-                <div className="vertical-flyout-content-wrap">
-                  {/* Encabezado de la categoría */}
-                  <div className="vertical-flyout-header">
-                    <h3 className="vertical-flyout-main-title">{currentActiveItem.label}</h3>
-                    <div className="vertical-flyout-line" />
-                  </div>
-
-                  {/* Grilla idéntica a MegaPanel */}
-                  <div
-                    className={`vertical-flyout-grid ${
-                      !hasFeatured ? 'vertical-flyout-grid--no-featured' : ''
-                    } ${colCount === 1 && hasFeatured ? 'vertical-flyout-grid--single-featured' : ''}`}
-                    style={
-                      !hasFeatured
-                        ? hasFramedSubCols && colCount === 2
-                          ? { gridTemplateColumns: '240px 1fr' }
-                          : { gridTemplateColumns: `repeat(${colCount}, minmax(210px, 1fr))` }
-                        : colCount === 1
-                        ? { gridTemplateColumns: '1fr 240px' }
-                        : { gridTemplateColumns: `repeat(${colCount}, 1fr) 240px` }
-                    }
-                  >
-                    {currentActiveItem.children.columns.map((col, cIdx) => {
-                      if (col.framed && col.subColumns) {
-                        return (
-                          <div key={cIdx} className="vanguard-mega-col vanguard-mega-col--framed">
-                            <div className="vanguard-framed-head">
-                              <span className="vanguard-mega-heading">{col.heading}</span>
-                            </div>
-                            <div className="vanguard-framed-subcols">
-                              {col.subColumns.map((subCol, scIdx) => (
-                                <div key={scIdx} className="vanguard-framed-subcol">
-                                  {subCol.map((sub, sIdx) => (
-                                    <a
-                                      key={sub.title + sIdx}
-                                      href={sub.href}
-                                      className={`vanguard-mega-item ${selectedSubTitle === sub.title ? 'vanguard-mega-item--selected' : ''}`}
-                                      onClick={(e) => {
-                                        setActiveItemId(currentActiveItem.id);
-                                        setSelectedSubTitle(sub.title);
-                                        const isObra = currentActiveItem.id === 'obra-social';
-                                        if (sub.action) {
-                                          e.preventDefault();
-                                          onItemAction(sub.action, { keepMenuOpen: isObra, categoryId: currentActiveItem.id });
-                                        } else if (isObra) {
-                                          e.preventDefault();
-                                        } else {
-                                          onClose();
-                                        }
-                                      }}
-                                    >
-                                      <span className="vanguard-mega-title">{sub.title}</span>
-                                      {sub.desc && (
-                                        <span className="vanguard-mega-desc">{sub.desc}</span>
-                                      )}
-                                    </a>
-                                  ))}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      return (
-                        <div
-                          key={cIdx}
-                          className={`vanguard-mega-col ${col.framed ? 'vanguard-mega-col--framed' : ''}`}
-                        >
-                          <span className="vanguard-mega-heading">{col.heading}</span>
-                          {(col.items || []).map((sub, sIdx) => (
-                            <a
-                              key={sub.title + sIdx}
-                              href={sub.href}
-                              className={`vanguard-mega-item ${selectedSubTitle === sub.title ? 'vanguard-mega-item--selected' : ''}`}
-                              onClick={(e) => {
-                                setActiveItemId(currentActiveItem.id);
-                                setSelectedSubTitle(sub.title);
-                                const isObra = currentActiveItem.id === 'obra-social';
-                                if (sub.action) {
-                                  e.preventDefault();
-                                  onItemAction(sub.action, { keepMenuOpen: isObra, categoryId: currentActiveItem.id });
-                                } else if (isObra) {
-                                  e.preventDefault();
-                                } else {
-                                  onClose();
-                                }
-                              }}
-                            >
-                              <span className="vanguard-mega-title">{sub.title}</span>
-                              {sub.desc && (
-                                <span className="vanguard-mega-desc">{sub.desc}</span>
-                              )}
-                            </a>
-                          ))}
-                        </div>
-                      );
-                    })}
-
-                    {/* Tarjeta destacada si la tiene */}
-                    {currentActiveItem.children.featured && (
-                      <div className="vanguard-mega-featured">
-                        <span className="vanguard-featured-tag">
-                          {currentActiveItem.children.featured.tag}
-                        </span>
-                        <h4 className="vanguard-featured-title">
-                          {currentActiveItem.children.featured.title}
-                        </h4>
-                        <p className="vanguard-featured-desc">
-                          {currentActiveItem.children.featured.desc}
-                        </p>
-                        <a
-                          href={currentActiveItem.children.featured.href}
-                          className="vanguard-featured-cta"
-                          onClick={(e) => {
-                            setActiveItemId(currentActiveItem.id);
-                            if (currentActiveItem.id === 'obra-social') {
-                              e.preventDefault();
-                              onItemAction({ type: 'toast', target: 'Obra Social - DSS' }, { keepMenuOpen: true, categoryId: currentActiveItem.id });
-                            } else {
-                              onClose();
-                            }
-                          }}
-                        >
-                          {currentActiveItem.children.featured.cta}
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="vertical-flyout-empty">
-                  <p>Seleccioná una sección para explorar sus trámites y resoluciones.</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Footer del Drawer */}
-        <div className="vertical-menu-footer">
-          <div className="vertical-menu-footer-links">
-            <a
-              href="https://ssp.contadores.org.ar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="vertical-menu-btn-primary"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <span>Acceso Profesional</span>
-            </a>
-          </div>
-          <div className="vertical-menu-footer-caption">
-            CPCE Santa Fe · Cámara I
-          </div>
+            )}
+          </nav>
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
-
-  // En mobile el menú es pantalla completa (position: fixed). Como el <header> tiene
-  // backdrop-filter, un hijo fixed quedaría atrapado dentro del header, así que se
-  // renderiza en document.body.
-  if (isMobile && typeof document !== 'undefined') {
-    return createPortal(panel, document.body);
-  }
-
-  return panel;
 }

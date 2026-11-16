@@ -1,0 +1,408 @@
+/* ================================================================
+   HERRAMIENTAS FRECUENTES — Figma "CPCE1_Web_Fase2" · "Banda · Trámites frecuentes" (482:2387)
+   Banda blanca de 1440 × 519 (padding 60 / 77) con dos "Aurora blob center" de fondo y la
+   instancia "Sección · Herramientas frecuentes" (1286 × 399): encabezado, "Filtro por perfil",
+   "Fila de prueba · trámites" (carrusel de tarjetas de 201 × 144) y "Pie · carrusel".
+   ================================================================ */
+
+/* ── 1. BANDA ─────────────────────────────────────────────────── */
+.frequent-tools-band {
+  position: relative;
+  /* Sin fondo propio y recortada solo en horizontal: como en Figma, los "Aurora blob" se
+     funden con las bandas vecinas sobre el blanco de la página (.home-main) */
+  overflow-x: clip;
+  padding: 60px 0;
+  background: transparent;
+}
+
+/* "Aurora blob center (#0052FF 28% / #0EA5E9 16%, blur 52)": elipse de 1017 × 1029 con degradé
+   radial difuminado. El SVG exportado incluye el margen del desenfoque (1117 × 1129, 50 px por
+   lado), por eso las posiciones de Figma se corren 50 px. */
+.frequent-tools-aurora {
+  position: absolute;
+  z-index: 0;
+  width: 1117px;
+  height: 1129px;
+  background: url('/images/herramientas/aurora-blob.svg') no-repeat center / 100% 100%;
+  pointer-events: none;
+}
+
+/* 482:2388 — abajo a la izquierda (x −496, y −21 en la banda) */
+.frequent-tools-aurora--left {
+  top: -71px;
+  left: -546px;
+}
+
+/* 482:2389 — arriba a la derecha (x 1014, y −722.5): se ancla al borde derecho de la banda */
+.frequent-tools-aurora--right {
+  top: -772px;
+  right: -641px;
+}
+
+/* ── 2. CONTENEDOR (1286 px a x = 77, separación 28 entre bloques) ── */
+.frequent-tools-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--vanguard-gutter);
+}
+
+/* ── 3. "Encabezado · Herramientas frecuentes" (barra 54 × 7 + título, gap 18) ── */
+.frequent-tools-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.frequent-tools-accent {
+  display: block;
+  width: 54px;
+  height: 7px;
+  border-radius: 30px;
+  background: var(--cpce-azul-acento);
+}
+
+/* Títulos/H1: Lato Black 40/48 en CPCE/Azul base */
+.frequent-tools-title {
+  margin: 0;
+  font-family: var(--font-sistema);
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 48px;
+  letter-spacing: 0;
+  color: var(--cpce-azul-base);
+}
+
+/* ── 4. "Contenedor · Filtro por perfil" (centrado, 16 px arriba) ── */
+.frequent-tools-filter-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+/* "Filtro por perfil": píldora Gris 50 con borde Gris 100 y "Sombra · 1" interior */
+.frequent-tools-filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 4px 4px 4px 16px;
+  border: 1px solid var(--neutro-100);
+  border-radius: 999px;
+  background: var(--neutro-50);
+}
+
+/* En Figma la sombra interior es una capa por encima de los chips */
+.frequent-tools-filter::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  border-radius: inherit;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+/* Texto/Cuerpo chico: Lato Medium 14/20, espaciado 1 % (Medium cae en 400) */
+.frequent-tools-filter-label,
+.frequent-tools-chip {
+  font-family: var(--font-sistema);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.14px;
+  white-space: nowrap;
+}
+
+.frequent-tools-filter-label {
+  color: var(--neutro-500);
+}
+
+/* "Chip de perfil": 32 px de alto, fondo blanco ("Fondo hover"), Gris 900 */
+.frequent-tools-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 24px;
+  background: var(--cpce-blanco);
+  color: var(--neutro-900);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+/* El hover de Figma ("Hover · Chip", 353:1518) es igual al reposo: solo se tiñe el texto */
+.frequent-tools-chip:hover {
+  color: var(--cpce-azul-acento);
+}
+
+/* Estado "Activo": azul acento con texto blanco */
+.frequent-tools-chip--active,
+.frequent-tools-chip--active:hover {
+  background: var(--cpce-azul-acento);
+  color: var(--cpce-blanco);
+  cursor: default;
+}
+
+.frequent-tools-chip:focus-visible {
+  outline: 2px solid var(--cpce-azul-acento);
+  outline-offset: 2px;
+}
+
+/* ── 5. "Fila de prueba · trámites": carrusel horizontal (gap 16) ── */
+/* El relleno (y el margen negativo que lo compensa) deja ver la sombra de las tarjetas y el
+   foco sin que el recorte horizontal se aparte del ancho de la sección. */
+.frequent-tools-track {
+  display: flex;
+  gap: 16px;
+  margin: -6px -4px -16px;
+  padding: 6px 4px 16px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  scrollbar-width: none;
+}
+
+.frequent-tools-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Seis tarjetas por vista: 6 × 201 + 5 × 16 = 1286 */
+.frequent-tools-item {
+  flex: 0 0 calc((100% - 5 * 16px) / 6);
+  min-width: 0;
+  scroll-snap-align: start;
+  animation: frequentToolsCardIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.frequent-tools-item:nth-child(2) { animation-delay: 0.03s; }
+.frequent-tools-item:nth-child(3) { animation-delay: 0.06s; }
+.frequent-tools-item:nth-child(4) { animation-delay: 0.09s; }
+.frequent-tools-item:nth-child(5) { animation-delay: 0.12s; }
+.frequent-tools-item:nth-child(6) { animation-delay: 0.15s; }
+.frequent-tools-item:nth-child(7) { animation-delay: 0.18s; }
+
+/* Aparición al cambiar de perfil: solo vertical, sin desplazar contenido fuera de pantalla */
+@keyframes frequentToolsCardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* "Tarjeta de trámite": 201 × 144, borde Gris 100, radio 24, padding 16, gap 12 y la
+   "Sombra Vertical" de la fila. El borde de Figma va por dentro: 1 px + 15 px = 16 px. */
+.frequent-tools-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  height: 144px;
+  padding: 15px;
+  border: 1px solid var(--neutro-100);
+  border-radius: 24px;
+  background: var(--cpce-blanco);
+  box-shadow: var(--sombra-vertical);
+  font-family: var(--font-sistema);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease;
+}
+
+/* "Hover · Trámite" (274:1225): borde de 2 px celeste #23ADFF e ícono en Perfiles/adya-celeste */
+.frequent-tools-card:hover,
+.frequent-tools-card:focus-visible {
+  padding: 14px;
+  border: 2px solid #23adff;
+}
+
+.frequent-tools-card:focus-visible {
+  outline: 2px solid var(--cpce-azul-acento);
+  outline-offset: 2px;
+}
+
+/* "Ícono" 32 × 32: el SVG del diseño se usa como máscara para poder cambiarle el color */
+.frequent-tools-card-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background-color: var(--cpce-azul-acento);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 32px 32px;
+  mask-size: 32px 32px;
+  transition: background-color 0.18s ease;
+}
+
+.frequent-tools-card:hover .frequent-tools-card-icon,
+.frequent-tools-card:focus-visible .frequent-tools-card-icon {
+  background-color: var(--perfil-celeste);
+}
+
+/* "TExto Enlace Bold": Lato Bold 16/20, espaciado 2 %, CPCE/Azul base */
+.frequent-tools-card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.32px;
+  color: var(--cpce-azul-base);
+  overflow-wrap: break-word;
+}
+
+/* ── 6. "Pie · carrusel" › "Flechas" (40 × 40, gap 8) ── */
+.frequent-tools-arrows {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.frequent-tools-arrow {
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: box-shadow 0.18s ease;
+}
+
+.frequent-tools-arrow img {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+/* Variantes sin exportar ("Anterior · Normal" y "Siguiente · Deshabilitado"): espejo horizontal */
+.frequent-tools-arrow-img--mirror {
+  transform: scaleX(-1);
+}
+
+.frequent-tools-arrow:not(:disabled):hover {
+  box-shadow: var(--sombra-vertical);
+}
+
+.frequent-tools-arrow:disabled {
+  cursor: default;
+}
+
+.frequent-tools-arrow:focus-visible {
+  outline: 2px solid var(--cpce-azul-acento);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frequent-tools-item {
+    animation: none;
+  }
+}
+
+/* ── 7. RESPONSIVE (el diseño solo cubre escritorio) ── */
+@media (max-width: 1023px) {
+  .frequent-tools-title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  /* Cuatro tarjetas por vista */
+  .frequent-tools-item {
+    flex-basis: calc((100% - 3 * 16px) / 4);
+  }
+}
+
+@media (max-width: 860px) {
+  /* Tres tarjetas por vista */
+  .frequent-tools-item {
+    flex-basis: calc((100% - 2 * 16px) / 3);
+  }
+}
+
+/* La píldora del filtro (664 px) deja de entrar en una fila: los chips se acomodan en varias */
+@media (max-width: 767px) {
+  .frequent-tools-filter {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
+    padding: 4px;
+    border-radius: 24px;
+  }
+  .frequent-tools-filter-label {
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .frequent-tools-band {
+    padding: 44px 0 40px;
+  }
+  .frequent-tools-inner {
+    gap: 24px;
+  }
+  .frequent-tools-header {
+    gap: 14px;
+  }
+  /* 28 px para que el título entre en una línea desde 360 px */
+  .frequent-tools-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .frequent-tools-filter-wrap {
+    padding-top: 0;
+  }
+  /* Chips algo más compactos: el filtro queda en dos filas a 375 px */
+  .frequent-tools-filter {
+    column-gap: 6px;
+  }
+  .frequent-tools-filter-label,
+  .frequent-tools-chip {
+    font-size: 13px;
+    letter-spacing: 0.13px;
+  }
+  .frequent-tools-chip {
+    padding: 4px 8px;
+  }
+  /* Dos tarjetas por vista */
+  .frequent-tools-track {
+    gap: 12px;
+  }
+  .frequent-tools-item {
+    flex-basis: calc((100% - 12px) / 2);
+  }
+  /* Auroras más chicas para que no tiñan toda la banda angosta */
+  .frequent-tools-aurora {
+    width: 670px;
+    height: 677px;
+  }
+  .frequent-tools-aurora--left {
+    top: auto;
+    bottom: -300px;
+    left: -335px;
+  }
+  .frequent-tools-aurora--right {
+    top: -470px;
+    right: -380px;
+  }
+}

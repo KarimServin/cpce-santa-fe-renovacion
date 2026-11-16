@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useId } from 'react';
+import React from 'react';
 
 interface InstitutionLinksProps {
   /** Se ejecuta al pulsar una institución que todavía no tiene URL propia (DSS). */
@@ -11,7 +11,7 @@ interface Institution {
   id: 'dss' | 'caja';
   name: string;
   description: string;
-  /** Logo oficial del micrositio. `srcSet`/`sizes` son opcionales (versiones remuestreadas). */
+  /** Logo de la institución. `srcSet`/`sizes` son opcionales (versiones remuestreadas). */
   logo: { src: string; width: number; height: number; srcSet?: string; sizes?: string };
   /** URL externa. Si no existe, el acceso dispara `onSelectWithoutLink`. */
   href?: string;
@@ -21,15 +21,14 @@ interface Institution {
 }
 
 /*
-  El logo de la Caja mide 1024 px y se muestra a 121–166 px: reducido 6x por el navegador, el
-  texto "Ciencias Económicas - Santa Fe" queda blando. Hay versiones remuestreadas (Lanczos) a
-  1x, 1,25x, 1,5x, 2x y 3x de cada tamaño; `sizes` debe coincidir con las alturas de header.css
-  (desktop 44 px → 166 px, tablet 36 px → 136 px, mobile 32 px → 121 px).
+  Logo de la Caja en dos líneas (496 × 146), tal como aparece en Figma a 40 px de alto (136 px
+  de ancho). Hay versiones remuestreadas (Lanczos) para cada tamaño y densidad; `sizes` debe
+  coincidir con las alturas de header.css (40 / 32 / 28 px, y en mobile 24 px recortado al árbol).
 */
-const CAJA_WIDTHS = [121, 136, 166, 204, 208, 242, 249, 272, 333, 363];
+const CAJA_WIDTHS = [109, 136, 164, 170, 204, 218, 272, 327, 408];
 const CAJA_SRCSET = [
-  ...CAJA_WIDTHS.map((w) => `/images/logo-caja-${w}.png ${w}w`),
-  '/images/logo-caja.png 1024w',
+  ...CAJA_WIDTHS.map((w) => `/images/logo-caja-dos-lineas-${w}.png ${w}w`),
+  '/images/logo-caja-dos-lineas.png 496w',
 ].join(', ');
 
 const INSTITUTIONS: Institution[] = [
@@ -37,7 +36,8 @@ const INSTITUTIONS: Institution[] = [
     id: 'dss',
     name: 'DSS',
     description: 'Departamento de Servicios Sociales',
-    logo: { src: '/images/logo-dss.png', width: 173, height: 67 },
+    // Logo vectorial exportado de Figma ("logo DSS", 82 × 40)
+    logo: { src: '/images/header/logo-dss.svg', width: 82, height: 40 },
     hint: 'Obra Social · DSS',
     toastLabel: 'Obra Social - DSS',
   },
@@ -46,11 +46,11 @@ const INSTITUTIONS: Institution[] = [
     name: 'Caja',
     description: 'Caja de Seguridad Social',
     logo: {
-      src: '/images/logo-caja.png',
-      width: 1024,
-      height: 271,
+      src: '/images/logo-caja-dos-lineas.png',
+      width: 496,
+      height: 146,
       srcSet: CAJA_SRCSET,
-      sizes: '(min-width: 1100px) 166px, (min-width: 641px) 136px, 121px',
+      sizes: '(min-width: 1024px) 136px, (min-width: 861px) 109px, (min-width: 641px) 95px, 82px',
     },
     href: 'https://www.cajaprofesional.org.ar/',
     hint: 'Ir a cajaprofesional.org.ar',
@@ -59,20 +59,13 @@ const INSTITUTIONS: Institution[] = [
 ];
 
 /**
- * Logos de las instituciones vinculadas (DSS y Caja) en el extremo derecho del navbar.
- * Se muestran como co-marca, sin caja ni borde, igual que el logo del CPCE: un rótulo
- * chico arriba explica qué son, y el ↗ en la esquina más el tooltip indican que llevan
- * a otro sitio.
+ * Accesos a DSS y Caja en el extremo derecho del navbar (Figma · "Botón · Acceso externo"):
+ * cada uno es una caja con borde gris, el logo y el ícono de enlace externo arriba a la derecha.
  */
 export function InstitutionLinks({ onSelectWithoutLink }: InstitutionLinksProps) {
-  const labelId = useId();
-
   return (
-    <nav className="vanguard-institutions" aria-labelledby={labelId}>
-      <span id={labelId} className="vanguard-institutions-label">
-        Sitios institucionales
-      </span>
-      <ul className="vanguard-institutions-list">
+    <nav aria-label="Sitios institucionales">
+      <ul className="vanguard-institutions">
         {INSTITUTIONS.map((institution) => {
           const content = (
             <>
@@ -85,28 +78,20 @@ export function InstitutionLinks({ onSelectWithoutLink }: InstitutionLinksProps)
                 height={institution.logo.height}
                 className={`vanguard-institution-logo vanguard-institution-logo--${institution.id}`}
               />
-              <svg
+              <img
+                src="/images/header/icono-enlace-externo.svg"
+                alt=""
+                width={16}
+                height={16}
                 className="vanguard-institution-arrow"
-                width="10"
-                height="10"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
+              />
             </>
           );
 
           const className = `vanguard-institution vanguard-institution--${institution.id}`;
 
           return (
-            <li key={institution.id} className="vanguard-institutions-item">
+            <li key={institution.id}>
               {institution.href ? (
                 <a
                   href={institution.href}

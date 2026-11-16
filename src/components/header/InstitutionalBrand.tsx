@@ -2,11 +2,12 @@
 
 import React from 'react';
 
+// Logo positivo del sistema de diseño (735 × 215, mismas proporciones que en Figma: 286 × 84).
 // Incluye tamaños intermedios (1,25x y 1,5x) para pantallas de Windows con escala del 125 % o 150 %
-const LOGO_WIDTHS = [141, 176, 212, 220, 247, 265, 282, 309, 318, 352, 371, 423, 493, 741];
+const LOGO_WIDTHS = [137, 171, 206, 219, 274, 287, 329, 359, 411, 431, 438, 574];
 const LOGO_SRCSET = [
-  ...LOGO_WIDTHS.map((w) => `/images/logo-cpce-camara-1-${w}.png ${w}w`),
-  '/images/logo-cpce-camara-1.png 1024w',
+  ...LOGO_WIDTHS.map((w) => `/images/logo-cpce-positivo-${w}.png ${w}w`),
+  '/images/logo-cpce-positivo.png 735w',
 ].join(', ');
 
 const EMBLEM_WIDTHS = [44, 87, 130];
@@ -28,19 +29,19 @@ export function InstitutionalBrand() {
       aria-label="Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe · Cámara I"
     >
       {/*
-        El logo original mide 1024 px y se muestra a 141–247 px: si el navegador lo reduce 4x las
-        letras quedan blandas. Por eso hay versiones remuestreadas (Lanczos) a cada tamaño de
-        pantalla (1x, 2x y 3x) y el navegador elige la más cercana al tamaño real; las medidas
-        de `sizes` deben coincidir con las alturas definidas en header.css.
+        El logo mide 735 px y se muestra a 137–287 px: si el navegador lo reduce mucho las letras
+        quedan blandas. Por eso hay versiones remuestreadas (Lanczos) a cada tamaño de pantalla
+        (1x, 1,25x, 1,5x y 2x) y el navegador elige la más cercana al tamaño real; las medidas de
+        `sizes` deben coincidir con las alturas definidas en header.css (84 / 64 / 56 / 40 px).
       */}
       <img
-        src="/images/logo-cpce-camara-1.png"
+        src="/images/logo-cpce-positivo.png"
         srcSet={LOGO_SRCSET}
-        sizes="(min-width: 1100px) 247px, (min-width: 641px) 176px, 141px"
+        sizes="(min-width: 1024px) 287px, (min-width: 861px) 219px, (min-width: 641px) 191px, 137px"
         alt="Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe · Cámara I"
         className="vanguard-brand-logo"
-        width="1024"
-        height="291"
+        width="735"
+        height="215"
         fetchPriority="high"
       />
       <img

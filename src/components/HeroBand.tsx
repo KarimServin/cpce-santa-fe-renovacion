@@ -6,32 +6,27 @@ interface HeroBandProps {
   children: ReactNode;
 }
 
+/**
+ * Fondo del héroe según Figma (CPCE1_Web_Fase2 · "Héroe · Sin márgenes"), a todo el ancho.
+ * En el diseño el fondo es una foto aérea de la ciudad ("image 1"); hasta tener ese archivo se
+ * usa la foto de la sede. Encima va la "Capa de color": gris 900 al 20 %.
+ */
 export default function HeroBand({ children }: HeroBandProps) {
   return (
-    <div className="hero-aurora-bg">
-      {/* Manchas aurora — aria-hidden, pointer-events none */}
-      <div className="aurora-blob aurora-blob--top-left" aria-hidden="true" />
-      <div className="aurora-blob aurora-blob--1" aria-hidden="true" />
-      <div className="aurora-blob aurora-blob--2" aria-hidden="true" />
-      <div className="aurora-blob aurora-blob--3" aria-hidden="true" />
-      <div className="aurora-blob aurora-blob--4" aria-hidden="true" />
-
-      {/* Foto institucional a todo el ancho, disuelta en blanco hacia la izquierda */}
-      <div className="hero-bg-photo-fade" aria-hidden="true">
+    <div className="hero-band">
+      <div className="hero-band-media" aria-hidden="true">
         <Image
           src="/images/sede-cpce-hero.jpg"
-          alt="Sede Central CPCE Santa Fe"
+          alt=""
           fill
           priority
-          className="hero-bg-photo-img"
+          className="hero-band-img"
           sizes="100vw"
         />
-        <div className="hero-bg-photo-overlay" />
       </div>
+      <div className="hero-band-tint" aria-hidden="true" />
 
-      <div className="hero-content-wrap">
-        {children}
-      </div>
+      <div className="hero-content-wrap">{children}</div>
     </div>
   );
 }

@@ -30,3 +30,8 @@
   font-size: 14px;
   max-width: 480px;
 }
+
+/* Home: fondo blanco claro del marco de Figma; las bandas no tienen fondo propio */
+.home-main {
+  background: var(--cpce-blanco);
+}

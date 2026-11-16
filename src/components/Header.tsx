@@ -7,25 +7,26 @@ import { InstitutionalBrand } from './header/InstitutionalBrand';
 import { TopBar } from './header/TopBar';
 import { InstitutionLinks } from './header/InstitutionLinks';
 import { VerticalMenuDrawer } from './header/VerticalMenuDrawer';
+import type { MenuLink } from '../content/menu';
 
+/**
+ * Encabezado del sitio según Figma (CPCE1_Web_Fase2 · "Encabezado"): barra superior azul,
+ * barra principal blanca con botón de menú, logo del CPCE y accesos a DSS y Caja, y el
+ * menú desplegable ("Menú desplegable") que se abre con el botón de menú.
+ */
 export default function Header() {
-  const { openDialog, showToast } = useModal();
+  const { showToast } = useModal();
   const { isScrolled } = useHeaderScroll();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeCategoryId, setActiveCategoryId] = useState<string>('institucional');
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const isObraSocial = activeCategoryId === 'obra-social';
-
-  // Shortcut "/" to focus search
+  // Atajo "/" para ir al buscador del héroe
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement === document.body) {
         e.preventDefault();
-        const heroInput = document.querySelector('#hero-search-input') as HTMLInputElement;
+        const heroInput = document.querySelector('#hero-search-input') as HTMLInputElement | null;
         if (heroInput) {
           heroInput.focus();
           heroInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -36,77 +37,45 @@ export default function Header() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleDropdownEnter = useCallback((id: string) => {
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current);
-      dropdownTimeoutRef.current = null;
-    }
-    setActiveDropdown(id);
+  // Al cerrar el menú el foco vuelve al botón que lo abrió
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+    menuButtonRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const handleDropdownLeave = useCallback(() => {
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current);
-    }
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 280);
-  }, []);
-
-  const handleToggleDropdown = useCallback((id: string) => {
-    setActiveDropdown((prev) => (prev === id ? null : id));
-  }, []);
-
-  const handleItemAction = useCallback(
-    (
-      action?: { type: 'toast' | 'dialog' | 'link'; target?: string },
-      options?: { keepMenuOpen?: boolean; categoryId?: string }
-    ) => {
-      if (options?.categoryId) {
-        setActiveCategoryId(options.categoryId);
-      }
-      setActiveDropdown(null);
-      if (!options?.keepMenuOpen) {
-        setIsMenuOpen(false);
-      }
-      if (!action) return;
-      if (action.type === 'dialog' && action.target) {
-        openDialog(action.target);
-      } else if (action.type === 'toast' && action.target) {
-        showToast(action.target);
-      } else if (action.type === 'link' && action.target) {
-        const el = document.querySelector(action.target);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }
+  const handlePendingLink = useCallback(
+    (link: MenuLink) => {
+      setIsMenuOpen(false);
+      showToast(link.label);
     },
-    [openDialog, showToast]
+    [showToast]
   );
 
   return (
     <header
-      className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'} ${
-        isObraSocial ? 'vanguard-header--obra-social' : ''
-      }`}
+      ref={headerRef}
+      className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'}`}
     >
-      {/* BARRA SUPERIOR OSCURA: ¿Cómo matricularte? + redes + software profesional */}
+      {/* BARRA SUPERIOR: ¿Cómo matricularte? + redes + software profesional */}
       <TopBar
         onHowToRegister={() => showToast('¿Cómo matricularte?')}
         onStudent={() => showToast('¿Sos estudiante?')}
       />
 
-      {/* BARRA PRINCIPAL: HAMBURGUESA + LOGO (IZQ) · DSS Y CAJA (DER) */}
+      {/* BARRA PRINCIPAL: MENÚ + LOGO (IZQ) · DSS Y CAJA (DER) */}
       <div className="vanguard-main-bar">
         <div className="vanguard-header-container">
           <div className="vanguard-unified-bar">
             <div className="vanguard-bar-left">
+              {/* Abierto se convierte en el "Botón · Cerrar" del diseño (círculo azul con una X) */}
               <button
+                ref={menuButtonRef}
                 type="button"
-                className={`vanguard-glass-hamburger ${isMenuOpen ? 'vanguard-glass-hamburger--active' : ''} ${
-                  isObraSocial ? 'vanguard-glass-hamburger--obra-social' : ''
-                }`}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className={`vanguard-glass-hamburger ${isMenuOpen ? 'vanguard-glass-hamburger--active' : ''}`}
+                onClick={() => (isMenuOpen ? closeMenu() : setIsMenuOpen(true))}
                 aria-expanded={isMenuOpen}
-                aria-label="Abrir menú de navegación"
+                aria-controls="site-menu"
+                aria-label={isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
               >
                 <div className="vanguard-hamburger-lines">
                   <span className="vanguard-h-line vanguard-h-line--1" />
@@ -115,7 +84,6 @@ export default function Header() {
                 </div>
               </button>
 
-              {/* El logo es fijo: no cambia al recorrer categorías del menú */}
               <InstitutionalBrand />
             </div>
 
@@ -126,13 +94,11 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ── MENÚ VERTICAL DESPLEGABLE CON FLYOUT MULTICOLUMNA ── */}
       <VerticalMenuDrawer
         isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        onItemAction={handleItemAction}
-        activeItemId={activeCategoryId}
-        onSelectCategory={setActiveCategoryId}
+        onClose={closeMenu}
+        onSelectPending={handlePendingLink}
+        headerRef={headerRef}
       />
     </header>
   );

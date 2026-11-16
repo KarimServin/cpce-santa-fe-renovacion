@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Lora, Outfit, Playfair_Display, Instrument_Sans } from 'next/font/google';
+import { Plus_Jakarta_Sans, Lora, Outfit, Playfair_Display, Instrument_Sans, Lato } from 'next/font/google';
 import './globals.css';
 import { ModalProvider } from '../context/ModalContext';
 import Header from '../components/Header';
@@ -9,6 +9,14 @@ import MatriculaModal from '../components/MatriculaModal';
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
+});
+
+// Tipografía del sistema de diseño Fase 2 (Figma). No es variable: hay que pedir cada peso.
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-lato',
   display: 'swap',
 });
 
@@ -130,7 +138,7 @@ export default function RootLayout({
   return (
     <html
       lang="es-AR"
-      className={`${plusJakartaSans.variable} ${instrumentSans.variable} ${lora.variable} ${outfit.variable} ${playfair.variable}`}
+      className={`${plusJakartaSans.variable} ${instrumentSans.variable} ${lora.variable} ${outfit.variable} ${playfair.variable} ${lato.variable}`}
     >
       <head>
         <script

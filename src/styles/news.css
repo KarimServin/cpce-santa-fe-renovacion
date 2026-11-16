@@ -1,425 +1,342 @@
 /* ================================================================
-   NOVEDADES Y COMUNICADOS — ESTÉTICA EDITORIAL BENTO (1 + 4 GRID)
-   Paleta institucional unificada CPCE Santa Fe
+   NOVEDADES — Figma "CPCE1_Web_Fase2" · "Banda · Novedades" (nodo 482:2116)
+   Banda de 1440 × 804 con márgenes de 50 / 77 px. Adentro, la instancia
+   "Sección Novedades" (1286 × 704): "Encabezado" + "Grilla" blanca con una
+   "Tarjeta de novedad" grande (588 px) y una "Columna" de 2 × 2 tarjetas chicas.
+   Detrás, el "Aurora blob center" difuso, abajo a la derecha.
+   Nota: Lato solo trae 400/700/900, así que SemiBold (600) se ve en Bold y
+   Medium (500) en Regular.
    ================================================================ */
 
-.news-compact-section {
-  padding: 56px 0 68px;
-  background: #ffffff;
+/* ── 1. BANDA ────────────────────────────────────────────────── */
+.news-band {
   position: relative;
+  /* Contexto de apilado propio: el aurora no se escapa y la sombra del héroe queda encima */
+  isolation: isolate;
+  /* Sin fondo propio y recortada solo en horizontal: como en Figma, los "Aurora blob" se
+     funden con las bandas vecinas sobre el blanco de la página (.home-main) */
+  overflow-x: clip;
+  padding: 50px 0;
+  background: transparent;
+  font-family: var(--font-sistema);
+  color: var(--neutro-900);
+  scroll-margin-top: var(--vanguard-mainbar-h, 140px);
 }
 
-/* ── 1. CABECERA INSTITUCIONAL ── */
-.news-header-wrap {
+/* "Aurora blob center (#0052FF 28% / #0EA5E9 16%, blur 52)": elipse de 1017 × 1029 en
+   x = 1014, y = 81.5 de la banda, con degradado radial y desenfoque gaussiano (σ 25).
+   En pantallas angostas se ancla al borde derecho para que siga asomando. */
+.news-aurora {
+  position: absolute;
+  z-index: -1;
+  top: 81.5px;
+  left: min(calc(50% + 294px), calc(100% - 426px));
+  width: 1017.171px;
+  height: 1029px;
+  background: radial-gradient(
+    closest-side,
+    rgba(0, 110, 238, 0.27) 0%,
+    rgba(14, 165, 233, 0.16) 35%,
+    rgba(0, 64, 115, 0.05) 70%,
+    rgba(0, 64, 113, 0) 100%
+  );
+  filter: blur(25px);
+  pointer-events: none;
+}
+
+/* Contenedor del diseño: 1440 de ancho con 77 px de margen lateral */
+.news-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--vanguard-gutter, clamp(16px, 5.35vw, 77px));
+}
+
+/* ── 2. ENCABEZADO ───────────────────────────────────────────── */
+.news-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: 32px;
 }
 
-.news-header-text {
-  max-width: 680px;
-}
-
-.news-eyebrow {
-  display: block;
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #0052FF;
-  margin-bottom: 4px;
-}
-
-h2.news-main-title,
-.news-compact-section h2,
-.news-main-title {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(1.4rem, 2vw, 1.85rem);
-  font-weight: 650;
-  line-height: 1.2;
-  color: #000000 !important;
-  letter-spacing: -0.02em;
-  margin: 0 0 6px;
-}
-
-.news-main-subtitle {
+/* "Títulos/H1": Lato Black 40 / 48, CPCE/Azul base */
+.news-title {
   margin: 0;
-  font-size: 13px;
-  color: #64748B;
-  line-height: 1.45;
+  font-family: var(--font-sistema);
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 48px;
+  letter-spacing: 0;
+  color: var(--cpce-azul-base);
 }
 
-.news-btn-all {
-  background: #0b192c;
-  color: #ffffff !important;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 12.5px;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: 9999px;
+/* "Botón · Pastilla · Ver todas las novedades": CPCE/Azul acento, "Texto/Enlace"
+   (Lato Medium 16 / 20, espaciado 2 %) */
+.news-all-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 22px;
+  border-radius: 30px;
+  background: var(--cpce-azul-acento);
+  color: var(--cpce-blanco);
+  font-family: var(--font-sistema);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.32px;
+  white-space: nowrap;
   text-decoration: none;
-  box-shadow: 0 2px 6px rgba(11, 25, 44, 0.12);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 0.2s ease;
+}
+
+/* "Sombra hover" del botón: la "Sombra Vertical" */
+.news-all-btn:hover {
+  box-shadow: var(--sombra-vertical);
+}
+
+.news-all-btn:focus-visible {
+  outline: 3px solid var(--cpce-azul-base);
+  outline-offset: 3px;
+  box-shadow: var(--sombra-vertical);
+}
+
+/* ── 3. GRILLA ───────────────────────────────────────────────── */
+/* Fondo CPCE/Blanco claro, radio 42, relleno 20, separación 24 y "Sombra Vertical".
+   Las columnas reparten 588 / 634 (el ancho exacto de Figma a 1440 px). */
+.news-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 588fr) minmax(0, 634fr);
+  align-items: start;
+  gap: 24px;
+  padding: 20px;
+  border-radius: 42px;
+  background: var(--cpce-blanco);
+  box-shadow: var(--sombra-vertical);
+}
+
+/* "Columna": "Fila 1" y "Fila 2" separadas 32, tarjetas separadas 24 */
+.news-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+/* ── 4. TARJETA DE NOVEDAD ───────────────────────────────────── */
+.news-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* "Imagen (proporción fija)": radio 20, fondo Neutros/Gris 100 mientras carga.
+   Chicas: 305 × 180. Grande: 588 × 392 (3 : 2). */
+.news-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 305 / 180;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--neutro-100);
+}
+
+.news-card--featured .news-card-media {
+  aspect-ratio: 3 / 2;
+}
+
+/* "Borde hover" (Figma "Hover · Novedad", nodo 285:1328): borde de 2 px CPCE/Azul acento
+   sobre la imagen */
+.news-card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.2s ease;
+}
+
+.news-card:hover .news-card-media::after,
+.news-card:has(.news-card-link:focus-visible) .news-card-media::after {
+  border-color: var(--cpce-azul-acento);
+}
+
+.news-card-img {
+  object-fit: cover;
+}
+
+/* Recorte de la imagen grande en Figma: ancho 128.96 % desplazado -7.38 % (mismo encuadre
+   horizontal). Figma además la estira en alto (118.59 %), lo que deforma la foto un 8 %;
+   acá se mantiene su proporción real (4000 × 2252) y se centra en el mismo punto
+   vertical (52.7 % de la foto), por eso asoma un poco más arriba y abajo. */
+.news-card-crop {
+  position: absolute;
+  top: -7.4%;
+  left: -7.38%;
+  width: 128.96%;
+  height: 108.91%;
+}
+
+/* "Categoría y fecha" */
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* "Etiqueta de tema": CPCE/Azul acento, "Texto/Etiqueta" (Lato Bold 12 / 16) */
+.news-card-tag {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 24px;
+  background: var(--cpce-azul-acento);
+  color: var(--cpce-blanco);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
   white-space: nowrap;
 }
 
-.news-btn-all:hover {
-  background: #0052FF;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 82, 255, 0.28);
+/* "Texto/Cuerpo chico": Lato Medium 14 / 20, espaciado 1 %, Neutros/Gris 500 */
+.news-card-date {
+  flex-shrink: 0;
+  color: var(--neutro-500);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.14px;
+  white-space: nowrap;
 }
 
-/* ── 2. LAYOUT BENTO EDITORIAL (1 GRANDE A LA IZQUIERDA + 2X2 A LA DERECHA) ── */
-.news-bento-layout {
-  display: grid;
-  grid-template-columns: 1.08fr 1fr;
-  gap: 20px;
-  align-items: stretch;
-}
-
-/* ── 3. TARJETA PRINCIPAL DESTACADA (IZQUIERDA) ── */
-.news-main-featured-card {
-  height: 100%;
-}
-
-.news-main-card-link {
-  position: relative;
-  border-radius: 20px;
+/* "Títulos/H4": Lato SemiBold 18 / 24, CPCE/Azul base (dos líneas como máximo) */
+.news-card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-sistema);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--cpce-azul-base);
+}
+
+/* "Títulos/H3": Lato SemiBold 24 / 32 con números de estilo antiguo */
+.news-card--featured .news-card-title {
+  font-size: 24px;
+  line-height: 32px;
+  font-feature-settings: 'onum' 1, 'pnum' 1;
+}
+
+/* El enlace del título cubre toda la tarjeta */
+.news-card-link {
+  color: inherit;
   text-decoration: none;
-  min-height: 480px;
-  height: 100%;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
 }
 
-.news-main-card-link:hover {
-  transform: translateY(-3px);
-  border-color: #cbd5e1;
-  box-shadow: 0 14px 34px -4px rgba(15, 23, 42, 0.10);
-}
-
-.news-main-img-wrap {
+.news-card-link::before {
+  content: '';
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background: #0b1a2d;
+  z-index: 1;
+  border-radius: 20px;
 }
 
-.news-main-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+.news-card-link:focus-visible {
+  outline: none;
 }
 
-.news-main-card-link:hover .news-main-img {
-  transform: scale(1.04);
+.news-card-link:focus-visible::before {
+  outline: 3px solid var(--cpce-azul-acento);
+  outline-offset: 6px;
 }
 
-/* Tag flotante superior izquierdo */
-.news-main-floating-tag {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 9999px;
-  padding: 5px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #0b192c;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  z-index: 2;
-}
-
-.news-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #0052FF;
-  flex-shrink: 0;
-}
-
-/* Caja blanca inferior sobre la imagen (estilo captura) */
-.news-main-white-box {
-  position: relative;
-  z-index: 2;
-  background: #ffffff;
-  padding: 20px 22px;
-  margin: 16px;
-  border-radius: 16px;
-  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.14);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: box-shadow 0.25s ease;
-}
-
-.news-main-card-link:hover .news-main-white-box {
-  box-shadow: 0 10px 30px rgba(0, 82, 255, 0.18);
-}
-
-.news-card-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.news-tag-pill {
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 2.5px 8.5px;
-  border-radius: 9999px;
-  color: #475569;
-  background-color: #F1F5F9;
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  display: inline-block;
-  transition: all 0.2s ease;
-}
-
-.news-tag-pill--primary {
-  color: #0052FF;
-  background-color: #EBF2FF;
-  border-color: rgba(0, 82, 255, 0.2);
-}
-
-.news-meta-date {
-  font-size: 12px;
-  font-weight: 550;
-  color: #94A3B8;
-}
-
-.news-main-headline {
-  margin: 0;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 18.5px;
-  font-weight: 750;
-  color: #0b192c;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-  transition: color 0.18s ease;
-}
-
-.news-main-card-link:hover .news-main-headline {
-  color: #0052FF;
-}
-
-.news-main-desc {
-  margin: 0;
-  font-size: 13px;
-  color: #475569;
-  line-height: 1.5;
-}
-
-.news-main-action-row {
-  padding-top: 4px;
-}
-
-.news-action-text {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #0052FF;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: transform 0.2s ease;
-}
-
-.news-main-card-link:hover .news-action-text {
-  transform: translateX(3px);
-}
-
-/* ── 4. GRILLA SECUNDARIA 2X2 (DERECHA) ── */
-.news-grid-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 16px;
-}
-
-.news-grid-card {
-  height: 100%;
-}
-
-.news-grid-card-link {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-decoration: none;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
-}
-
-.news-grid-card-link:hover {
-  transform: translateY(-2px);
-  border-color: #0052FF;
-  box-shadow: 0 8px 24px -4px rgba(0, 82, 255, 0.16);
-}
-
-.news-grid-img-wrap {
-  position: relative;
-  height: 135px;
-  overflow: hidden;
-  background: #E2E8F0;
-}
-
-.news-grid-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.news-grid-card-link:hover .news-grid-img {
-  transform: scale(1.05);
-}
-
-.news-grid-floating-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 9999px;
-  padding: 3px 9px;
-  font-family: var(--font-instrument), 'Instrument Sans', sans-serif;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #0b192c;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-}
-
-.news-grid-white-box {
-  padding: 13px 15px;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 8px;
-  flex: 1;
-}
-
-.news-grid-headline {
-  margin: 0;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #0b192c;
-  line-height: 1.34;
-  letter-spacing: -0.01em;
-  transition: color 0.18s ease;
+/* "Texto/Cuerpo": Lato Regular 16 / 24, Neutros/Gris 900 (dos líneas como máximo) */
+.news-card-summary {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
+  width: 100%;
+  margin: 0;
+  color: var(--neutro-900);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
 }
 
-.news-grid-card-link:hover .news-grid-headline {
-  color: #0052FF;
-}
-
-.news-grid-meta-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  padding-top: 4px;
-}
-
-.news-grid-date {
-  font-size: 11.5px;
-  color: #94A3B8;
-  font-weight: 550;
-}
-
-.news-grid-more-link {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: #0052FF;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  transition: transform 0.18s ease;
-}
-
-.news-grid-card-link:hover .news-grid-more-link {
-  transform: translateX(2px);
-}
-
-/* ── 5. ADAPTACIÓN RESPONSIVA FLUIDA ── */
-@media (max-width: 992px) {
-  .news-compact-section {
-    padding: 42px 0 50px;
-  }
-
-  .news-bento-layout {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .news-main-card-link {
-    min-height: 380px;
+@media (prefers-reduced-motion: reduce) {
+  .news-all-btn,
+  .news-card-media::after {
+    transition: none;
   }
 }
 
+/* ── 5. RESPONSIVE ───────────────────────────────────────────── */
+/* Tablet: la tarjeta grande arriba y las cuatro chicas en 2 × 2 debajo */
+@media (max-width: 1023px) {
+  .news-band {
+    padding: 40px 0 48px;
+  }
+
+  .news-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    border-radius: 32px;
+  }
+}
+
+/* Mobile: una sola columna */
 @media (max-width: 640px) {
-  .news-header-wrap {
-    flex-direction: column;
-    align-items: flex-start;
+  .news-band {
+    padding: 32px 0 40px;
   }
 
-  .news-btn-all {
-    width: 100%;
-    justify-content: center;
+  .news-header {
+    margin-bottom: 24px;
   }
 
-  .news-grid-right {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .news-title {
+    font-size: 32px;
+    line-height: 40px;
   }
 
-  .news-main-white-box {
-    margin: 12px;
-    padding: 16px 16px;
+  .news-all-btn {
+    padding: 10px 20px;
   }
 
-  .news-main-headline {
-    font-size: 16.5px;
+  .news-grid {
+    gap: 28px;
+    padding: 16px;
+    border-radius: 28px;
+  }
+
+  .news-column {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .news-card--featured .news-card-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .news-card-summary {
+    -webkit-line-clamp: 3;
+  }
+
+  .news-card-meta {
+    flex-wrap: wrap;
   }
 }
