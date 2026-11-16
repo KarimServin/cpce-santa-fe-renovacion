@@ -24,6 +24,14 @@
   --vanguard-header-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Margen redondeado a píxeles enteros: con decimales (p. ej. 73,08 px a 1366 de ancho) los
+   logos quedaban en posiciones fraccionarias y el navegador los redibujaba algo borrosos */
+@supports (width: round(down, 5.35vw, 1px)) {
+  :root {
+    --vanguard-gutter: clamp(16px, round(down, 5.35vw, 1px), 77px);
+  }
+}
+
 /* Grande arriba (como en Figma) y compacto al bajar. El encabezado es fijo y el espaciador
    de abajo reserva siempre los 188 px: así, al compactarse, el contenido no salta. Al hacer
    scroll la barra azul sale por arriba y la blanca se achica (--vanguard-mainbar-compact-h). */
