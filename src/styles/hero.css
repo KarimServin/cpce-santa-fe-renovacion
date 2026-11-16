@@ -78,14 +78,13 @@
 }
 
 /* Animaciones de entrada de los elementos del hero */
+/* Solo fundido, sin desplazamiento: el contenido aparece en su lugar (sin "rebote" al cargar) */
 @keyframes heroElementFadeUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

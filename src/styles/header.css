@@ -3,15 +3,6 @@
    Barra superior azul base de 48 px + barra principal blanca de 140 px
    (botón de menú, logo positivo del CPCE y accesos a DSS y Caja).
    ================================================================ */
-@keyframes vanguardHeaderEntrance {
-  0% {
-    transform: translateY(-16px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
 :root {
   /* Alturas del encabezado. En Figma la barra blanca mide 140 px; a pedido del cliente se
      redujo a 120 (menos aire arriba y abajo, mismo logo de 84 px): total 48 + 120 = 168 px */
@@ -39,7 +30,14 @@
   position: relative;
   z-index: 1000;
   width: 100%;
-  animation: vanguardHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Hasta que se calcula la posición de scroll inicial no hay transiciones: si la página carga
+   ya bajada (p. ej. al recargar), el encabezado aparece directamente en su estado final en
+   lugar de animarse solo. Header.tsx agrega --ready un cuadro después de montar. */
+.vanguard-header:not(.vanguard-header--ready),
+.vanguard-header:not(.vanguard-header--ready) * {
+  transition: none !important;
 }
 
 .vanguard-header-spacer {

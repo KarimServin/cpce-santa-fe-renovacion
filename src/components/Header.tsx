@@ -18,6 +18,20 @@ export default function Header() {
   const { showToast } = useModal();
   const { isScrolled } = useHeaderScroll();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Las transiciones del encabezado se habilitan recién después del primer cuadro, cuando ya
+  // se conoce la posición de scroll inicial (evita animaciones solas al cargar)
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    let second = 0;
+    const first = requestAnimationFrame(() => {
+      second = requestAnimationFrame(() => setIsReady(true));
+    });
+    return () => {
+      cancelAnimationFrame(first);
+      cancelAnimationFrame(second);
+    };
+  }, []);
   const headerRef = useRef<HTMLElement | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -55,7 +69,9 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'}`}
+        className={`vanguard-header ${isScrolled ? 'vanguard-header--scrolled' : 'vanguard-header--top'} ${
+          isReady ? 'vanguard-header--ready' : ''
+        }`}
       >
         {/* BARRA SUPERIOR: ¿Cómo matricularte? + redes + software profesional */}
         <TopBar
