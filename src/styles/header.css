@@ -31,8 +31,9 @@
   }
 }
 
-/* Desktop (≥ 1024 px): el encabezado queda fijo arriba y no cambia al hacer scroll; el
-   espaciador de abajo reserva su alto (168 px) para que el contenido empiece debajo.
+/* Desktop (≥ 1024 px): el encabezado queda fijo arriba; el espaciador de abajo reserva su
+   alto (168 px) para que el contenido empiece debajo. Al bajar, la barra azul se va y la
+   blanca (mismo tamaño) se vuelve traslúcida con difuminado.
    Celulares y tablets: el encabezado va en el flujo normal y se desplaza con la página. */
 .vanguard-header {
   position: relative;
@@ -51,11 +52,30 @@
     top: 0;
     left: 0;
     right: 0;
+    transition: transform var(--vanguard-header-transition);
   }
 
   .vanguard-header-spacer {
     display: block;
     height: calc(var(--vanguard-topbar-h) + var(--vanguard-mainbar-h));
+  }
+
+  /* Al bajar, la barra azul sale por arriba (se desliza y se desvanece) y queda solo la
+     blanca pegada al borde superior; el espaciador no cambia, así que el contenido no salta */
+  .vanguard-header--scrolled {
+    transform: translateY(calc(var(--vanguard-topbar-h) * -1));
+  }
+
+  .vanguard-header--scrolled .vanguard-topbar {
+    opacity: 0;
+  }
+
+  /* Arriba de todo la barra es blanca y sólida; al bajar se vuelve levemente traslúcida y
+     difumina lo que pasa por detrás */
+  .vanguard-header--scrolled .vanguard-main-bar {
+    background: rgba(254, 254, 254, 0.78);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    backdrop-filter: blur(16px) saturate(1.5);
   }
 }
 
@@ -71,7 +91,7 @@
   height: var(--vanguard-topbar-h);
   background: var(--cpce-azul-base);
   color: var(--cpce-blanco);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity var(--vanguard-header-transition);
 }
 
 .vanguard-topbar-inner {
@@ -193,11 +213,11 @@
 .vanguard-main-bar {
   height: var(--vanguard-mainbar-h);
   background: var(--cpce-blanco);
-  transition: height var(--vanguard-header-transition), background-color 0.3s ease,
-    box-shadow var(--vanguard-header-transition);
+  transition: height var(--vanguard-header-transition), background-color var(--vanguard-header-transition),
+    box-shadow var(--vanguard-header-transition), backdrop-filter var(--vanguard-header-transition);
 }
 
-/* Con scroll queda fija arriba: la "Sombra Vertical" del sistema la separa del contenido */
+/* Con la página bajada, la "Sombra Vertical" del sistema separa la barra del contenido */
 .vanguard-header--scrolled .vanguard-main-bar {
   box-shadow: var(--sombra-vertical);
 }
@@ -1437,6 +1457,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .vanguard-header,
+  .vanguard-topbar,
   .vanguard-main-bar,
   .vanguard-brand-logo,
   .vanguard-institution,
