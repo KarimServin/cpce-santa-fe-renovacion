@@ -14,23 +14,42 @@ interface HeroBandProps {
 export default function HeroBand({ children }: HeroBandProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Con "reducir movimiento" activado en el sistema, el video queda quieto en la portada
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    // Refuerza el "muted" como propiedad: los celulares solo permiten reproducir solos videos mudos
+    video.muted = true;
+    video.defaultMuted = true;
+
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const gestures = ['pointerdown', 'touchstart', 'keydown'] as const;
+
+    // Si el celular bloqueó la reproducción automática (p. ej. iPhone en modo ahorro de energía),
+    // el video arranca con el primer toque o tecla en cualquier parte de la página
+    const playOnGesture = () => {
+      removeGestureListeners();
+      if (!query.matches) video.play().catch(() => {});
+    };
+    const removeGestureListeners = () =>
+      gestures.forEach((type) => window.removeEventListener(type, playOnGesture));
+
     const apply = () => {
+      // Con "reducir movimiento" activado en el sistema, el video queda quieto en la portada
       if (query.matches) {
         video.pause();
-      } else {
-        video.play().catch(() => {
-          /* Sin autoplay (p. ej. modo ahorro de energía): queda la portada */
-        });
+        return;
       }
+      video.play().catch(() => {
+        gestures.forEach((type) => window.addEventListener(type, playOnGesture, { passive: true }));
+      });
     };
+
     apply();
     query.addEventListener('change', apply);
-    return () => query.removeEventListener('change', apply);
+    return () => {
+      query.removeEventListener('change', apply);
+      removeGestureListeners();
+    };
   }, []);
 
   return (

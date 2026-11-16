@@ -17,10 +17,11 @@
   --vanguard-topbar-h: 48px;
   --vanguard-mainbar-h: 140px;
   /* Barra principal compacta al hacer scroll (solo escritorio, ver más abajo) */
-  --vanguard-mainbar-compact-h: 76px;
+  --vanguard-mainbar-compact-h: 100px;
   /* Margen lateral del diseño: 77 px en un ancho de 1440 px */
   --vanguard-gutter: clamp(16px, 5.35vw, 77px);
-  --vanguard-header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Transición pausada y pareja (aceleración y frenado suaves), sin rebotes */
+  --vanguard-header-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Grande arriba (como en Figma) y compacto al bajar. El encabezado es fijo y el espaciador
@@ -179,7 +180,8 @@
 .vanguard-main-bar {
   height: var(--vanguard-mainbar-h);
   background: var(--cpce-blanco);
-  transition: height var(--vanguard-header-transition), background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: height var(--vanguard-header-transition), background-color 0.3s ease,
+    box-shadow var(--vanguard-header-transition);
 }
 
 /* Con scroll queda fija arriba: la "Sombra Vertical" del sistema la separa del contenido */
@@ -1108,6 +1110,8 @@
   right: 8px;
   width: 16px;
   height: 16px;
+  transition: top var(--vanguard-header-transition), right var(--vanguard-header-transition),
+    width var(--vanguard-header-transition), height var(--vanguard-header-transition);
 }
 
 .vanguard-institution:focus-visible {
@@ -1419,26 +1423,27 @@
 }
 
 /* ── COMPACTO AL HACER SCROLL (escritorio) ──
-   Arriba de la página se ve como en Figma (140 px); al bajar la barra blanca pasa a 76 px:
-   logo de 52 px y logos de DSS/Caja de 36 px. */
+   Arriba de la página se ve como en Figma (140 px). Al bajar, la barra blanca pasa a 100 px
+   con un cambio moderado (logo de 84 → 64 px, DSS/Caja de 56 → 44 px), todo con la misma
+   transición pausada para que se lea como un solo movimiento. */
 @media (min-width: 1024px) {
   .vanguard-header--scrolled .vanguard-main-bar {
     height: var(--vanguard-mainbar-compact-h);
   }
   .vanguard-header--scrolled .vanguard-brand-logo {
-    height: 52px;
+    height: 64px;
   }
   .vanguard-header--scrolled .vanguard-institution {
-    padding: 8px 24px 8px 12px;
+    padding: 10px 26px 10px 12px;
   }
   .vanguard-header--scrolled .vanguard-institution-logo {
-    height: 36px;
+    height: 44px;
   }
   .vanguard-header--scrolled .vanguard-institution-arrow {
-    top: 4px;
-    right: 5px;
-    width: 12px;
-    height: 12px;
+    top: 6px;
+    right: 6px;
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -1447,7 +1452,8 @@
   .vanguard-main-bar,
   .vanguard-brand-logo,
   .vanguard-institution,
-  .vanguard-institution-logo {
+  .vanguard-institution-logo,
+  .vanguard-institution-arrow {
     transition: none;
   }
 }

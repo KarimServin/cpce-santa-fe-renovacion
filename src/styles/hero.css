@@ -27,13 +27,13 @@
   background: var(--neutro-50);
 }
 
+/* Solo escala (sin opacidad): Safari de iPhone no arranca un video con autoplay si al cargar
+   lo considera invisible, y una opacidad que parte de 0 puede frenarlo */
 @keyframes heroPhotoEntrance {
   0% {
-    opacity: 0;
     transform: scale(1.04);
   }
   100% {
-    opacity: 1;
     transform: scale(1);
   }
 }
