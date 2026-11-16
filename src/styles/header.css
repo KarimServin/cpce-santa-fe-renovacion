@@ -1383,46 +1383,6 @@
   }
 }
 
-/* ── ESCRITORIO DE POCA ALTURA (notebooks HD: 1366 × 768, o 1920 × 1080 con escala del 125–150 %) ──
-   Con los 188 px del diseño el encabezado ocupaba casi un tercio de la pantalla. Se compacta
-   a 40 + 100 px (logo de 64 px y accesos de 150 px) manteniendo las proporciones. Si cambian
-   las alturas, actualizar `sizes` del logo (InstitutionalBrand) y de la Caja (InstitutionLinks). */
-@media (min-width: 1024px) and (max-height: 900px) {
-  :root {
-    --vanguard-topbar-h: 40px;
-    --vanguard-mainbar-h: 100px;
-  }
-  .vanguard-unified-bar,
-  .vanguard-bar-left {
-    gap: 20px;
-  }
-  .vanguard-brand-logo {
-    height: 64px;
-  }
-  .vanguard-institutions {
-    gap: 16px;
-  }
-  .vanguard-institution {
-    width: 150px;
-    padding: 10px 12px;
-  }
-  .vanguard-institution--caja {
-    padding: 10px 26px 10px 12px;
-  }
-  .vanguard-institution-logo {
-    height: 32px;
-  }
-  .vanguard-institution-logo--dss {
-    width: 66px;
-  }
-  .vanguard-institution-arrow {
-    top: 5px;
-    right: 6px;
-    width: 14px;
-    height: 14px;
-  }
-}
-
 /* ── RESPONSIVE DEL ENCABEZADO (el diseño es de 1440 px; debajo se achica en escalones) ── */
 /* Laptop angosta / tablet horizontal: logo de 64 px y accesos de 150 px */
 @media (max-width: 1023px) {

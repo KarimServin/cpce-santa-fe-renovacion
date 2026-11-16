@@ -37,7 +37,7 @@ export function InstitutionalBrand() {
       <img
         src="/images/logo-cpce-positivo.png"
         srcSet={LOGO_SRCSET}
-        sizes="(min-width: 1024px) and (max-height: 900px) 219px, (min-width: 1024px) 287px, (min-width: 861px) 219px, (min-width: 641px) 191px, 137px"
+        sizes="(min-width: 1024px) 287px, (min-width: 861px) 219px, (min-width: 641px) 191px, 137px"
         alt="Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe · Cámara I"
         className="vanguard-brand-logo"
         width="735"
