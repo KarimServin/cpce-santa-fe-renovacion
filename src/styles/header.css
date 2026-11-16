@@ -13,9 +13,10 @@
 }
 
 :root {
-  /* Alturas del encabezado (Figma: 48 + 140 = 188 px) */
+  /* Alturas del encabezado. En Figma la barra blanca mide 140 px; a pedido del cliente se
+     redujo a 120 (menos aire arriba y abajo, mismo logo de 84 px): total 48 + 120 = 168 px */
   --vanguard-topbar-h: 48px;
-  --vanguard-mainbar-h: 140px;
+  --vanguard-mainbar-h: 120px;
   /* Barra principal compacta al hacer scroll (solo escritorio, ver más abajo) */
   --vanguard-mainbar-compact-h: 100px;
   /* Margen lateral del diseño: 77 px en un ancho de 1440 px */
@@ -33,7 +34,7 @@
 }
 
 /* Grande arriba (como en Figma) y compacto al bajar. El encabezado es fijo y el espaciador
-   de abajo reserva siempre los 188 px: así, al compactarse, el contenido no salta. Al hacer
+   de abajo reserva siempre el alto completo (168 px): así, al compactarse, el contenido no salta. Al hacer
    scroll la barra azul sale por arriba y la blanca se achica (--vanguard-mainbar-compact-h). */
 .vanguard-header {
   position: fixed;
@@ -184,7 +185,7 @@
   display: none;
 }
 
-/* ── BARRA PRINCIPAL: blanca, 140 px (padding de 28 + logo de 84) ── */
+/* ── BARRA PRINCIPAL: blanca, 120 px (padding de 18 + logo de 84) ── */
 .vanguard-main-bar {
   height: var(--vanguard-mainbar-h);
   background: var(--cpce-blanco);
@@ -1431,7 +1432,7 @@
 }
 
 /* ── COMPACTO AL HACER SCROLL (escritorio) ──
-   Arriba de la página se ve como en Figma (140 px). Al bajar, la barra blanca pasa a 100 px
+   Arriba de la página la barra blanca mide 120 px. Al bajar pasa a 100 px
    con un cambio moderado (logo de 84 → 64 px, DSS/Caja de 56 → 44 px), todo con la misma
    transición pausada para que se lea como un solo movimiento. */
 @media (min-width: 1024px) {

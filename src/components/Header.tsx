@@ -104,7 +104,7 @@ export default function Header() {
         />
       </header>
 
-      {/* El encabezado es fijo: este espacio reserva su alto completo (188 px) para que el
+      {/* El encabezado es fijo: este espacio reserva su alto completo (168 px) para que el
           contenido empiece debajo y no salte cuando el encabezado se compacta al bajar */}
       <div className="vanguard-header-spacer" aria-hidden="true" />
     </>

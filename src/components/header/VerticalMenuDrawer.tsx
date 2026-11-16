@@ -53,7 +53,7 @@ export function VerticalMenuDrawer({
     return () => query.removeEventListener('change', update);
   }, []);
 
-  // El panel arranca en el borde inferior del encabezado (188 px arriba de todo, 76 px con
+  // El panel arranca en el borde inferior del encabezado (168 px arriba de todo, 100 px con
   // scroll) y el botón de cerrar va justo encima del botón de menú
   useLayoutEffect(() => {
     if (!isOpen) return;
