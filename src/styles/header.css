@@ -1183,15 +1183,45 @@
   }
 }
 
-/* Fondo gris que cubre la página debajo del encabezado; un clic cierra el menú */
+/* Fondo gris que cubre toda la pantalla, encabezado incluido (como en Figma), para que el
+   panel blanco se despegue; un clic afuera cierra el menú */
 .site-menu-backdrop {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 990;
-  background: rgba(34, 38, 41, 0.35);
+  inset: 0;
+  z-index: 1001;
+  background: rgba(34, 38, 41, 0.45);
   animation: siteMenuFade 0.2s ease both;
+}
+
+/* "Botón · Cerrar": círculo azul base con la X blanca, exactamente sobre el botón de menú */
+.site-menu-close {
+  position: fixed;
+  z-index: 1003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--cpce-azul-base);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  animation: siteMenuFade 0.2s ease both;
+}
+
+.site-menu-close:hover {
+  background: var(--cpce-azul-acento);
+}
+
+.site-menu-close:focus-visible {
+  outline: 2px solid var(--cpce-blanco);
+  outline-offset: 2px;
+}
+
+.site-menu-close img {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 /* Capa fija con el mismo contenedor que el encabezado: el panel queda alineado con el menú */
@@ -1199,7 +1229,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  z-index: 995;
+  z-index: 1002;
   pointer-events: none;
 }
 

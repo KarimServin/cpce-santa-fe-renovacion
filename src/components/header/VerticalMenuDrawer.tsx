@@ -12,21 +12,37 @@ interface VerticalMenuDrawerProps {
   onSelectPending: (link: MenuLink) => void;
   /** Encabezado: el panel se ubica justo debajo de su borde inferior. */
   headerRef: React.RefObject<HTMLElement | null>;
+  /** Botón de menú del encabezado: el "Botón · Cerrar" se dibuja exactamente encima. */
+  anchorRef: React.RefObject<HTMLElement | null>;
+}
+
+interface Anchor {
+  top: number;
+  left: number;
+  size: number;
 }
 
 const MOBILE_QUERY = '(max-width: 1023px)';
 
 /**
- * Menú desplegable según Figma (componente "Menú desplegable"): panel blanco de 920 px con
- * radio 42 bajo el encabezado, con la lista de secciones a la izquierda (280 px) y el
- * contenido de la sección activa a la derecha (640 px). En pantallas angostas las secciones
- * se despliegan como acordeón.
+ * Menú desplegable según Figma (frames "Menú · …"): un fondo gris cubre toda la pantalla,
+ * incluido el encabezado; encima quedan solo el "Botón · Cerrar" (círculo azul con una X, en
+ * el lugar del botón de menú) y el panel blanco de 920 px con radio 42 bajo el encabezado,
+ * con la lista de secciones a la izquierda (280 px) y el contenido de la sección activa a la
+ * derecha (640 px). En pantallas angostas las secciones se despliegan como acordeón.
  */
-export function VerticalMenuDrawer({ isOpen, onClose, onSelectPending, headerRef }: VerticalMenuDrawerProps) {
+export function VerticalMenuDrawer({
+  isOpen,
+  onClose,
+  onSelectPending,
+  headerRef,
+  anchorRef,
+}: VerticalMenuDrawerProps) {
   const [activeId, setActiveId] = useState(SITE_MENU[0].id);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [top, setTop] = useState(0);
+  const [anchor, setAnchor] = useState<Anchor | null>(null);
   const firstItemRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -37,14 +53,24 @@ export function VerticalMenuDrawer({ isOpen, onClose, onSelectPending, headerRef
     return () => query.removeEventListener('change', update);
   }, []);
 
-  // El panel arranca en el borde inferior del encabezado (188 px arriba de todo, 140 px con scroll)
+  // El panel arranca en el borde inferior del encabezado (188 px arriba de todo, 76 px con
+  // scroll) y el botón de cerrar va justo encima del botón de menú
   useLayoutEffect(() => {
     if (!isOpen) return;
-    const measure = () => setTop(Math.round(headerRef.current?.getBoundingClientRect().bottom ?? 0));
+    const measure = () => {
+      setTop(Math.round(headerRef.current?.getBoundingClientRect().bottom ?? 0));
+      const button = anchorRef.current?.getBoundingClientRect();
+      setAnchor(button ? { top: button.top, left: button.left, size: button.width } : null);
+    };
     measure();
+    // Si se abre mientras el encabezado se anima (entrada o compactado), se vuelve a medir al terminar
+    const settle = window.setTimeout(measure, 800);
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [isOpen, headerRef]);
+    return () => {
+      window.clearTimeout(settle);
+      window.removeEventListener('resize', measure);
+    };
+  }, [isOpen, headerRef, anchorRef]);
 
   // Mientras está abierto: sin scroll de fondo, Escape cierra y el foco entra al menú
   useEffect(() => {
@@ -115,10 +141,21 @@ export function VerticalMenuDrawer({ isOpen, onClose, onSelectPending, headerRef
     />
   );
 
-  // Se monta en document.body para que el fondo cubra toda la pantalla
+  // Se monta en document.body para que el fondo cubra toda la pantalla, encabezado incluido
   return createPortal(
     <>
-      <div className="site-menu-backdrop" style={{ top }} onClick={onClose} aria-hidden="true" />
+      <div className="site-menu-backdrop" onClick={onClose} aria-hidden="true" />
+      {anchor && (
+        <button
+          type="button"
+          className="site-menu-close"
+          style={{ top: anchor.top, left: anchor.left, width: anchor.size, height: anchor.size }}
+          onClick={onClose}
+          aria-label="Cerrar menú de navegación"
+        >
+          <img src="/images/header/icono-cerrar.svg" alt="" width={24} height={24} />
+        </button>
+      )}
       <div className="site-menu-layer" style={{ top }}>
         <div className="vanguard-header-container">
           <nav

@@ -100,6 +100,7 @@ export default function Header() {
           onClose={closeMenu}
           onSelectPending={handlePendingLink}
           headerRef={headerRef}
+          anchorRef={menuButtonRef}
         />
       </header>
 
