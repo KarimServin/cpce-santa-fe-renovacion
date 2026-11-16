@@ -215,9 +215,12 @@ export default function Footer() {
 
         {/* "Pie inferior": copyright y enlaces legales */}
         <div className="footer-bottom">
-          <p className="footer-copy">
-            © {currentYear} Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe — Cámara I
-          </p>
+          <div className="footer-copy">
+            <p>
+              © {currentYear} Consejo Profesional de Ciencias Económicas de la Provincia de Santa Fe - Cámara I.
+            </p>
+            <p>Desarrollado por el Área de Sistemas de CPCE Santa Fe - Cámara I.</p>
+          </div>
           <ul className="footer-legal" aria-label="Enlaces legales">
             {LEGAL_ITEMS.map((item) => (
               <li key={item.label}>{renderItem(item)}</li>

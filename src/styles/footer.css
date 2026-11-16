@@ -183,6 +183,15 @@
   color: var(--neutro-300);
 }
 
+/* Dos líneas: copyright y crédito del Área de Sistemas */
+.footer-copy p {
+  margin: 0;
+}
+
+.footer-copy p + p {
+  margin-top: 4px;
+}
+
 .footer-legal {
   flex-shrink: 0;
   display: flex;
